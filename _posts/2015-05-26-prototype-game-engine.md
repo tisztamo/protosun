@@ -9,7 +9,9 @@ The heart of a game engine is the scheduler which ensures that game time pass in
 
 The full code of the scheduler and its usage:
 
-#### gameengine.js: ####
+### gameengine.js: ###
+
+{% highlight javascript %}
     function GameEngine(fps) {
         this.fps = fps || 30;
     }
@@ -22,8 +24,10 @@ The full code of the scheduler and its usage:
     GameEngine.prototype.oneStep = function () {
         console.log("Default oneStep, you have to override it");
     };
-    
+ {% endhighlight %}
+ 
 #### main.js: ####
+{% highlight javascript %}
     var simulation = new GameEngine(30);
     
     simulation.oneStep = function () {
@@ -31,6 +35,7 @@ The full code of the scheduler and its usage:
     };
 
     simulation.start();
+{% endhighlight %}
 
 The code is short but if you are a beginner you may need some clarification. Let's go through!
 
