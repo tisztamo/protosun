@@ -12,6 +12,7 @@ The full code of the scheduler and its usage:
 #### gameengine.js: ####
 
 {% highlight javascript %}
+
     function GameEngine(fps) {
         this.fps = fps || 30;
     }
@@ -19,7 +20,7 @@ The full code of the scheduler and its usage:
     GameEngine.prototype.start = function () {
         setInterval(this.oneStep.bind(this),
             1000 / this.fps);
-    };
+};
 
     GameEngine.prototype.oneStep = function () {
         console.log("Default oneStep, you have to override it");
