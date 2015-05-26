@@ -9,7 +9,7 @@ The heart of a game engine is the scheduler which ensures that game time pass in
 
 The full code of the scheduler and its usage:
 
-### gameengine.js: ###
+#### gameengine.js: ####
 
 {% highlight javascript %}
     function GameEngine(fps) {
