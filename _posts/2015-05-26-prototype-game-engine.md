@@ -13,29 +13,29 @@ The full code of the scheduler and its usage:
 
 {% highlight javascript %}
 
-    function GameEngine(fps) {
-        this.fps = fps || 30;
-    }
+function GameEngine(fps) {
+    this.fps = fps || 30;
+}
 
-    GameEngine.prototype.start = function () {
-        setInterval(this.oneStep.bind(this),
-            1000 / this.fps);
+GameEngine.prototype.start = function () {
+    setInterval(this.oneStep.bind(this),
+        1000 / this.fps);
 };
 
-    GameEngine.prototype.oneStep = function () {
-        console.log("Default oneStep, you have to override it");
-    };
+GameEngine.prototype.oneStep = function () {
+    console.log("Default oneStep, you have to override it");
+};
 {% endhighlight %}
  
 #### main.js: ####
 {% highlight javascript %}
-    var simulation = new GameEngine(30);
-    
-    simulation.oneStep = function () {
-        console.log("Overridden onStep");
-    };
+var simulation = new GameEngine(30);
 
-    simulation.start();
+simulation.oneStep = function () {
+    console.log("Overridden onStep");
+};
+
+simulation.start();
 {% endhighlight %}
 
 The code is short but if you are a beginner you may need some clarification. Let's go through!
@@ -45,9 +45,9 @@ The code is short but if you are a beginner you may need some clarification. Let
 I have implemented the scheduler using the constructor pattern, you can think of this as a class if you are familiar with classical OOP concepts. JavaScript (ES5) doesn't have the notion of a class but it has a very flexible prototype system which allows us to construct this class-like formation:
 
 {% highlight javascript %}
-    function GameEngine(fps) {
-        this.fps = fps || 30;
-    }
+function GameEngine(fps) {
+    this.fps = fps || 30;
+}
 {% endhighlight %}
 
 This is the constructor of our "class". It is just a function, it will be used as a constructor when we call it with the `new` operator.
@@ -63,9 +63,9 @@ This is the constructor of our "class". It is just a function, it will be used a
 We can define methods of the "class" by adding them to the automatically defined prototype property of the constructor:
 
 {% highlight javascript %}
-   GameEngine.prototype.start = function () {
-        ...
-    };
+GameEngine.prototype.start = function () {
+    ...
+};
 {% endhighlight %}
 
 Every object has a prototype which is an another object. If we access a property of an object which is not defined in that object then the prototype of the object will be checked for the property. The runtime will travel through the prototype chain up to the root Object. If it finds the property somewhere it will return it.
@@ -75,8 +75,8 @@ If an object is created using a constructor then its prototype will be set to th
 So if we attach anything to the prototype property of the `GameEngine` contructor, that thing will be available in every GameEngine object through the prototype chain:
 
 {% highlight javascript %}
-    var simulation = new GameEngine();
-    simulation.start();
+var simulation = new GameEngine();
+simulation.start();
 {% endhighlight %}
 
 > Geek Note: You may have noticed that there is a difference between "the prototype" and "the `prototype` property". Strangely enough the prototype of an object is not stored in its `prototype` property but in its `__proto__` property. Every object has a prototype (thus a `__proto__` property) but only functions have the `prototype` property which will be used only if the function is called as a constructor. Fortunately you don't often need to access the prototype of an object so you may live happy without knowing this.
@@ -88,10 +88,10 @@ A simple but powerful mechanism. So powerful that it is hard to understand. You 
 Let's see the content of the start method:
 
 {% highlight javascript %}
-    GameEngine.prototype.start = function () {
-        setInterval(this.oneStep.bind(this),
-            1000 / this.fps);
-    };
+GameEngine.prototype.start = function () {
+    setInterval(this.oneStep.bind(this),
+        1000 / this.fps);
+};
 {% endhighlight %}
 
 The easy part: setInterval is an internal function which sets up a scheduler in the runtime which will call the given function (first parameter) regularly. The second parameter is the time between two calls in milliseconds. `1000 / this.fps` is the number of milliseconds we have to wait betwen two calls to receive this.fps call per second.
@@ -99,9 +99,9 @@ The easy part: setInterval is an internal function which sets up a scheduler in 
 The strange thing here is the expression `this.oneStep.bind(this)` which is the function to get called regularly. `this.oneStep` is a reference to the oneStep method defined later, doing nothing at the time: 
 
 {% highlight javascript %}
-    GameEngine.prototype.oneStep = function () {
-        console.log("Default oneStep, you have to override it");
-    };
+GameEngine.prototype.oneStep = function () {
+    console.log("Default oneStep, you have to override it");
+};
 {% endhighlight %}
 
 So why we don't just write `setInterval(this.oneStep, 1000 / this.fps)`? The problem is with `this`: it works a 'bit' counter-intuitive:
