@@ -24,7 +24,7 @@ The full code of the scheduler and its usage:
     GameEngine.prototype.oneStep = function () {
         console.log("Default oneStep, you have to override it");
     };
- {% endhighlight %}
+{% endhighlight %}
  
 #### main.js: ####
 {% highlight javascript %}
