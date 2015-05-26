@@ -1,6 +1,7 @@
 ---
 layout: post
 title: A Prototype Game Engine
+git_tag: 20150526_gameengine
 ---
 
 The heart of a game engine is the scheduler which ensures that game time pass independently of hardware performance and any event happening inside or outside the simulation. 
@@ -118,3 +119,4 @@ And this is exactly what happens when you call `setInterval`: it accepets a func
 > Geek Note: Again a powerful but hard to understand concept. This time so powerful that most of us have shot himself in the foot with it several times. You may call it bad language design but your mother would answer: Cook with what you have!
 
 To solve this problem I have used the `bind` method on the original function: `this.oneStep.bind(...)` which returns a decorated version of the function. The decorated version will call the original function with `this` pointing to where we want (first parameter). In our case it is the current value of `this` as we just want to preserve its value. So `this.oneStep.bind(this)` is almost the same as `this.oneStep` except that `this` will be preserved when this reference is given to setInterval. You have to learn this: It is not just about setInterval but it will be the case with every callback - and we will have a lot.
+
