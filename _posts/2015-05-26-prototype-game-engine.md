@@ -112,7 +112,7 @@ So why we don't just write `setInterval(this.oneStep, 1000 / this.fps)`? The pro
 
 The problem is that if you get a reference to a method of an object then it is in reality a reference to a function without any knowledge of the object (Most of the time the method is not an own property of the object but lies somewhere on the prototype chain). If you later call that function reference then the value of `this` will be lost and it will point to `window`.
 
-And this is exactly what happens when you call `setInterval()`: it accepts a function reference and will call it directly, resulting `this` pointing to `window`. But we will need a reference to our GameEngine object so we have to do something.
+And this is exactly what happens when you call `setInterval()`: it accepts a function reference and will call it directly, resulting `this` pointing to `window`. But we will need a reference to our GameEngine instance so we have to do something.
 
 > Geek Note: Again a powerful but hard to understand concept. This time so powerful that most of us have shot himself in the foot with it several times. You may call it bad language design but your mother would answer: Cook with what you have!
 
