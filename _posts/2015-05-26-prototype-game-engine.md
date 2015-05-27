@@ -69,7 +69,7 @@ Every object has a prototype which is an another object. If we access a property
 
 If an object is created using a constructor then its prototype will be set to the value stored in the prototype property of the constructor (functions are objects too).
 
-So if we attach anything to the prototype property of the `GameEngine` contructor, that thing will be available in every `GameEngine` object through the prototype chain:
+So if we attach anything to the prototype property of the `GameEngine` contructor, that thing will be available in every `GameEngine()`-created object through the prototype chain:
 
 {% highlight javascript %}
 var simulation = new GameEngine();
