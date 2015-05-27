@@ -94,7 +94,7 @@ GameEngine.prototype.start = function () {
 };
 {% endhighlight %}
 
-The easy part: `setInterval` is an internal function which sets up a scheduler in the runtime which will call the given function (first parameter) regularly. The second parameter is the time between two calls in milliseconds. `1000 / this.fps` is the number of milliseconds we have to wait betwen two calls to receive `this.fps` call per second.
+The easy part: `setInterval` is a built-in function which sets up a scheduler in the runtime which will call the given function (first parameter) regularly. The second parameter is the time between two calls in milliseconds. `1000 / this.fps` is the number of milliseconds we have to wait betwen two calls to receive `this.fps` call per second.
 
 The strange thing here is the expression `this.oneStep.bind(this)` which is the function to get called regularly. `this.oneStep` is a reference to the `oneStep` method defined later, doing not very much at the time: 
 
