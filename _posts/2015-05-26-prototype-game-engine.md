@@ -67,7 +67,7 @@ GameEngine.prototype.start = function () {
 
 Every object has a prototype which is an another object. If we access a property of an object which is not defined in that object then the prototype of the object will be checked for the property. The runtime will travel through the prototype chain up to the root Object. If it finds the property somewhere it will return it. This is the way inheritance is implemented in JavaScript: it is defined between object instances.
 
-If an object is created using a constructor then its prototype will be set to the value stored in the prototype property of the constructor. 
+If an object is created using a constructor then its prototype will be set to the value stored in the prototype property of the constructor (functions are objects too).
 
 So if we attach anything to the prototype property of the `GameEngine` contructor, that thing will be available in every `GameEngine` object through the prototype chain:
 
