@@ -29,13 +29,9 @@ GameEngine.prototype.oneStep = function () {
 {% endhighlight %}
  
 #### main.js: ####
+
 {% highlight javascript %}
-var simulation = new GameEngine(30);
-
-simulation.oneStep = function () {
-    console.log("Overridden oneStep");
-};
-
+var simulation = new GameEngine();
 simulation.start();
 {% endhighlight %}
 
@@ -57,7 +53,7 @@ This is the constructor of our "class". It is just a function, it will be used a
 - The `this` keyword refers to the object under creation.
 - We use the `||` operator to define the default value of property `fps`: it will return the parameter `fps` when it is defined and 30 if not.
 - Although this is a fairly common trick I have to warn you: The exact truth is that `||` is a simple boolean operator which returns its first argument when it is truthy and the second if not ([more info about truthiness](https://developer.mozilla.org/en-US/docs/Glossary/Truthy)). This means for us that it is impossible to set `fps` to 0: If you try it, it will be set to the default value as 0 is falsy. So you should use this `||` trick only if falsy values are invalid for that parameter.
-- Note the upper camel case, it is recommended as the only way to know this is a constructor. You should never call constructors directly because they will construct the global `window` object.
+- Note the upper camel case, it is recommended to mark the function as a constructor. You should never call constructors directly because they will construct the global `window` object (see below).
 
 ### Prototype ###
 
@@ -69,7 +65,7 @@ GameEngine.prototype.start = function () {
 };
 {% endhighlight %}
 
-Every object has a prototype which is an another object. If we access a property of an object which is not defined in that object then the prototype of the object will be checked for the property. The runtime will travel through the prototype chain up to the root Object. If it finds the property somewhere it will return it.
+Every object has a prototype which is an another object. If we access a property of an object which is not defined in that object then the prototype of the object will be checked for the property. The runtime will travel through the prototype chain up to the root Object. If it finds the property somewhere it will return it. This is the way inheritance is implemented in JavaScript: it is defined between object instances.
 
 If an object is created using a constructor then its prototype will be set to the value stored in the prototype property of the constructor. 
 
@@ -80,7 +76,9 @@ var simulation = new GameEngine();
 simulation.start();
 {% endhighlight %}
 
-A simple but powerful mechanism. So powerful that it is hard to understand. You can think of the prototype of the constructor as if it were the class, that will be enough to use it. If yo do not like to think to a thing as if it were something else then you can learn all the details of prototypes from Angus Croll's great article: [https://javascriptweblog.wordpress.com/2010/06/07/understanding-javascript-prototypes/](https://javascriptweblog.wordpress.com/2010/06/07/understanding-javascript-prototypes/)
+A simple but powerful mechanism. So powerful that it is hard to understand. You can think of the prototype of the constructor as if it were the class, that will be enough to use it. Or you can learn all the details of prototypes from Angus Croll's great article: 
+
+[https://javascriptweblog.wordpress.com/2010/06/07/understanding-javascript-prototypes/](https://javascriptweblog.wordpress.com/2010/06/07/understanding-javascript-prototypes/)
 
 
 > Geek Note: You may have noticed that there is a difference between "the prototype" and "the `prototype` property". Strangely enough the prototype of an object is not stored in its `prototype` property but in its `__proto__` property. Every object has a prototype (thus a `__proto__` property) but only functions have the `prototype` property which will be used only if the function is called as a constructor. Fortunately you don't often need to access the prototype of an object so you may live happy without knowing this.
@@ -114,7 +112,7 @@ So why we don't just write `setInterval(this.oneStep, 1000 / this.fps)`? The pro
 
 The problem is that if you get a reference to a method of an object then it is in reality a reference to a function without any knowledge of the object (Most of the time the method is not an own property of the object but lies somewhere on the prototype chain). If you later call that function reference then the value of `this` will be lost and it will point to `window`.
 
-And this is exactly what happens when you call `setInterval`: it accepets a function reference and will call it directly, resulting `this` pointing to `window`. But we will need a reference to our GameEngine object so we have to do something.
+And this is exactly what happens when you call `setInterval()`: it accepts a function reference and will call it directly, resulting `this` pointing to `window`. But we will need a reference to our GameEngine object so we have to do something.
 
 > Geek Note: Again a powerful but hard to understand concept. This time so powerful that most of us have shot himself in the foot with it several times. You may call it bad language design but your mother would answer: Cook with what you have!
 
