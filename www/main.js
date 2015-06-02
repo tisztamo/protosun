@@ -1,7 +1,7 @@
-var simulation = new GameEngine(30);
+var simulation = new Simulation();
 
-simulation.oneStep = function () {
-    console.log("Overridden onStep");
+simulation.setUpModel = function () {
+  console.log("Overridden setUpModel");
 };
 
 simulation.start();

@@ -3,5 +3,5 @@
   "devel": true,
   "undef": true,
   "unused": true,
-  "predef": [ "GameEngine" ]
+  "predef": [ "GameEngine", "Simulation" ]
 }
