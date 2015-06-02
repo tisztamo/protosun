@@ -13,11 +13,11 @@ email:
 #blog logo
 logo: "assets/images/df_logo.jpg"
 # blog cover
-cover: "assets/images/background_image.jpg"
+cover: "/assets/images/background_image.jpg"
 
 name: 'Krisztián Schäffer'
 author: 'Krisztián Schäffer'
-author_image: "assets/images/author.jpg"
+author_image: "/assets/images/author.jpg"
 
 paginate:	5
 

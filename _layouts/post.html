@@ -9,13 +9,13 @@
       <article class="post">
         {% if page.image %}
         <div class="article-image">
-          <div class="post-image-image" style="background-image: url({% if page.image %}{{ page.image }}{% endif %})">
+          <div class="post-image-image" style="background-image: url({% if page.image %}{{ site.url }}{{ site.baseurl }}/assets/article_images/{{ page.image }}{% endif %})">
             Article Image
           </div>
           <div class="post-meta">
             <h1 class="post-title">{{ page.title }}</h1>
             <div class="cf post-meta-text">
-              <div class="author-image" style="background-image: url({{ site.author_image }})">Blog Logo</div>
+              <div class="author-image" style="background-image: url({{ site.author_image | prepend: site.baseurl | prepend: site.url }} }})">Blog Logo</div>
               <h4 class="author-name" itemprop="author" itemscope itemtype="http://schema.org/Person">{{ site.author }}</h4>
               on
               <time datetime="{{ page.date | date: "%F %R" }}">{{ page.date | date_to_string }}</time>
