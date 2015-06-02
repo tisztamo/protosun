@@ -4,8 +4,6 @@ title: A Prototype Game Engine
 git_tag: 20150526_gameengine
 ---
 
-### Abstract ###
-
 In the first post, we start to learn prototype programming in JavaScript while creating the scheduler of Protosun, the yet to be written space game.
 
 ### The scheduler ###

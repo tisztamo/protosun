@@ -11,18 +11,18 @@ description: > # this means to ignore newlines until "email:"
 
 email: 
 #blog logo
-logo: "/assets/images/df_logo.jpg"
+logo: "assets/images/df_logo.jpg"
 # blog cover
-cover: "/assets/images/cA4aKEIPQrerBnp1yGHv_IMG_9534-3-2.jpg"
+cover: "assets/images/cA4aKEIPQrerBnp1yGHv_IMG_9534-3-2.jpg"
 
 name: 'Krisztián Schäffer'
 author: 'Krisztián Schäffer'
-author_image: "/assets/images/author.jpg"
+author_image: "assets/images/author.jpg"
 
 paginate:	5
 
-url: "http://tisztamo.github.io/" # the base hostname & protocol for your site
-baseurl: "/protosun"
+url: "http://tisztamo.github.io/protosun/" # the base hostname & protocol for your site
+baseurl: ""
 
 # social icons and sharing options
 social:
