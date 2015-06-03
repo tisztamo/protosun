@@ -12,4 +12,4 @@ It is not about unopinionated software, I just think that you have to learn walk
 
 The Protosun blog follows the development of the game explaining all details of the code and all glitches of JavaScript/CSS, giving you a deep understanding of HTML5 development.
 
-We will also learn something about game design, physics, user interface design, and also about the Universe. Last but not least we will encapsulate the game for mobile use, publish it to different stores and maybe learn some marketing stuff too. 
+We will also learn something about game design, physics, user interface design, and also about the Universe. Last but not least, we will encapsulate the game for mobile use, publish it to different stores and maybe learn some marketing stuff too. 
