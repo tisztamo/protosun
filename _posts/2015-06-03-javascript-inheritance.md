@@ -89,7 +89,7 @@ The new thing here is that we set the prototype of `Simulation` to a new instanc
 
 I have added a new method called `setUpModel`. An instance of `Simulation`:
 
-![](../../../assets/article_images/2015/modifiedsimulation.png "Modified GameEngine object")
+![](../../../assets/article_images/2015/simulation.png "A Simulation object")
 
 Overriding a method is as simple as defining it in the "subclass":
 
