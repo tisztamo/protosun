@@ -11,7 +11,7 @@ description: > # this means to ignore newlines until "email:"
 
 email: 
 #blog logo
-logo: "assets/images/df_logo.jpg"
+logo: "/assets/images/df_logo.jpg"
 # blog cover
 cover: "/assets/images/background_image.jpg"
 
@@ -21,7 +21,7 @@ author_image: "/assets/images/author.jpg"
 
 paginate:	5
 
-url: "http://tisztamo.github.io/" # the base hostname & protocol for your site
+url: "http://tisztamo.github.io" # the base hostname & protocol for your site
 baseurl: "/protosun"
 
 # social icons and sharing options
