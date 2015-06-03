@@ -80,6 +80,8 @@ var simulation = new GameEngine();
 simulation.start();
 ```
 
+> From now on, I will use the term "prototype object" instead of "constructor function", as this is more natural.
+
 A simple but powerful mechanism. So powerful that it is hard to understand. You can think of the prototype of the constructor as if it were the class, that will be enough to use it. Or you can learn all the details of prototypes from Angus Croll's great article: 
 
 [https://javascriptweblog.wordpress.com/2010/06/07/understanding-javascript-prototypes/](https://javascriptweblog.wordpress.com/2010/06/07/understanding-javascript-prototypes/)
