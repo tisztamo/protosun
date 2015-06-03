@@ -144,4 +144,4 @@ Based on the prototype system we are able to create classes and subclasses with 
 
 The syntax is sometimes weird, but the flexible toolset of JavaScript allows us to do tricky things, like changing the behavior of objects after creation.
 
-We will see later that mastering the tool and use the tricks sparingly will lead to clear code and a lot of fun.
+We will see later that mastering the tool and using the tricks sparingly will lead to clear code and a lot of fun.
