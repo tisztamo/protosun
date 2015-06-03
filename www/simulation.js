@@ -1,6 +1,5 @@
 function Simulation(fps) {
   GameEngine.call(this, fps);
-  this.spaceObjects = {};
 }
 
 Simulation.prototype = new GameEngine();
@@ -12,5 +11,5 @@ Simulation.prototype.start = function () {
 };
 
 Simulation.prototype.setUpModel = function () {
-  console.log("Default setUpModel, you have to override it");
+  this.spaceObjects = {};
 };
