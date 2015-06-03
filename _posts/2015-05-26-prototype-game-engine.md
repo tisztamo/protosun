@@ -124,4 +124,4 @@ To solve this problem I have used the `bind` method on the original function: `t
 
 ### Conclusion ###
 
-JavaScript OOP is funny. Now we have class-like creatures called "constructor functions" and we can create new instances. Next time we will learn implementing inheritance so we can start programming the interesting part of the game.
+JavaScript OOP is funny. Now we have class-like creatures called "constructor functions" and we can create new instances. [Next time](http://tisztamo.github.io/protosun/2015/06/03/javascript-inheritance.html) we will learn implementing inheritance so we can start programming the interesting part of the game.

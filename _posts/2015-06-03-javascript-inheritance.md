@@ -6,7 +6,7 @@ image: 2015/drosophila.jpg
 ---
 
 
-In the previous post, we have created the `GameEngine` prototype. Now we will create a "subclass" of it called `Simulation`, which will manage the game world.
+In the [previous post](http://tisztamo.github.io/protosun/2015/05/26/prototype-game-engine.html), we have created the `GameEngine` prototype. Now we will create a "subclass" of it called `Simulation`, which will manage the game world.
 
 We will learn creating subclasses, overriding methods and calling the overridden one. Enjoying JavaScript OOP remains a future plan...
 
