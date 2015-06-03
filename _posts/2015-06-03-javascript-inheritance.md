@@ -22,13 +22,13 @@ var simulation = new GameEngine();
 
 the newly created object looks like this:
 
-![](../assets/article_images/2015/gameengine.png "GameEngine instance in console")
+![](../../../assets/article_images/2015/gameengine.png "GameEngine instance in console")
 
 *Just open the javascript console at [http://tisztamo.github.io/protosun/www/index.html]() and enter the code to see this.*
 
 Ita prototype is the `GameEngine` we have created. If we call `oneStep()` on it directly then the `oneStep` method of the prototype will  run because the object has no `oneStep` method but its prototype has:
 
-![](../assets/article_images/2015/onestep.png "Default oneStep")
+![](../../../assets/article_images/2015/onestep.png "Default oneStep")
 
 But we can easily give it an own `oneStep` method to override the default one:
 
@@ -40,11 +40,11 @@ simulation.oneStep = function () {
 
 Call `oneStep()` again and see the wonder:
 
-![](../assets/article_images/2015/overridden.png "Overridden oneStep")
+![](../../../assets/article_images/2015/overridden.png "Overridden oneStep")
 
 The object now looks a bit different, it has an own `oneStep` which overrides the old one in the prototype:
 
-![](../assets/article_images/2015/modifiedsimulation.png "Modified GameEngine object")
+![](../../../assets/article_images/2015/modifiedsimulation.png "Modified GameEngine object")
 
 This seems a bit hacky and not very usable as we don't usually want to change the behavior of objects after creation. We want to create different objects directly.
 
@@ -68,7 +68,7 @@ The new thing here is that we set the prototype of `Simulation` to a new instanc
 
 I have added a new "abstract" method called `setUpModel`. An instance of `Simulation`:
 
-![](../assets/article_images/2015/modifiedsimulation.png "Modified GameEngine object")
+![](../../../assets/article_images/2015/modifiedsimulation.png "Modified GameEngine object")
 
 Overriding a method is as simple as defining it in the "subclass":
 
