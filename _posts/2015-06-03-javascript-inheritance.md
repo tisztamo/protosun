@@ -10,6 +10,26 @@ In the previous post, we have created the `GameEngine` prototype. Now we will cr
 
 We will learn creating subclasses, overriding methods and calling the overridden one. Enjoying JavaScript OOP remains a future plan...
 
+The code for today:
+
+```javascript
+function Simulation(fps) {
+  GameEngine.call(this, fps);
+}
+
+Simulation.prototype = new GameEngine();
+Simulation.prototype.constructor = Simulation;
+
+Simulation.prototype.setUpModel = function () {
+  this.spaceObjects = {};
+};
+
+Simulation.prototype.start = function () {
+  this.setUpModel();
+  GameEngine.prototype.start.call(this);
+};
+```
+
 Let's start with the weird stuff!
 
 ### Overriding methods after instantiation ###
@@ -25,7 +45,7 @@ The newly created object looks like this:
 
 ![](../../../assets/article_images/2015/gameengine.png "GameEngine instance in console")
 
-*Just open the javascript console at [http://tisztamo.github.io/protosun/www/index.html](http://tisztamo.github.io/protosun/www/index.html) and enter the code to see this.*
+*Just open the javascript console at [http://tisztamo.github.io/protosun/www/index.html](http://tisztamo.github.io/protosun/www/index.html) to play with th code.*
 
 Its prototype is the `GameEngine` we have created. If we call `oneStep()` on it directly then the `oneStep` method of the prototype will  run because the object has no `oneStep` method but its prototype has:
 
@@ -86,7 +106,7 @@ This is the way we call methods from the base class as there is no `super` in Ja
 
 ### Overriding and chaining constructors ###
 
-JavaScript has a surprise for us again: If we create a `new Simulation()`, it will work perfectly except one thing: The old `GameEngine` constructor will be called instead of the new `Simulation` (The prototype of the object is `Simulation`, but the base constructor runs).
+JavaScript has a surprise for us again: If we create a `new Simulation()`, it will work perfectly, except one thing: The old `GameEngine` constructor will be called instead of the new `Simulation` (The prototype of the object is `Simulation`, but the base constructor runs).
 
 The problem is that we have changed the prototype of `Simulation` to a `new GameEngine()`, and this also changes the constructor. If we want `new Simulation()` objects to be created with the `Simulation` constructor, we have to write one more line:
 
