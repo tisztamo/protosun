@@ -91,7 +91,7 @@ A simple but powerful mechanism. So powerful that it is hard to understand. You 
 
 ### The nightmare of *this*
 
-Let's see the content of the start method:
+Let's see the body of the start method:
 
 ```javascript
 GameEngine.prototype.start = function () {
