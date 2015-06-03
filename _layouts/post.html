@@ -17,7 +17,7 @@
           <div class="cf post-meta-text">
             <div class="author-image" style="background-image: url({{ site.author_image | prepend: site.baseurl | prepend: site.url }} }})">Blog Logo</div>
             <h4 class="author-name" itemprop="author" itemscope itemtype="http://schema.org/Person">{{ site.author }}</h4> on
-            <time datetime="{{ page.date | date: " %F %R " }}">{{ page.date | date_to_string }}</time>
+            <time datetime="{{ page.date | date: '%F %R'}}">{{ page.date | date_to_string }}</time>
             <!-- , tagged on {{#foreach tags}}<span class="post-tag-{{slug}}">{{#if @first}}{{else}}, {{/if}}<a href="/tag/{{slug}}">{{name}}</a></span>{{/foreach}} -->
           </div>
           <div style="text-align:center">
@@ -65,7 +65,7 @@
             <p class="bio">{{author.bio}}</p>
             <hr>
             <p class="published">Published
-              <time datetime="{{ page.date | date: " %F %R " }}">{{ page.date | date_to_string }}</time>
+              <time datetime="{{ page.date | date: '%F %R' }}">{{ page.date | date_to_string }}</time>
             </p>
           </section>
         </div>
@@ -73,9 +73,9 @@
         <div class="isRight">
           <h5 class="index-headline featured"><span>Supported by</span></h5>
           <footer class="site-footer">
-            <section class="poweredby">Proudly published with <a href="http://jekyllrb.com"> Jekyll</a>
+            <section class="poweredby">Made with <a href="http://jekyllrb.com"> Jekyll</a>
             </section>
-            <a class="subscribe" href="{{ " /feed.xml " | prepend: site.baseurl }}"> <span class="tooltip"> <i class="fa fa-rss"></i> Subscribe!</span>
+            <a class="subscribe" href="{{ '/feed.xml' | prepend: site.baseurl }}"> <span class="tooltip"> <i class="fa fa-rss"></i> Subscribe!</span>
             </a>
             <div class="inner">
               <section class="copyright"><a href="{{@blog.url}}/">{{site.author}}</a> &copy; {{ site.time | date: '%Y' }}
