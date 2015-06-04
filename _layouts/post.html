@@ -72,14 +72,14 @@
         </div>
         {{/post}}
         <div class="isRight">
-          <h5 class="index-headline featured"><span>Supported by</span></h5>
+          <h5 class="index-headline featured"><span></span></h5>
           <footer class="site-footer">
             <section class="poweredby">Made with <a href="http://jekyllrb.com"> Jekyll</a>
             </section>
             <a class="subscribe" href="{{ '/feed.xml' | prepend: site.baseurl }}"> <span class="tooltip"> <i class="fa fa-rss"></i> Subscribe!</span>
             </a>
             <div class="inner">
-              <section class="copyright"><a href="{{@blog.url}}/">{{site.author}}</a> &copy; {{ site.time | date: '%Y' }}
+              <section class="copyright"><a href="{{site.baseurl | prepend: site.url}}/">{{site.author}}</a> &copy; {{ site.time | date: '%Y' }}
                 <br>All rights reserved.</section>
             </div>
           </footer>
