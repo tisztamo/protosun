@@ -1,3 +1,5 @@
+"use strict";
+
 function GameEngine(fps) {
   this.fps = fps || 30;
 }
