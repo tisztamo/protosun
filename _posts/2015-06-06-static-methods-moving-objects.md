@@ -101,7 +101,7 @@ Simulation.prototype.oneStep = function () {
 };
 ```
 
-> I have modified this a bit from the previous version where `spaceObjects` was `Object`, not `Array`. Storing them in an object may be more convenient because it allows us both sequential and random (based on the `SpaceObject` id) access. But it is at least [20x slower](https://jsperf.com/performance-of-array-vs-object/142) than an array so I gave way to the desire of (premature?) optimization.
+> I have modified this a bit from the previous version where `spaceObjects` was `Object`, not `Array`. Storing them in an object may be more convenient because it allows us both sequential and random (based on `SpaceObject.id`) access. But it is at least [20x slower](https://jsperf.com/performance-of-array-vs-object/142) than an array so I gave way to the desire of (premature?) optimization.
 
 All we need to start the simulation is setting up the scene. I have created two SpaceObject:
 
@@ -124,9 +124,7 @@ The only problem is that we haven't implemented the display so to see what happe
 
 > I strongly suggest you to learn mastering the debugger of your favorite browser. JavaScript is a dynamic language so problems tend to show up only at runtime - the compiler and even static analyzers cannot help very much. So you either have to write unit tests or debug a lot. Or both.
 
-To see what happens inside the simulation, I injected a `console.log` into `SpaceObject.oneStep`. I simply override the method in the `SpaceObject` prototype which will change the behavior of every `SpaceObject`. This is also true for `SpaceObject`s created before this call.
-
-To avoid disturbing the simulation, I store the original method in a variable and call it in the overridden `oneStep`:
+To see what happens inside the simulation, I have injected a `console.log` into `SpaceObject.oneStep`:
 
 ```javascript
 var originalOneStep = SpaceObject.prototype.oneStep;
@@ -135,6 +133,10 @@ SpaceObject.prototype.oneStep = function () {
   console.log("Id: " + this.id + "; Position: " + this.pos);
 };
 ```
+
+I simply override the method in the `SpaceObject` prototype which will change the behavior of every `SpaceObject`. This is also true for `SpaceObject`s created before this call.
+
+To avoid disturbing the simulation, I store the original method in a variable and call it in the overridden `oneStep.
 
 You can do this anywhere, even from the console while the simulation is running. But if you do this, the console will be flooded with logs:
 
@@ -150,6 +152,6 @@ setInterval(function () {
 
 ### Conclusion ###
 
-We have objects flying on straight lines in an invisible 2D vector space.
+We have objects flying in straight lines in an invisible 2D vector space.
 
 Not very much, but it is surprisingly close to a solar system simulator! We just need more Newton, a bit Euler and some CSS...
