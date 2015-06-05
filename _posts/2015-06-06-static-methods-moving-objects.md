@@ -42,7 +42,7 @@ It is not possible in JavaScript to define operators on objects so we have to us
 
 The `toString` method is predefined in `Object`, it will be automatically called when a text representation of the object is needed, e.g.: when we add the object to a string:
 
-![Vector operations](../../../assets/article_images/2015/vector.png)
+![](../../../assets/article_images/2015/vector.png)
 
 #### spaceobject.js
 
@@ -58,7 +58,7 @@ The `SpaceObject` is just a point in space which moves with a specific velocity.
 
 A unique id is generated for every `SpaceObject` at creation. `getNextId` is "static", which just means that it doesn't access `this` so it can be called using the prototype, without an object.
 
-> As we are in the constructor, `this` already points to a `SpaceObject`, so `this.id = this.getNextId()` would work the same.
+> As we are in the constructor, `this` already points to a `SpaceObject`, so `this.id = this.getNextId()` would work too.
 
 More interesting is the `nextId` property which is added to the prototype, so it will be shared, just like a static property in classic OOP:
 
@@ -122,7 +122,7 @@ Wow, it runs!
 
 The only problem is that we haven't implemented the display so to see what happens we have to debug.
 
-> I strongly suggest you to learn the debugger of your favorite browser. JavaScript is a dynamic language so problems tend to show up only at runtime - the compiler and even static analyzers cannot help very much. So you either have to write unit tests or debug a lot. Or both.
+> I strongly suggest you to learn mastering the debugger of your favorite browser. JavaScript is a dynamic language so problems tend to show up only at runtime - the compiler and even static analyzers cannot help very much. So you either have to write unit tests or debug a lot. Or both.
 
 To see what happens inside the simulation, I injected a `console.log` into `SpaceObject.oneStep`. I simply override the method in the `SpaceObject` prototype which will change the behavior of every `SpaceObject`. This is also true for `SpaceObject`s created before this call.
 
@@ -138,7 +138,7 @@ SpaceObject.prototype.oneStep = function () {
 
 You can do this anywhere, even from the console while the simulation is running. But if you do this, the console will be flooded with logs:
 
-![Vector operations](../../../assets/article_images/2015/flood.png)
+![](../../../assets/article_images/2015/flood.png)
 
 So I have also added some code to turn off the debug logs automatically after a second:
 
