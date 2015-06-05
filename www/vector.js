@@ -5,9 +5,16 @@ function Vector(x, y) {
   this.y = y;
 }
 
-Vector.prototype.addLocal = function (another) {
+Vector.prototype.add = function (another) {
   this.x += another.x;
   this.y += another.y;
+  return this;
+};
+
+Vector.prototype.multiply = function (scalar) {
+  this.x *= scalar;
+  this.y *= scalar;
+  return this;
 };
 
 Vector.prototype.toString = function () {

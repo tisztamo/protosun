@@ -15,5 +15,5 @@ SpaceObject.prototype.getNextId = function () {
 };
 
 SpaceObject.prototype.oneStep = function () {
-  this.pos.addLocal(this.v);
+  this.pos.add(this.v);
 };
