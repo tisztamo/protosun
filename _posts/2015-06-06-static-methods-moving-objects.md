@@ -120,7 +120,7 @@ simulation.start();
 
 Wow, it runs!
 
-The only problem is that we haven't implemented the display so to see what happens we have to debug.
+The only problem is that we haven't implemented the display so to see what happens, we have to debug.
 
 > I strongly suggest you to learn mastering the debugger of your favorite browser. JavaScript is a dynamic language so problems tend to show up only at runtime - the compiler and even static analyzers cannot help very much. So you either have to write unit tests or debug a lot. Or both.
 
@@ -142,7 +142,7 @@ You can run this piece of code anywhere, even from the console while the simulat
 
 ![](../../../assets/article_images/2015/flood.png)
 
-So we will also added some code to turn off the debug logs automatically after a second:
+So we have to add some code to turn off the debug logs automatically, e.g. after a second:
 
 ```javascript
 setInterval(function () {
