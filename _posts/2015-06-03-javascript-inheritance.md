@@ -45,7 +45,7 @@ The newly created object looks like this:
 
 ![](../../../assets/article_images/2015/gameengine.png "GameEngine instance in console")
 
-*Just open the javascript console at [http://tisztamo.github.io/protosun/www/index.html](http://tisztamo.github.io/protosun/www/index.html) to play with th code.*
+*Just open the javascript console at [http://tisztamo.github.io/protosun/www/index.html](http://tisztamo.github.io/protosun/www/index.html) to play with the code.*
 
 Its prototype is the `GameEngine` we have created. If we call `oneStep()` on it directly then the `oneStep` method of the prototype will  run because the object has no `oneStep` method but its prototype has:
 
@@ -102,11 +102,11 @@ Simulation.prototype.start = function () {
 
 I have also called the original `start` with the bizarre syntax using `call`, which allows us to call a function directly and specify the value of `this`. It is similar to `bind`, except that it calls the function immediately, setting `this` to the given value. The result is that the method from the base "class" runs on the current object.
 
-This is the way we call methods from the base class as there is no `super` in JavaScript.
+This is the way we call methods of the base class as there is no `super` in JavaScript.
 
 ### Overriding and chaining constructors ###
 
-JavaScript has a surprise for us again: If we create a `new Simulation()`, it will work perfectly, except one thing: The old `GameEngine` constructor will be called instead of the new `Simulation` (The prototype of the object is `Simulation`, but the base constructor runs).
+JavaScript has a surprise for us again: If we create a `new Simulation()`, it will work perfectly, except one thing: The old `GameEngine` constructor will be called instead of the new `Simulation` (The prototype of the object is `Simulation`, but the base constructor will be executed).
 
 The problem is that we have changed the prototype of `Simulation` to a `new GameEngine()`, and this also changes the constructor. If we want `new Simulation()` objects to be created with the `Simulation` constructor, we have to write one more line:
 
