@@ -124,7 +124,7 @@ The only problem is that we haven't implemented the display so to see what happe
 
 > I strongly suggest you to learn mastering the debugger of your favorite browser. JavaScript is a dynamic language so problems tend to show up only at runtime - the compiler and even static analyzers cannot help very much. So you either have to write unit tests or debug a lot. Or both.
 
-To see what happens inside the simulation, I have injected a `console.log` into `SpaceObject.oneStep`:
+To see what happens inside the simulation, and to practice prototype programming, we could inject a `console.log` into `SpaceObject.oneStep`:
 
 ```javascript
 var originalOneStep = SpaceObject.prototype.oneStep;
@@ -134,15 +134,15 @@ SpaceObject.prototype.oneStep = function () {
 };
 ```
 
-I simply override the method in the `SpaceObject` prototype which will change the behavior of every `SpaceObject`. This is also true for `SpaceObject`s created before this call.
+This simply overrides the method in the `SpaceObject` prototype which will change the behavior of every `SpaceObject`. *Every* means here that this is also true for `SpaceObject`s created *before* this call.
 
-To avoid disturbing the simulation, I store the original method in a variable and call it in the overridden `oneStep`.
+To avoid disturbing the simulation, we have to store the original method in a variable and call it in the overridden `oneStep`.
 
-You can do this anywhere, even from the console while the simulation is running. But if you do this, the console will be flooded with logs:
+You can run this piece of code anywhere, even from the console while the simulation is running. But if you do this, the console will be flooded with logs:
 
 ![](../../../assets/article_images/2015/flood.png)
 
-So I have also added some code to turn off the debug logs automatically after a second:
+So we will also added some code to turn off the debug logs automatically after a second:
 
 ```javascript
 setInterval(function () {
