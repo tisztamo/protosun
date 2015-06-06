@@ -136,7 +136,7 @@ SpaceObject.prototype.oneStep = function () {
 
 I simply override the method in the `SpaceObject` prototype which will change the behavior of every `SpaceObject`. This is also true for `SpaceObject`s created before this call.
 
-To avoid disturbing the simulation, I store the original method in a variable and call it in the overridden `oneStep.
+To avoid disturbing the simulation, I store the original method in a variable and call it in the overridden `oneStep`.
 
 You can do this anywhere, even from the console while the simulation is running. But if you do this, the console will be flooded with logs:
 
