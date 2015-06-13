@@ -4,5 +4,5 @@
   "globalstrict": true,
   "undef": true,
   "unused": true,
-  "predef": [ "GameEngine", "Simulation", "SpaceObject", "Vector" ]
+  "predef": [ "GameEngine", "Simulation", "SpaceObject", "Vector", "Renderer", "DOMRenderer" ]
 }

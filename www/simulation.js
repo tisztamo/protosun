@@ -3,6 +3,7 @@
 function Simulation(fps) {
   GameEngine.call(this, fps);
   this.spaceObjects = [];
+  this.renderer = null;
 }
 
 Simulation.prototype = new GameEngine();
@@ -13,12 +14,19 @@ Simulation.prototype.start = function () {
   GameEngine.prototype.start.call(this);
 };
 
+Simulation.prototype.setRenderer = function (renderer) {
+  this.renderer = renderer;
+};
+
 Simulation.prototype.setUpModel = function () {
   console.log("Default setUpModel, you have to override it!");
 };
 
 Simulation.prototype.addSpaceObject = function (spaceObject) {
   this.spaceObjects.push(spaceObject);
+  if (this.renderer) {
+    this.renderer.spaceObjectAdded(spaceObject);
+  }
 };
 
 Simulation.prototype.oneStep = function () {
@@ -26,4 +34,5 @@ Simulation.prototype.oneStep = function () {
   for (var j = 0; j < length; j++) {
     this.spaceObjects[j].oneStep();
   }
+  this.renderer.oneStepTaken();
 };
