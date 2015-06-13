@@ -1,9 +1,7 @@
 # Build settings
 markdown: redcarpet
 highlighter: pygments
-gems:
-  - jemoji
-  
+
 # Site settings
 title: "Protosun"
 description: > # this means to ignore newlines until "email:"
