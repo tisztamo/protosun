@@ -1,20 +1,12 @@
 "use strict";
 
-var simulation = new Simulation();
+var simulation = new Simulation(60);
+var renderer = new DOMRenderer(simulation, document.getElementById('area'));
 
 simulation.setUpModel = function () {
-  this.addSpaceObject(new SpaceObject(new Vector(0, 0), new Vector(0.1, -0.05)));
-  this.addSpaceObject(new SpaceObject(new Vector(0, 0), new Vector(-0.02, 0.03)));
+  this.addSpaceObject(new SpaceObject(new Vector(0, 0), new Vector(1, 0.5)));
+  this.addSpaceObject(new SpaceObject(new Vector(0, 0), new Vector(0.3, 0.3)));
 };
 
 simulation.start();
-
-var originalOneStep = SpaceObject.prototype.oneStep;
-SpaceObject.prototype.oneStep = function () {
-  originalOneStep.call(this);
-  console.log("Id: " + this.id + "; Position: " + this.pos);
-};
-
-setInterval(function () {
-  SpaceObject.prototype.oneStep = originalOneStep;
-}, 1000);
+renderer.start();

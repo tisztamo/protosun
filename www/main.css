@@ -1,0 +1,18 @@
+.template {
+  display: none;
+}
+
+.gamearea {
+  position: relative;
+}
+
+.spaceobject {
+  position: absolute;
+}
+
+.spaceobject img {
+  width: 40px;
+  height: 40px;
+  margin-left: -20px;
+  margin-right: -20px;
+}
