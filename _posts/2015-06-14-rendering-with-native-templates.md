@@ -5,7 +5,7 @@ git_tag: 20150614_rendering
 image: 2015/native_american.jpg
 ---
 
-We will finally see something on the screen! Logic-less templates are sexy, so we give them a try in the form of 'native' HTML templates.  Today we will build the view of our MVC design, so that the simulation will come to life.
+We will finally see something on the screen! Logic-less templates are sexy, so we give them a try in the form of 'native' HTML templates.  Today we will build the view of our MVC design so that the simulation will come to life.
 
 ### Separation of concerns
 
@@ -33,7 +33,7 @@ Renderer.prototype.spaceObjectAdded = function (spaceObject) {
 };
 ```
 
-`Renderer` is an abstract 'class', the concrete rendering will be done in `DOMRenderer`. This will allow us to have separate implementations, for example we may later want switch to `<canvas>` based rendering.
+`Renderer` is an abstract 'class', the concrete rendering will be done in `DOMRenderer`. This will allow us to have separate implementations, for example, we may later want to switch to `<canvas>` based rendering.
 
 > This is a simplified observer pattern, with only one observer per subject. If you are interested in design patterns, you may find useful this book: [Learning JavaScript Design Patterns](http://addyosmani.com/resources/essentialjsdesignpatterns/book/)
 
@@ -61,7 +61,7 @@ Renderer.prototype.tick = function () {
 
 ### HTML templates
 
-We will use fragments of the html code as templates, simply cloning them and connecting with the model.
+We will use fragments of the HTML code as templates, simply cloning them and connecting with the model.
 
 So a template looks like this:
 
@@ -72,7 +72,7 @@ So a template looks like this:
 ```
 > Although this is a rarely used approach currently, it works for us and this points to the future direction of the standard.
 > 
-> The already widely supported `<template>` element is aimed definitely to the same. I decidied not to use it because it needs some time to get prevalent, and because it has a feature which prevents automatic preloading of images inside templates - which may be good for most cases but not for a game.
+> The already widely supported `<template>` element is aimed definitely to the same. I decided not to use it because it needs some time to get prevalent, and because it has a feature which prevents automatic preloading of images inside templates - which may be good for most cases but not for a game.
 
 Rendering of templates is simply turned off using CSS:
 
@@ -95,9 +95,9 @@ DOMRenderer.prototype.createView = function (templateid, spaceObject) {
 };
 ```
 
-It looks for the template element, creates a deep clone of it and connects it to the model object (`spaceObject`) it represents. The connection is of course one-way, the model doesn't know anything about the view.
+It looks for the template element, creates a deep clone of it and connects it to the model object (`spaceObject`) it represents. The connection is, of course, one-way, the model doesn't know anything about the view.
 
-`createView` also removes the CSS class 'template' from the cloned node, allowing it to be displayed by the browser. I used `classList` which is way more convenient than `className`. It is not supported in old browsers (e.g. IE9), but polyfills are available. The `id` of the cloned element must be also changed, because it is the same as the id of the template. We set it to the unique id of the model object, which is generated for every `SpaceObject` at creation.
+`createView` also removes the CSS class 'template' from the cloned node, allowing it to be displayed by the browser. I used `classList` which is way more convenient than `className`. It is not supported in old browsers (e.g. IE9), but polyfills are available. The `id` of the cloned element must be also changed because it is the same as the id of the template. We set it to the unique id of the model object, which is generated for every `SpaceObject` at creation.
 
 The cloned node is not yet part of the DOM, it has to be added to the DOM as a child of an element. The full code of `spaceObjectAdded`, which handles the addition of a new  `SpaceObject`  to `Simulation`:
 
@@ -126,6 +126,6 @@ For the sake of simplicity, I use the model coordinates directly. Later some pro
 
 ### Conclusion
 
-We were able to separate the view and the model and we have also saved us from creating node hierarchies with the DOM API. Instead we use HTML templates. They work like a charm!
+We were able to separate the view and the model and we have also saved us from creating node hierarchies with the DOM API. Instead, we use HTML templates. They work like a charm!
 
 Today space objects started to fly out from the screen and I am sure that in the next post we will have real fun playing with our solar system simulator, adding new planets - or even stars - and watching what happens.
