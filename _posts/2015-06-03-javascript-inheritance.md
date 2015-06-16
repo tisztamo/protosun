@@ -2,6 +2,7 @@
 layout: post
 title: Inheritance in JavaScript
 git_tag: 20150603_simulation
+previous_git_tag: 20150526_gameengine
 image: 2015/drosophila.jpg
 ---
 

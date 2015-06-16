@@ -2,6 +2,7 @@
 layout: post
 title: Static methods, moving objects and Newton's first law
 git_tag: 20150606_spaceobject
+previous_git_tag: 20150603_simulation
 image: 2015/newton.jpg
 ---
 
