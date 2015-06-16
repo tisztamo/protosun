@@ -1,0 +1,25 @@
+body {
+  background-image: url(img/background.jpg);
+  background-size: cover;
+}
+
+.template {
+  display: none;
+}
+
+.gamearea {
+  position: relative;
+}
+
+.spaceobject {
+  position: absolute;
+}
+
+.spaceobject img {
+  margin-left: -50%;
+  margin-right: -50%;
+}
+
+#copyrightnotice a {
+  color: dimgray;
+}

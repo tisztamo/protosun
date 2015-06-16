@@ -41,13 +41,22 @@
       <br>
       <br> {% endif %}
       <section class="post-content">
+        {% if page.image_source %}
         <div class="post-reading">
-          <span class="post-reading-time"></span> read
+          <a href="{{ page.image_source }}" target="_blank">image source</a>
         </div>
+        {% endif %}
         <a name="topofpage"></a>
         {{content}}
       </section>
-      <a href="https://github.com/tisztamo/protosun/archive/{{page.git_tag}}.zip">Download this version of the source.</a> Or find the current version <a href="https://github.com/tisztamo/protosun">here</a>.
+      Try out <a href="../../../archive/{{ page.git_tag}}/index.html" target="_blank">this version online.</a><br>
+      {% if page.previous_git_tag %}
+      View <a href="https://github.com/tisztamo/protosun/compare/{{ page.previous_git_tag }}...{{page.git_tag}}?diff=unified&name={{page.git_tag}}" target="_blank">diff from previous post.</a>
+      <br>
+      {% endif %}
+      Download <a href="https://github.com/tisztamo/protosun/archive/{{page.git_tag}}.zip">this version of the source.</a>
+       <br>
+      Or find <a href="https://github.com/tisztamo/protosun">the current version of the source here</a>.
       <footer class="post-footer">
         <section class="share">
           {% for social in site.social %} {% if social.share_url != null %}

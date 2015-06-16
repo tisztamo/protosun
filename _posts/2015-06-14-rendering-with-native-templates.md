@@ -2,7 +2,9 @@
 layout: post
 title: Rendering from HTML templates
 git_tag: 20150614_rendering
+previous_git_tag: 20150606_spaceobject
 image: 2015/native_american.jpg
+image_source: https://commons.wikimedia.org/wiki/File:Portrait_of_native_American_man_in_front_of_teepee,_from_Robert_N._Dennis_collection_of_stereoscopic_views.png
 ---
 
 We will finally see something on the screen! Logic-less templates are sexy, so we give them a try in the form of 'native' HTML templates.  Today we will build the view of our MVC design so that the simulation will come to life.
