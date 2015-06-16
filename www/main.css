@@ -1,3 +1,8 @@
+body {
+  background-image: url(img/background.jpg);
+  background-size: cover;
+}
+
 .template {
   display: none;
 }
@@ -11,8 +16,10 @@
 }
 
 .spaceobject img {
-  width: 40px;
-  height: 40px;
-  margin-left: -20px;
-  margin-right: -20px;
+  margin-left: -50%;
+  margin-right: -50%;
+}
+
+#copyrightnotice a {
+  color: dimgray;
 }

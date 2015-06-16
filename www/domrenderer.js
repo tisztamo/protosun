@@ -18,7 +18,7 @@ DOMRenderer.prototype.redraw = function () {
 DOMRenderer.prototype.spaceObjectAdded = function (spaceObject) {
   Renderer.prototype.spaceObjectAdded.call(this, spaceObject);
 
-  var view = this.createView("spaceobject", spaceObject);
+  var view = this.createView(spaceObject.constructor.name.toLowerCase(), spaceObject);
   this.views.push(view);
 
   this.targetElement.appendChild(view);

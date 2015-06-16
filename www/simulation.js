@@ -31,8 +31,12 @@ Simulation.prototype.addSpaceObject = function (spaceObject) {
 
 Simulation.prototype.oneStep = function () {
   var length = this.spaceObjects.length;
-  for (var j = 0; j < length; j++) {
-    this.spaceObjects[j].oneStep();
+  var spaceObjects = this.spaceObjects;
+  for (var i = 0; i < length; i++) {
+    for (var j = i + 1; j < length; j++) {
+      SpaceObject.actGravityForce(spaceObjects[i], spaceObjects[j]);
+    }
+    spaceObjects[i].oneStep();
   }
   this.renderer.oneStepTaken();
 };
