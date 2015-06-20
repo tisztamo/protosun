@@ -1,16 +1,33 @@
 "use strict";
 
-var simulation = new Simulation(60);
-var renderer = new DOMRenderer(simulation, document.getElementById('area'));
+var loader = new Loader();
+loader.loadScript("compressed.js", main, function () {
+  console.info("compressed.js not found, loading scripts in debug mode.");
+  loader.loadScripts(["util/polyfills.js",
+  "model/gameengine.js",
+  "model/simulation.js",
+  "model/vector.js",
+  "model/spaceobject.js",
+  "model/star.js",
+  "model/planet.js",
+  "model/moon.js",
+  "view/renderer.js",
+  "view/domrenderer.js"], main);
+});
 
-simulation.setUpModel = function () {
-  this.addSpaceObject(new Star(new Vector(400, 200), new Vector(0, 0), 5));
-  this.addSpaceObject(new Planet(new Vector(200, 200), new Vector(0, 1.5)), 1);
-  this.addSpaceObject(new Moon(new Vector(170, 200), new Vector(0, 3.5), 0.1));
-  this.addSpaceObject(new Planet(new Vector(600, 200), new Vector(0, -1.5), 1));
-  this.addSpaceObject(new Moon(new Vector(630, 200), new Vector(0, -3.5), 0.1));
-  this.addSpaceObject(new Moon(new Vector(200, -1200), new Vector(0, 1), 0.1));
-};
+function main() {
+  var simulation = new Simulation(60);
+  var renderer = new DOMRenderer(simulation, document.getElementById('area'));
 
-simulation.start();
-renderer.start();
+  simulation.setUpModel = function () {
+    this.addSpaceObject(new Star(new Vector(400, 200), new Vector(0, 0), 5));
+    this.addSpaceObject(new Planet(new Vector(200, 200), new Vector(0, 1.5)), 1);
+    this.addSpaceObject(new Moon(new Vector(170, 200), new Vector(0, 3.5), 0.1));
+    this.addSpaceObject(new Planet(new Vector(600, 200), new Vector(0, -1.5), 1));
+    this.addSpaceObject(new Moon(new Vector(630, 200), new Vector(0, -3.5), 0.1));
+    this.addSpaceObject(new Moon(new Vector(200, -1200), new Vector(0, 1), 0.1));
+  };
+
+  simulation.start();
+  renderer.start();
+}
