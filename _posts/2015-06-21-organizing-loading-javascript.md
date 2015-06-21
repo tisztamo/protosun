@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Organizing and loading JavaScript files
-git_tag: 20150620_scriptload
+git_tag: 20150621_scriptload
 previous_git_tag: 20150618_gravity
 image: 2015/load.jpg
 image_source: https://www.flickr.com/photos/usnavy/7970395398
@@ -73,7 +73,7 @@ Loader.prototype.loadScript = function (url, success, fail) {
 };
 ```
 
-It simply creates a `script` element pointing to the URL and appends it to the DOM. It also attaches event handlers for the `load` and `error` events. We call this function on every URL and wait for every `load` event to fire
+It simply creates a `script` element pointing to the URL and appends it to the DOM. It also attaches event handlers for the `load` and `error` events. We call this function on every URL and wait for every `load` event to fire:
 
 ```javascript
 Loader.prototype.loadScripts = function (scriptUrls, cb) {
@@ -99,8 +99,8 @@ Loader.prototype.loadedCB = function () {
 
 Here we see some language constructs you may not be familiar with:
 
-- The `instanceof` operator tests whether the object is an instance of a 'class'. (To be more precise: it *"tests whether an object has in its prototype chain the prototype property of a constructor"*. ([MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof)) But who can understand that sentence?)
-- The `typeof` operator returns a string containing the lowercase name of the type of the given operand. You can use it to differentiate between built-in types. If you give it any object, it will return "object" independently of the prototype chain. It even return "object" for arrays. Its usage is pretty limited. [Read more about `typeof` on MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof)
+- The `instanceof` operator tests whether the object is an instance of a 'class'. (To be more precise: it *"tests whether an object has in its prototype chain the prototype property of a constructor"* ([MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof)). But who can understand that sentence?)
+- The `typeof` operator returns a string containing the lowercase name of the type of the given operand. You can use it to differentiate between built-in types. If you give it any object, it will return "object" independently of the prototype chain. It even returns "object" for arrays. Its usage is pretty limited. [Read more about typeof on MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof)
 - `throw` will throw an exception, which can be any type in JavaScript. You can catch exceptions with `try-catch` blocks. If you fail to catch an exception, the browser will log an error to the console and stop that script run. (But timers and event handlers will continue to fire). Here I use `throw` to report an invalid parameter, as it is easy to call this method mistakenly with one or more strings. If `scriptUrls` is a string, not an `Array`, then the cycle will go through its characters and will try to load one character long URLs. I do not want that.
 
 ### Separating development and production code loading
@@ -140,7 +140,7 @@ $ java -jar compiler.jar util/polyfills.js model/gameengine.js ... > compressed.
 
 >Far from a full-featured build system, but it works for this small project, was an hour to write and its only dependency is the OS command shell.
 
-> The HTML now contains only two `<script>` tags: for `loader.js` and `main.js`. In production, this means three script load, which is acceptable. I think that going down to one is only possible if you maintain a separate branch for the production code, or if you use a build system that modifies your HTML and/or scripts.
+> The HTML now contains only two `<script>` tags: for `loader.js` and `main.js`. In production, this means three script load, which is acceptable. Going down to two is easy but it disfigures the code. I think that going down to one is only possible if you maintain a separate branch for the production code, or if you use a build system that modifies your HTML and/or scripts.
 
 ### Conclusion
 
