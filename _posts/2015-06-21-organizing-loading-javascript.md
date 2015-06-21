@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Organizing and loading JavaScript files
-git_tag: 20150621_scriptload
+git_tag: 20150621_scriptload_fix
 previous_git_tag: 20150618_gravity
 image: 2015/load.jpg
 image_source: https://www.flickr.com/photos/usnavy/7970395398
@@ -65,6 +65,7 @@ We will create a simple script loader, which loads scripts using an array of URL
 ```javascript
 Loader.prototype.loadScript = function (url, success, fail) {
   var scriptElement = document.createElement("script");
+  scriptElement.async = false;
   scriptElement.type = "text\/javascript";
   scriptElement.addEventListener("error", fail);
   scriptElement.addEventListener("load", success);
@@ -73,7 +74,9 @@ Loader.prototype.loadScript = function (url, success, fail) {
 };
 ```
 
-It simply creates a `script` element pointing to the URL and appends it to the DOM. It also attaches event handlers for the `load` and `error` events. We call this function on every URL and wait for every `load` event to fire:
+It simply creates a `script` element pointing to the URL and appends it to the DOM. It also attaches event handlers for the `load` and `error` events. Setting async to false on a dynamically loaded script menas that loading is async but execution will be in order.
+
+We call this function on every URL and wait for every `load` event to fire:
 
 ```javascript
 Loader.prototype.loadScripts = function (scriptUrls, cb) {
