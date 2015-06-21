@@ -1,7 +1,15 @@
 "use strict";
 
 var loader = new Loader();
+var chromeScriptLoadErrorFlag = false; //Chrome fires the error event twice when a dynamically loaded script is async=false and it failes to load. We will ignore the second one.
+
 loader.loadScript("compressed.js", main, function () {
+  if (chromeScriptLoadErrorFlag) {
+    console.log("onerror fired twice");
+    return;
+  }
+  chromeScriptLoadErrorFlag = true;
+  
   console.info("compressed.js not found, loading scripts in debug mode.");
   loader.loadScripts(["util/polyfills.js",
   "model/gameengine.js",

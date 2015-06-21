@@ -28,6 +28,7 @@ Loader.prototype.loadScripts = function (scriptUrls, cb) {
 
 Loader.prototype.loadScript = function (url, success, fail) {
   var scriptElement = document.createElement("script");
+  scriptElement.async = false;
   scriptElement.type = "text\/javascript";
   scriptElement.addEventListener("error", fail);
   scriptElement.addEventListener("load", success);
