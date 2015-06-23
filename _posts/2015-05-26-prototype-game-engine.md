@@ -55,13 +55,12 @@ This is the constructor of our "class". It is just a function, it will be used a
 
 - It takes an optional parameter and stores it in the object.
 - The `this` keyword refers to the object under creation.
-- We use the `||` operator to define the default value of property `fps`: it will return the parameter `fps` when it is defined, and 30 if not.
-- Although this is a fairly common trick, I have to warn you: The exact truth is that `||` is a simple boolean operator, which returns its first argument when it is truthy and the second if not. ([more info about truthiness](https://developer.mozilla.org/en-US/docs/Glossary/Truthy)) This means for us that it is impossible to set `fps` to 0: If you try it, it will be set to the default value as 0 is falsy. So you should use this `||` trick only if falsy values are invalid for that parameter.
+- We use the `||` operator to define the default value of property `fps`: it will return the parameter `fps` when it is defined, and 30 if not. Although this is a fairly common trick, I have to warn you: The exact truth is that `||` is a simple boolean operator, which returns its first argument when it is truthy and the second if not. ([more info about truthiness](https://developer.mozilla.org/en-US/docs/Glossary/Truthy)) This means for us that it is impossible to set `fps` to 0: If you try it, it will be set to the default value as 0 is falsy. So you should use this `||` trick only if falsy values are invalid for that parameter.
 - Note the upper camel case, it is recommended to mark the function as a constructor. You should never call constructors directly because they will construct the global `window` object (see below).
 
 ### Prototype ###
 
-We can define methods of the "class" by adding them to the automatically defined prototype property of the constructor:
+We can define methods of the 'class' by adding them to the automatically defined prototype property of the constructor:
 
 ```javascript
 GameEngine.prototype.start = function () {
@@ -112,7 +111,7 @@ GameEngine.prototype.oneStep = function () {
 
 So why we don't just write `setInterval(this.oneStep, 1000 / this.fps)`? The problem is with `this`: it works a 'bit' counter-intuitive:
 
-- As said before in the constructor it refers to the object under construction.
+- As said before, in the constructor it refers to the object under construction.
 - When you call a method on an object, e.g. `simulation.start()` then it will point to that object. So it works as expected most of the time.
 - But when you call a function without knowing the object then `this` will point to the global `window` object.
 
