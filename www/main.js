@@ -19,6 +19,7 @@ loader.loadScript("compressed.js", main, function () {
   "model/star.js",
   "model/planet.js",
   "model/moon.js",
+  "model/spaceship.js",
   "view/renderer.js",
   "view/domrenderer.js"], main);
 });
@@ -34,6 +35,9 @@ function main() {
     this.addSpaceObject(new Planet(new Vector(600, 200), new Vector(0, -1.5), 1));
     this.addSpaceObject(new Moon(new Vector(630, 200), new Vector(0, -3.5), 0.1));
     this.addSpaceObject(new Moon(new Vector(200, -1200), new Vector(0, 1), 0.1));
+    var ship = new SpaceShip(new Vector(150, 150), new Vector(0, 0), 0.1);
+    this.addSpaceObject(ship);
+    ship.angularSpeed = 0.1;
   };
 
   simulation.start();

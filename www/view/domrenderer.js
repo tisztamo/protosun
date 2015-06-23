@@ -29,12 +29,22 @@ DOMRenderer.prototype.createView = function (templateid, spaceObject) {
   var view = template.cloneNode(true);
   view.id = spaceObject.id;
   view.model = spaceObject;
+  view.rotatedElement = view.getElementsByClassName("rotate").item(0);
   view.classList.remove("template");
   return view;
 };
 
 DOMRenderer.prototype.updateView = function (view) {
   var spaceObject = view.model;
-  view.style.top = spaceObject.pos.y + "px";
-  view.style.left = spaceObject.pos.x + "px";
+  var style = view.style;
+  var transform = "rotate(" + (Math.PI / 2 + spaceObject.heading) + "rad)";
+  style.top = spaceObject.pos.y + "px";
+  style.left = spaceObject.pos.x + "px";
+  if (view.rotatedElement) {
+    var rotatedStyle = view.rotatedElement.style;
+    rotatedStyle.webkitTransform  = transform;
+    rotatedStyle.mozTransform  = transform;
+    rotatedStyle.msTransform  = transform;
+    rotatedStyle.transform  = transform;    
+  }
 };

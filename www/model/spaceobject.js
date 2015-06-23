@@ -1,10 +1,12 @@
 "use strict";
 
-function SpaceObject(pos, v, mass) {
+function SpaceObject(pos, v, mass, heading, angularSpeed) {
   this.pos = pos;
   this.v = v;
   this.mass = mass || 1;
   this.reciprocalMass = 1 / this.mass;
+  this.heading = heading || 0;
+  this.angularSpeed = angularSpeed || 0;
   this.stepForce = new Vector(0, 0);
   this.id = SpaceObject.prototype.getNextId();
 }
@@ -34,5 +36,6 @@ SpaceObject.prototype.getNextId = function () {
 SpaceObject.prototype.oneStep = function () {
   this.v.add(this.stepForce.multiply(this.reciprocalMass));
   this.pos.add(this.v);
+  this.heading += this.angularSpeed;
   this.stepForce = new Vector(0, 0);
 };
