@@ -9,15 +9,32 @@ body {
 
 .gamearea {
   position: relative;
+  overflow: visible;
 }
 
 .spaceobject {
   position: absolute;
 }
 
-.spaceobject img {
-  margin-left: -50%;
-  margin-right: -50%;
+.rotate {
+  position: absolute;
+}
+
+.flame {
+  opacity: 1;
+  position: absolute;
+  height: 10px;
+  top: 40px;
+  left: 0;
+  visibility: hidden;
+  transition-property: height, opacity;
+  transition-duration: 0.2s;
+}
+
+.spaceship.enginerunning .flame {
+  visibility: visible;
+  height: 100px;
+  opacity: 0.5;
 }
 
 #copyrightnotice a {

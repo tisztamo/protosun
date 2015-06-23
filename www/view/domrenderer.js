@@ -38,13 +38,24 @@ DOMRenderer.prototype.updateView = function (view) {
   var spaceObject = view.model;
   var style = view.style;
   var transform = "rotate(" + (Math.PI / 2 + spaceObject.heading) + "rad)";
-  style.top = spaceObject.pos.y + "px";
-  style.left = spaceObject.pos.x + "px";
+  style.top = (spaceObject.pos.y - view.clientWidth / 2) + "px";
+  style.left = (spaceObject.pos.x - view.clientHeight / 2) + "px";
   if (view.rotatedElement) {
     var rotatedStyle = view.rotatedElement.style;
     rotatedStyle.webkitTransform  = transform;
     rotatedStyle.mozTransform  = transform;
     rotatedStyle.msTransform  = transform;
     rotatedStyle.transform  = transform;    
+  }
+  if (spaceObject instanceof SpaceShip) {
+    this.updateSpaceShipView(view);
+  }
+};
+
+DOMRenderer.prototype.updateSpaceShipView = function (view) {
+  if (view.model.engineRunning) {
+    view.classList.add("enginerunning");
+  } else {
+    view.classList.remove("enginerunning");    
   }
 };

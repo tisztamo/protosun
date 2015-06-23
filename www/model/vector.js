@@ -5,6 +5,13 @@ function Vector(x, y) {
   this.y = y;
 }
 
+/**
+* Creates a Vector with the given polar coordinates.
+*/
+Vector.createFromPolar = function (angle, length) {
+  return new Vector(length * Math.cos(angle), length * Math.sin(angle));
+};
+
 Vector.prototype.add = function (another) {
   this.x += another.x;
   this.y += another.y;

@@ -9,7 +9,7 @@ loader.loadScript("compressed.js", main, function () {
     return;
   }
   chromeScriptLoadErrorFlag = true;
-  
+
   console.info("compressed.js not found, loading scripts in debug mode.");
   loader.loadScripts(["util/polyfills.js",
   "model/gameengine.js",
@@ -21,12 +21,15 @@ loader.loadScript("compressed.js", main, function () {
   "model/moon.js",
   "model/spaceship.js",
   "view/renderer.js",
-  "view/domrenderer.js"], main);
+  "view/domrenderer.js",
+  "controller/keyboardcontroller.js"], main);
 });
 
 function main() {
   var simulation = new Simulation(60);
   var renderer = new DOMRenderer(simulation, document.getElementById('area'));
+
+  var ship = new SpaceShip(new Vector(750, 450), new Vector(0, 0), 0.1);
 
   simulation.setUpModel = function () {
     this.addSpaceObject(new Star(new Vector(400, 200), new Vector(0, 0), 5));
@@ -35,10 +38,10 @@ function main() {
     this.addSpaceObject(new Planet(new Vector(600, 200), new Vector(0, -1.5), 1));
     this.addSpaceObject(new Moon(new Vector(630, 200), new Vector(0, -3.5), 0.1));
     this.addSpaceObject(new Moon(new Vector(200, -1200), new Vector(0, 1), 0.1));
-    var ship = new SpaceShip(new Vector(150, 150), new Vector(0, 0), 0.1);
     this.addSpaceObject(ship);
-    ship.angularSpeed = 0.1;
   };
+
+  new KeyboardController(ship);
 
   simulation.start();
   renderer.start();
