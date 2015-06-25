@@ -24,6 +24,19 @@ DOMRenderer.prototype.spaceObjectAdded = function (spaceObject) {
   this.targetElement.appendChild(view);
 };
 
+DOMRenderer.prototype.spaceObjectRemoved = function (spaceObject) {
+  Renderer.prototype.spaceObjectRemoved.call(this, spaceObject);
+  var i = this.views.length - 1;
+  while (i >= 0) {
+    if (this.views[i].model === spaceObject) {
+      this.views[i].parentElement.removeChild(this.views[i]);
+      this.views.splice(i, 1);
+      return;
+    }
+    i--;
+  }
+};
+
 DOMRenderer.prototype.createView = function (templateid, spaceObject) {
   var template = document.getElementById(templateid);
   var view = template.cloneNode(true);
@@ -38,16 +51,18 @@ DOMRenderer.prototype.updateView = function (view) {
   var spaceObject = view.model;
   var style = view.style;
   var transform = "rotate(" + (Math.PI / 2 + spaceObject.heading) + "rad)";
-  style.top = (spaceObject.pos.y - view.clientWidth / 2) + "px";
-  style.left = (spaceObject.pos.x - view.clientHeight / 2) + "px";
+  style.left = (spaceObject.pos.x - view.clientWidth / 2) + "px";
+  style.top = (spaceObject.pos.y - view.clientHeight / 2) + "px";
   if (view.rotatedElement) {
     var rotatedStyle = view.rotatedElement.style;
-    rotatedStyle.webkitTransform  = transform;
-    rotatedStyle.mozTransform  = transform;
-    rotatedStyle.msTransform  = transform;
-    rotatedStyle.transform  = transform;    
+    rotatedStyle.webkitTransform = transform;
+    rotatedStyle.mozTransform = transform;
+    rotatedStyle.msTransform = transform;
+    rotatedStyle.transform = transform;
   }
-  if (spaceObject instanceof SpaceShip) {
+  if (spaceObject instanceof Detonation) {
+    this.updateDetonationView(view);
+  } else if (spaceObject instanceof SpaceShip) {
     this.updateSpaceShipView(view);
   }
 };
@@ -56,6 +71,10 @@ DOMRenderer.prototype.updateSpaceShipView = function (view) {
   if (view.model.engineRunning) {
     view.classList.add("enginerunning");
   } else {
-    view.classList.remove("enginerunning");    
+    view.classList.remove("enginerunning");
   }
+};
+
+DOMRenderer.prototype.updateDetonationView = function (view) {
+  view.classList.add("detonated");
 };

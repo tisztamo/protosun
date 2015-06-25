@@ -1,6 +1,6 @@
-body {
-  background-image: url(img/background.jpg);
-  background-size: cover;
+html, body{
+  height:100%;
+  margin: 0;
 }
 
 .template {
@@ -9,7 +9,11 @@ body {
 
 .gamearea {
   position: relative;
-  overflow: visible;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-image: url(img/background.jpg);
+  background-size: cover;
 }
 
 .spaceobject {
@@ -17,15 +21,14 @@ body {
 }
 
 .rotate {
-  position: absolute;
 }
 
 .flame {
   opacity: 1;
   position: absolute;
-  height: 10px;
-  top: 40px;
-  left: 0;
+  height: 20px;
+  top: 65px;
+  left: -5px;
   visibility: hidden;
   transition-property: height, opacity;
   transition-duration: 0.2s;
@@ -35,6 +38,35 @@ body {
   visibility: visible;
   height: 100px;
   opacity: 0.5;
+}
+
+.spaceship {
+  z-index: 1000;
+}
+
+.detonation {
+  opacity: 1;
+  width: 0;
+  height: 0;
+  transition-property: width, height, opacity;
+  transition-duration: 1.5s;
+}
+
+.detonationview {
+  width: 100%;
+  height: 100%;
+}
+
+.detonated.detonation {
+  opacity: 0;
+  width: 600px;
+  height: 600px;
+}
+
+#copyrightnotice {
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
 #copyrightnotice a {
