@@ -49,14 +49,12 @@ SpaceObject.prototype.hasNegligibleMass = function () {
 /*jshint -W098 */
 
 /**
-* @abstract
-* Acts on the another SpaceObject from the given distance.
-* Gravity action is not simulated here, only game-specific actions.
-* 
-* Distance is calculated previously.
-* @param {SpaceObject} another The SpaceObject to act on.
-* @param distance The precalculated distance between this and another
-*/
-SpaceObject.prototype.actOn = function (another, distance) {
-  
-};
+ * @abstract
+ * Acts on the another SpaceObject from the given distance.
+ * Gravity action is not simulated here, only game-specific actions.
+ *
+ * Distance is calculated previously.
+ * @param {SpaceObject} another The SpaceObject to act on.
+ * @param distance The precalculated distance between this and another
+ */
+SpaceObject.prototype.actOn = function (another, distance) {};

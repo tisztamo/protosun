@@ -42,7 +42,7 @@ function main() {
     this.addSpaceObject(new Moon(new Vector(200, -1200), new Vector(0, 0.5), 0.1));
     this.addSpaceObject(ship);
   };
-  
+
   new KeyboardController(ship);
 
   simulation.start();

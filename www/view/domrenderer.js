@@ -42,7 +42,7 @@ DOMRenderer.prototype.createView = function (templateid, spaceObject) {
   var view = template.cloneNode(true);
   view.id = spaceObject.id;
   view.model = spaceObject;
-  view.rotatedElement = view.getElementsByClassName("rotate").item(0);
+  view.rotatedElement = view.getElementsByClassName("rotated").item(0);
   view.classList.remove("template");
   return view;
 };
