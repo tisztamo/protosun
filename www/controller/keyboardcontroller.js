@@ -9,7 +9,7 @@ function KeyboardController(spaceShip) {
 /** @private */
 KeyboardController.prototype.keydownHandler = function (keyEvent) {
   //console.log(this.getKey(keyEvent));
-  switch (this.getKey(keyEvent)) {
+  switch (keyEvent.key) {
   case "ArrowRight":
     this.spaceShip.startRotationRight();
     break;
@@ -26,8 +26,7 @@ KeyboardController.prototype.keydownHandler = function (keyEvent) {
 
 /** @private */
 KeyboardController.prototype.keyupHandler = function (keyEvent) {
-  //console.log(this.getKey(keyEvent));
-  switch (this.getKey(keyEvent)) {
+  switch (keyEvent.key) {
   case "ArrowRight":
   case "ArrowLeft":
     this.spaceShip.stopRotation();
@@ -35,31 +34,5 @@ KeyboardController.prototype.keyupHandler = function (keyEvent) {
   case "ArrowUp":
     this.spaceShip.stopEngine();
     break;
-  }
-};
-
-/** 
- * Normalizes the key event
- * @returns The key property of keyEvent if exists, otherwise
- * a guess based on the keyCode property.
- */
-KeyboardController.prototype.getKey = function (keyEvent) {
-  if (keyEvent.key) {
-    return keyEvent.key;
-  }
-  console.log(keyEvent.keyCode);
-  switch (keyEvent.keyCode) {
-  case 32:
-    return " ";
-  case 37:
-    return "ArrowLeft";
-  case 38:
-    return "ArrowUp";
-  case 39:
-    return "ArrowRight";
-  case 40:
-    return "ArrowDown";
-  default:
-    return "Unidentified";
   }
 };
