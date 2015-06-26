@@ -18,10 +18,7 @@ DOMRenderer.prototype.redraw = function () {
 DOMRenderer.prototype.spaceObjectAdded = function (spaceObject) {
   Renderer.prototype.spaceObjectAdded.call(this, spaceObject);
 
-  var view = this.createView(spaceObject.constructor.name.toLowerCase(), spaceObject);
-  this.views.push(view);
-
-  this.targetElement.appendChild(view);
+  this.createView(spaceObject.constructor.name.toLowerCase(), spaceObject);
 };
 
 DOMRenderer.prototype.spaceObjectRemoved = function (spaceObject) {
@@ -44,6 +41,10 @@ DOMRenderer.prototype.createView = function (templateid, spaceObject) {
   view.model = spaceObject;
   view.rotatedElement = view.getElementsByClassName("rotated").item(0);
   view.classList.remove("template");
+  this.targetElement.appendChild(view);
+  this.views.push(view);
+  view.originX = view.clientWidth / 2;
+  view.originY = view.clientHeight / 2;
   return view;
 };
 
@@ -51,8 +52,8 @@ DOMRenderer.prototype.updateView = function (view) {
   var spaceObject = view.model;
   var style = view.style;
   var transform = "rotate(" + (Math.PI / 2 + spaceObject.heading) + "rad)";
-  style.left = (spaceObject.pos.x - view.clientWidth / 2) + "px";
-  style.top = (spaceObject.pos.y - view.clientHeight / 2) + "px";
+  style.left = (spaceObject.pos.x - view.originX) + "px";
+  style.top = (spaceObject.pos.y - view.originY) + "px";
   if (view.rotatedElement) {
     var rotatedStyle = view.rotatedElement.style;
     rotatedStyle.webkitTransform = transform;
@@ -75,6 +76,10 @@ DOMRenderer.prototype.updateSpaceShipView = function (view) {
   }
 };
 
+/*jshint -W098 */
 DOMRenderer.prototype.updateDetonationView = function (view) {
-  view.classList.add("detonated");
+  if (!view.classList.contains("detonated")) {
+    var forceStyleRecalc = view.clientHeight != 0.001;
+    view.classList.add("detonated");
+  }
 };
