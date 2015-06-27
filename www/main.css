@@ -24,14 +24,16 @@ html, body{
   opacity: 1;
   position: absolute;
   width: 0;
-  left: -98px;
+  left: 0;
+  margin-left: 0;
   top: -5px;
-  transition-property: height, opacity;
+  transition-property: width, margin-left, opacity;
   transition-duration: 0.2s;
 }
 
 .spaceship.enginerunning .flame {
   width: 100px;
+  margin-left: -100px;
   opacity: 0.5;
 }
 
