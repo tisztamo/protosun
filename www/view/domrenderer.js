@@ -51,10 +51,10 @@ DOMRenderer.prototype.createView = function (templateid, spaceObject) {
 DOMRenderer.prototype.updateView = function (view) {
   var spaceObject = view.model;
   var style = view.style;
-  var transform = "rotate(" + (Math.PI / 2 + spaceObject.heading) + "rad)";
   style.left = (spaceObject.pos.x - view.originX) + "px";
   style.top = (spaceObject.pos.y - view.originY) + "px";
   if (view.rotatedElement) {
+    var transform = "rotate(" + spaceObject.heading + "rad)";
     var rotatedStyle = view.rotatedElement.style;
     rotatedStyle.webkitTransform = transform;
     rotatedStyle.mozTransform = transform;

@@ -23,17 +23,15 @@ html, body{
 .flame {
   opacity: 1;
   position: absolute;
-  height: 20px;
-  top: 65px;
-  left: -5px;
-  visibility: hidden;
+  width: 0;
+  left: -98px;
+  top: -5px;
   transition-property: height, opacity;
   transition-duration: 0.2s;
 }
 
 .spaceship.enginerunning .flame {
-  visibility: visible;
-  height: 100px;
+  width: 100px;
   opacity: 0.5;
 }
 
@@ -71,4 +69,11 @@ html, body{
 
 #copyrightnotice a {
   color: dimgray;
+}
+
+#controlhint {
+  color: dimgray;
+  position: fixed;
+  top: 18px;
+  left: 0;  
 }
