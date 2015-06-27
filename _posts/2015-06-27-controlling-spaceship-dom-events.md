@@ -2,7 +2,7 @@
 layout: post
 title: Controlling a spaceship
 previous_git_tag: 20150621_scriptload_fix
-git_tag: 20150627_spaceship
+git_tag: 20150627_spaceship_fix
 image: 2015/controller.jpg
 image_source: https://en.wikipedia.org/wiki/Launch_Control_Center#/media/File:S-IB_Networks_panel.jpg
 ---
