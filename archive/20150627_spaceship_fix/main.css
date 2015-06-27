@@ -1,0 +1,59 @@
+html, body{
+  height:100%;
+  margin: 0;
+}
+
+.template {
+  display: none;
+}
+
+.gamearea {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-image: url(img/background.jpg);
+  background-size: cover;
+}
+
+.spaceobject {
+  position: absolute;
+}
+
+.flame {
+  opacity: 1;
+  position: absolute;
+  width: 0;
+  left: 0;
+  margin-left: 0;
+  top: -5px;
+  transition-property: width, margin-left, opacity;
+  transition-duration: 0.2s;
+}
+
+.spaceship.enginerunning .flame {
+  width: 100px;
+  margin-left: -100px;
+  opacity: 0.5;
+}
+
+.spaceship {
+  z-index: 1000;
+}
+
+#copyrightnotice {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+#copyrightnotice a {
+  color: dimgray;
+}
+
+#controlhint {
+  color: dimgray;
+  position: fixed;
+  top: 18px;
+  left: 0;  
+}

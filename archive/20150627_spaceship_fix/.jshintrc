@@ -1,0 +1,8 @@
+{
+  "browser": true,
+  "devel": true,
+  "globalstrict": true,
+  "undef": true,
+  "unused": true,
+  "predef": [ "Loader", "GameEngine", "Simulation", "SpaceObject", "Vector", "Renderer", "DOMRenderer", "Planet", "Star", "Moon", "SpaceShip", "Missile", "Detonation", "KeyboardController" ]
+}
