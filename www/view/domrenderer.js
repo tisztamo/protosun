@@ -51,19 +51,17 @@ DOMRenderer.prototype.createView = function (templateid, spaceObject) {
 DOMRenderer.prototype.updateView = function (view) {
   var spaceObject = view.model;
   var style = view.style;
-  var transform = "rotate(" + (Math.PI / 2 + spaceObject.heading) + "rad)";
   style.left = (spaceObject.pos.x - view.originX) + "px";
   style.top = (spaceObject.pos.y - view.originY) + "px";
   if (view.rotatedElement) {
+    var transform = "rotate(" + spaceObject.heading + "rad)";
     var rotatedStyle = view.rotatedElement.style;
     rotatedStyle.webkitTransform = transform;
     rotatedStyle.mozTransform = transform;
     rotatedStyle.msTransform = transform;
     rotatedStyle.transform = transform;
   }
-  if (spaceObject instanceof Detonation) {
-    this.updateDetonationView(view);
-  } else if (spaceObject instanceof SpaceShip) {
+  if (spaceObject instanceof SpaceShip) {
     this.updateSpaceShipView(view);
   }
 };
@@ -73,13 +71,5 @@ DOMRenderer.prototype.updateSpaceShipView = function (view) {
     view.classList.add("enginerunning");
   } else {
     view.classList.remove("enginerunning");
-  }
-};
-
-/*jshint -W098 */
-DOMRenderer.prototype.updateDetonationView = function (view) {
-  if (!view.classList.contains("detonated")) {
-    var forceStyleRecalc = view.clientHeight != 0.001;
-    view.classList.add("detonated");
   }
 };

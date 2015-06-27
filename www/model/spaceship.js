@@ -38,11 +38,3 @@ SpaceShip.prototype.startEngine = function () {
 SpaceShip.prototype.stopEngine = function () {
   this.engineRunning = false;
 };
-
-SpaceShip.prototype.launchMissile = function () {
-  var direction = Vector.createFromPolar(this.heading, 1);
-  var pos = this.pos.clone().add(direction.clone().multiply(40)).add(this.v);
-  var v = this.v.clone().add(direction.clone().multiply(3));
-  var missile = new Missile(pos, v, this.heading);
-  this.simulation.addSpaceObject(missile);
-};

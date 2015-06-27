@@ -23,44 +23,20 @@ html, body{
 .flame {
   opacity: 1;
   position: absolute;
-  height: 20px;
-  top: 65px;
-  left: -5px;
-  visibility: hidden;
+  width: 0;
+  left: -98px;
+  top: -5px;
   transition-property: height, opacity;
   transition-duration: 0.2s;
 }
 
 .spaceship.enginerunning .flame {
-  visibility: visible;
-  height: 100px;
+  width: 100px;
   opacity: 0.5;
 }
 
 .spaceship {
   z-index: 1000;
-}
-
-.detonation {
-  z-index: 20000;
-  opacity: 1;
-  width: 0;
-  height: 0;
-  transition-property: all;
-  transition-duration: 1.5s;
-}
-
-.detonation img {
-  width: 100%;
-  height: 100%;
-}
-
-.detonated.detonation {
-  opacity: 0;
-  width: 600px;
-  height: 600px;
-  margin-left: -300px;
-  margin-top: -300px;
 }
 
 #copyrightnotice {
@@ -71,4 +47,11 @@ html, body{
 
 #copyrightnotice a {
   color: dimgray;
+}
+
+#controlhint {
+  color: dimgray;
+  position: fixed;
+  top: 18px;
+  left: 0;  
 }
