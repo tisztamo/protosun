@@ -1,13 +1,13 @@
 ---
 layout: post
-title: Controlling a space ship
+title: Controlling a spaceship
 previous_git_tag: 20150621_scriptload_fix
 git_tag: 20150627_spaceship
 image: 2015/controller.jpg
 image_source: https://en.wikipedia.org/wiki/Launch_Control_Center#/media/File:S-IB_Networks_panel.jpg
 ---
 
-Time to transform the simulation into a game: We will create a space ship and control it using the keyboard. To do this, we will learn how to use DOM events, CSS transforms, and transitions.
+Time to transform the simulation into a game: We will create a spaceship and control it using the keyboard. To do this, we will learn how to use DOM events, CSS transforms, and transitions.
 
 ### Rotation modeling
 
