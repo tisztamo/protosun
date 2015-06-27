@@ -61,7 +61,9 @@ DOMRenderer.prototype.updateView = function (view) {
     rotatedStyle.msTransform = transform;
     rotatedStyle.transform = transform;
   }
-  if (spaceObject instanceof SpaceShip) {
+  if (spaceObject instanceof Detonation) {
+    this.updateDetonationView(view);
+  } else if (spaceObject instanceof SpaceShip) {
     this.updateSpaceShipView(view);
   }
 };
@@ -71,5 +73,13 @@ DOMRenderer.prototype.updateSpaceShipView = function (view) {
     view.classList.add("enginerunning");
   } else {
     view.classList.remove("enginerunning");
+  }
+};
+
+/*jshint -W098 */
+DOMRenderer.prototype.updateDetonationView = function (view) {
+  if (!view.classList.contains("detonated")) {
+    var forceStyleRecalc = view.clientHeight != 0.001;
+    view.classList.add("detonated");
   }
 };
