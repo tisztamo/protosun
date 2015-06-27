@@ -19,8 +19,6 @@ KeyboardController.prototype.keydownHandler = function (keyEvent) {
   case "ArrowUp":
     this.spaceShip.startEngine();
     break;
-  case " ":
-    this.spaceShip.launchMissile();
   }
 };
 

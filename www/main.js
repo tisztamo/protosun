@@ -21,8 +21,6 @@ loader.loadScript("compressed.js", main, function () {
   "model/planet.js",
   "model/moon.js",
   "model/spaceship.js",
-  "model/missile.js",
-  "model/detonation.js",
   "view/renderer.js",
   "view/domrenderer.js",
   "controller/keyboardcontroller.js"], main);
