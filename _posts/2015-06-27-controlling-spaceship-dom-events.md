@@ -185,7 +185,7 @@ SpaceShip.prototype.stopEngine = function () {
 
 ### Rendering the engine flame: View logic in logic-less templates
 
-Displaying the flame of the main engine is a nice effect, and - as a visual feedback - it also helps the player learn driving the ship. The problem is that the flame has to be only displayed while the engine is running. We need a way to map the `engineRunning` property of `SpaceShip` to the displayed state of the flame.
+Displaying the flame of the main engine is a nice effect, and - as a visual feedback - it also helps the player to learn driving the ship. The problem is that the flame has to be only displayed while the engine is running. We need a way to map the `engineRunning` property of `SpaceShip` to the displayed state of the flame.
 
 > Logic-less templates aren't really logicless, they just contain less logic. Their goal is to prevent business logic to find its way into the template, but view-specific logic must be implemented somehow. Conditional display and iteration are available in every logic-less template language to support view logic implementation.
 
@@ -253,7 +253,7 @@ It states that the flame is fully opaque, but its height is 0, so it won't be vi
 
 Which changes the height and opacity of the flame, thus it will trigger the transition. The browser will smoothly animate to the new height and opacity values. The effect is that the flame grows while its opacity goes from 1 to 0.5. The flame is brighter while small. This looks great and also allows other objects to show through the fully developed flame.
 
-You may have noted that the selector of the rule is a bit strange. `".spaceship.enginerunning .flame"` select every elements with the `flame` class which is inside an element with both `spaceship` and `enginerunning` classes. We apply `enginerunning` on the full spaceship view from JavaScript without knowing how it will be displayed. This rule helps to separate low-level view description with high-level view logic.
+You may have noted that the selector of the rule is a bit strange. `".spaceship.enginerunning .flame"` select every elements with the `flame` class which is inside an element with both `spaceship` and `enginerunning` classes. We apply `enginerunning` on the full spaceship view using JavaScript, without knowing how it will be displayed. This rule helps to separate low-level view description from high-level view logic.
 
 > I have removed the `visibility` settings in favor of `height: 0`. This is because the transition from `visibility: visible` to `visibility: hidden` is not working, the flame just disappears. There is a [workaround for this](http://www.greywyvern.com/?post=337), but we do not need it.
  
