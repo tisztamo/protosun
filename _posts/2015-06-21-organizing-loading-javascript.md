@@ -24,7 +24,7 @@ We will organize the files based on their architectural role, creating separate 
 
 JavaScript has global variables but JavaScript libraries almost always use a root object like `$`, `google` or `_`. They store everything inside that object to avoid polluting the global namespace, which would lead to name collisions and hard-to-debug bugs. 
 
-The problem is that this is a workaround as JavaScript lacks namespaces and imports. One problem is that you always have to write out the fully qualified names, like `new google.maps.LatLng()` (instead of `new LatLng()` after importing `google.maps`).
+Unfortunately, this is az imperfect workaround for the problem that JavaScript lacks namespaces and imports. One problem is that you always have to write out the fully qualified names, like `new google.maps.LatLng()` (instead of `new LatLng()` after importing `google.maps`).
 
 I do not like writing and reading long names and we aren't developing a library, so I have decided not to use namespaces in this project.
 
@@ -74,7 +74,7 @@ Loader.prototype.loadScript = function (url, success, fail) {
 };
 ```
 
-It simply creates a `script` element pointing to the URL and appends it to the DOM. It also attaches event handlers for the `load` and `error` events. Setting async to false on a dynamically loaded script menas that loading is async but execution will be in order.
+It simply creates a `script` element pointing to the URL and appends it to the DOM. It also attaches event handlers for the `load` and `error` events. Setting async to false on a dynamically loaded script means that loading is async but execution will be in order.
 
 We call this function on every URL and wait for every `load` event to fire:
 
