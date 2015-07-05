@@ -4,5 +4,5 @@
   "globalstrict": true,
   "undef": true,
   "unused": true,
-  "predef": [ "Loader", "GameEngine", "Simulation", "SpaceObject", "Vector", "Renderer", "DOMRenderer", "Planet", "Star", "Moon", "SpaceShip", "Missile", "Detonation", "KeyboardController" ]
+  "predef": [ "Loader", "GameEngine", "Simulation", "SpaceObject", "Vector", "Renderer", "DOMRenderer", "Planet", "Star", "Moon", "SpaceShip", "Missile", "Detonation", "KeyboardController", "TouchControl", "TouchControlView", "TouchController" ]
 }

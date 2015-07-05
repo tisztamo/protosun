@@ -5,7 +5,10 @@
   <meta charset="UTF-8">
   <title>Solar System Simulation</title>
   <link rel="stylesheet" href="main.css">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="viewport" content="user-scalable=no" />
 </head>
 
 <body>
@@ -27,17 +30,23 @@
   </div>
   <div class="template spaceobject spaceship" id="spaceship">
     <div class="rotated">
-      <img src="img/spaceship.png" height="20">
+      <img src="img/spaceship.png" width="50" height="20">
       <img src="img/flame.png" height="35" class="flame">
     </div>
   </div>
   <div class="template spaceobject missile" id="missile">
     <div class="rotated">
-      <img src="img/missile.png" height="10">
+      <img src="img/missile.png" height="10" width="30">
     </div>
   </div>
   <div class="template spaceobject detonation" id="detonation">
     <img src="img/detonation.png">
+  </div>
+  <div class="template touchControl" id="touchcontrol">
+    <div class="leftControl">Left</div>
+    <div class="rightControl">Right</div>
+    <div class="engineControl">Accelerate</div>
+    <div class="fireControl">Fire</div>
   </div>
   <script src="util/loader.js"></script>
   <script src="main.js"></script>
