@@ -43,8 +43,8 @@ DOMRenderer.prototype.createView = function (templateid, spaceObject) {
   view.classList.remove("template");
   this.targetElement.appendChild(view);
   this.views.push(view);
-  view.originX = view.clientWidth / 2;
-  view.originY = view.clientHeight / 2;
+  view.originX = Math.floor(view.clientWidth / 2);
+  view.originY = Math.floor(view.clientHeight / 2);
   return view;
 };
 
@@ -57,7 +57,6 @@ DOMRenderer.prototype.updateView = function (view) {
     var transform = "rotate(" + spaceObject.heading + "rad)";
     var rotatedStyle = view.rotatedElement.style;
     rotatedStyle.webkitTransform = transform;
-    rotatedStyle.mozTransform = transform;
     rotatedStyle.msTransform = transform;
     rotatedStyle.transform = transform;
   }

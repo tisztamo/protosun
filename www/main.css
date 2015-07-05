@@ -1,5 +1,6 @@
-html, body{
-  height:100%;
+html,
+body {
+  height: 100%;
   margin: 0;
 }
 
@@ -46,21 +47,21 @@ html, body{
   opacity: 1;
   width: 0;
   height: 0;
-  transition-property: all;
-  transition-duration: 1.5s;
 }
 
 .detonation img {
   width: 100%;
   height: 100%;
+  margin-left: -50%;
+  margin-top: -50%;
 }
 
 .detonated.detonation {
   opacity: 0;
   width: 600px;
   height: 600px;
-  margin-left: -300px;
-  margin-top: -300px;
+  transition: all 1.5s;
+  -webkit-transition: all 1.5s;
 }
 
 #copyrightnotice {
@@ -77,5 +78,5 @@ html, body{
   color: dimgray;
   position: fixed;
   top: 18px;
-  left: 0;  
+  left: 0;
 }
