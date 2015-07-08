@@ -8,7 +8,7 @@ function SpaceShip(pos, v, mass, heading) {
 SpaceShip.prototype = new SpaceObject();
 SpaceShip.prototype.constructor = SpaceShip;
 
-HasEngine.mixInto(SpaceShip.prototype);
+HasEngine.mixInto(SpaceShip);
 
 SpaceShip.prototype.rotationEnginePower = 0.03;
 

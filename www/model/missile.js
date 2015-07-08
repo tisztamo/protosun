@@ -41,5 +41,5 @@ Missile.prototype.detonate = function (spaceObjectHit) {
   }
 };
 
-HasEngine.mixInto(Missile.prototype);
+HasEngine.mixInto(Missile);
 Missile.prototype.enginePower = 0.0001;
