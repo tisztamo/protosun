@@ -64,6 +64,8 @@ DOMRenderer.prototype.updateView = function (view) {
     this.updateDetonationView(view);
   } else if (spaceObject instanceof SpaceShip) {
     this.updateSpaceShipView(view);
+  } else if (spaceObject instanceof Missile) {
+    this.updateSpaceShipView(view);
   }
 };
 

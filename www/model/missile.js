@@ -4,15 +4,24 @@ function Missile(pos, v, heading, lifeSteps) {
   SpaceObject.call(this, pos, v, 0.001, heading);
   this.lifeSteps = lifeSteps || 480;
   this.detonated = false;
+  this.engineRunning = true;
 }
 
 Missile.prototype = new SpaceObject();
 Missile.prototype.constructor = Missile;
 
+Missile.prototype.mainEnginePower = 0.0001;
+
 Missile.prototype.oneStep = function () {
   SpaceObject.prototype.oneStep.call(this);
-  if (--this.lifeSteps <= 0 && !this.detonated) {
+  --this.lifeSteps;
+  if (this.lifeSteps <= 0 && !this.detonated) {
     this.detonate();
+  } else if (this.engineRunning) {
+    this.stepForce.add(Vector.createFromPolar(this.heading, this.mainEnginePower));
+    if (this.lifeSteps < 400) {
+      this.engineRunning = false;
+    }
   }
 };
 
