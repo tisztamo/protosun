@@ -1,11 +1,10 @@
 "use strict";
 
 var loader = new Loader();
-var chromeScriptLoadErrorFlag = false; //Chrome fires the error event twice when a dynamically loaded script is async=false and it failes to load. We will ignore the second one.
+var chromeScriptLoadErrorFlag = false; //Chrome fires the error event twice when a dynamically loaded script is async=false and it failes to load. We will ignore the second one. https://code.google.com/p/chromium/issues/detail?id=503077
 
 loader.loadScript("compressed.js", main, function () {
   if (chromeScriptLoadErrorFlag) {
-    console.log("onerror fired twice");
     return;
   }
   chromeScriptLoadErrorFlag = true;

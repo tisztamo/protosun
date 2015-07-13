@@ -2,7 +2,7 @@
 
 function Detonation(pos, v) {
   SpaceObject.call(this, pos, v, -0.1);
-  this.lifeSteps = 60;
+  this.lifeSteps = 100;
 }
 
 Detonation.prototype = new SpaceObject();
