@@ -41,8 +41,8 @@ SpaceShip.prototype.stopEngine = function () {
 
 SpaceShip.prototype.launchMissile = function () {
   var direction = Vector.createFromPolar(this.heading, 1);
-  var pos = this.pos.clone().add(direction.clone().multiply(40)).add(this.v);
-  var v = this.v.clone().add(direction.clone().multiply(0.3));
+  var pos = this.pos.clone().add(direction.clone().multiply(35));
+  var v = this.v.clone();
   var missile = new Missile(pos, v, this.heading);
   this.simulation.addSpaceObject(missile);
 };

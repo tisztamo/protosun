@@ -24,11 +24,7 @@ Simulation.prototype.setUpModel = function () {
 };
 
 Simulation.prototype.addSpaceObject = function (spaceObject) {
-  if (spaceObject.hasNegligibleMass()) {
-    this.spaceObjects.push(spaceObject);
-  } else {
-    this.spaceObjects.unshift(spaceObject);
-  }
+  this.spaceObjects.push(spaceObject);
   spaceObject.simulation = this;
   if (this.renderer) {
     this.renderer.spaceObjectAdded(spaceObject);
@@ -65,10 +61,6 @@ Simulation.prototype.oneStep = function () {
   var distance;
   while (outerIdx < length) {
     outerObject = spaceObjects[outerIdx];
-    //negligible mass objects cannot act on each other (they are at the end of the spaceObjects array)
-    if (outerObject.hasNegligibleMass()) {
-      break;
-    }
     for (var j = outerIdx + 1; j < length; j++) {
       innerObject = spaceObjects[j];
       distance = SpaceObject.actGravityForce(outerObject, innerObject);
@@ -76,10 +68,6 @@ Simulation.prototype.oneStep = function () {
       innerObject.actOn(outerObject, distance);
     }
     outerObject.oneStep();
-    outerIdx++;
-  }
-  while (outerIdx < length) { //Negligible mass objects
-    spaceObjects[outerIdx].oneStep();
     outerIdx++;
   }
   this.purgeSpaceObjects();
