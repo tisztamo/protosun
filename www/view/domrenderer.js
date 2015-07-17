@@ -80,6 +80,8 @@ DOMRenderer.prototype.updateSpaceShipView = function (view) {
 /*jshint -W098 */
 DOMRenderer.prototype.updateDetonationView = function (view) {
   if (!view.classList.contains("detonated")) {
+    // Reading clientHeight forces style recalculation which is needed
+    // to start the transition
     var forceStyleRecalc = view.clientHeight != 0.001;
     view.classList.add("detonated");
   }

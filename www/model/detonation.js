@@ -1,7 +1,8 @@
 "use strict";
 
 function Detonation(pos, v) {
-  SpaceObject.call(this, pos, v, -0.1);
+  SpaceObject.call(this, pos, v, -0.15);
+  this.permeable = true;
   this.lifeSteps = 100;
 }
 

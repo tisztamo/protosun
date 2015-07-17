@@ -13,6 +13,7 @@ function SpaceObject(pos, v, mass, heading, angularSpeed) {
 }
 
 SpaceObject.G = 50;
+SpaceObject.prototype.permeable = false;
 
 SpaceObject.actGravityForce = function (spaceObject1, spaceObject2) {
   var distance = spaceObject1.pos.distanceFrom(spaceObject2.pos);
@@ -40,10 +41,6 @@ SpaceObject.prototype.oneStep = function () {
   this.pos.add(this.v);
   this.heading += this.angularSpeed;
   this.stepForce = new Vector(0, 0);
-};
-
-SpaceObject.prototype.hasNegligibleMass = function () {
-  return this.mass < 0.05;
 };
 
 /*jshint -W098 */
