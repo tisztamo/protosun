@@ -20,6 +20,7 @@ KeyboardController.prototype.keydownHandler = function (keyEvent) {
     this.spaceShip.startEngine();
     break;
   case " ":
+  case "Spacebar":
     this.spaceShip.launchMissile();
   }
 };
