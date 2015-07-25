@@ -12,6 +12,7 @@ loader.loadScript("compressed.js", main, function () {
   console.info("compressed.js not found, loading scripts in debug mode.");
   loader.loadScripts(["util/polyfills.js",
   "util/keyboard.js",
+  "util/mixin.js",
   "model/gameengine.js",
   "model/simulation.js",
   "model/vector.js",
@@ -19,6 +20,7 @@ loader.loadScript("compressed.js", main, function () {
   "model/star.js",
   "model/planet.js",
   "model/moon.js",
+  "model/hasengine.js",
   "model/spaceship.js",
   "model/missile.js",
   "model/detonation.js",
