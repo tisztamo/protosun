@@ -2,7 +2,6 @@
 
 function SpaceShip(pos, v, mass, heading) {
   SpaceObject.call(this, pos, v, mass, heading);
-  this.engineRunning = false;
 }
 
 SpaceShip.prototype = new SpaceObject();
