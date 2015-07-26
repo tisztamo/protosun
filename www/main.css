@@ -19,6 +19,7 @@ body {
 
 .spaceobject {
   position: absolute;
+  transform: translate(-50%, -50%);
 }
 
 .flame {
@@ -66,7 +67,6 @@ body {
 .detonation img {
   width: 100%;
   height: 100%;
-  transform: translate(-50%, -50%);
 }
 
 .detonated.detonation {
