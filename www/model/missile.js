@@ -2,10 +2,9 @@
 
 function Missile(pos, v, heading, lifeSteps, fuel) {
   SpaceObject.call(this, pos, v, 0.001, heading);
+  EnginePowered.call(this, 0.0001, 60, true);
   this.lifeSteps = lifeSteps || 480;
-  this.fuel = fuel || 60;
   this.detonated = false;
-  this.engineRunning = true;
 }
 
 Missile.prototype = new SpaceObject();
@@ -40,5 +39,4 @@ Missile.prototype.detonate = function (spaceObjectHit) {
   }
 };
 
-HasEngine.mixInto(Missile);
-Missile.prototype.enginePower = 0.0001;
+EnginePowered.mixInto(Missile);
