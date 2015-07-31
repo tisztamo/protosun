@@ -1,0 +1,95 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+.template {
+  display: none;
+}
+
+.gamearea {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-image: url(img/background.jpg);
+  background-size: cover;
+}
+
+.spaceobject {
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+
+.flame {
+  opacity: 1;
+  position: absolute;
+  width: 0;
+  left: 0;
+  margin-left: 0;
+  top: 1px;
+  transition-property: width, margin-left, opacity;
+  transition-duration: 0.2s;
+}
+
+.flame img {
+  width: 100%;
+  margin-left: -100%;
+  margin-right: 100%;
+}
+
+.spaceship .flame {
+  top: -7px;
+}
+
+.spaceship.enginerunning .flame {
+  width: 100px;
+  opacity: 0.5;
+}
+
+.missile.enginerunning .flame {
+  width: 50px;
+  opacity: 0.5;  
+}
+
+.spaceship {
+  z-index: 1000;
+}
+
+.detonation {
+  z-index: 20000;
+  opacity: 1;
+  width: 0;
+  height: 0;
+}
+
+.detonation img {
+  width: 100%;
+  height: 100%;
+}
+
+.detonated.detonation {
+  opacity: 0;
+  width: 600px;
+  height: 600px;
+  transition: all 1.5s;
+  -webkit-transition: all 1.5s;
+}
+
+#copyrightnotice {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+#copyrightnotice a {
+  color: dimgray;
+}
+
+#controlhint {
+  color: dimgray;
+  position: fixed;
+  top: 18px;
+  left: 0;
+}
