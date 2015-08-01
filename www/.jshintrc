@@ -4,5 +4,22 @@
   "globalstrict": true,
   "undef": true,
   "unused": true,
-  "predef": [ "Mixin", "Loader", "GameEngine", "Simulation", "SpaceObject", "Vector", "Renderer", "DOMRenderer", "Planet", "Star", "Moon", "HasEngine", "SpaceShip", "Missile", "Detonation", "KeyboardController" ]
+  "predef": ["Mixin",
+             "Loader",
+             "GameEngine",
+             "Simulation",
+             "SpaceObject",
+             "Vector",
+             "Renderer",
+             "DOMRenderer",
+             "Planet",
+             "Star",
+             "Moon",
+             "SpaceShip",
+             "Missile",
+             "Detonation",
+             "KeyboardController",
+             "TouchControl",
+             "TouchControlView",
+             "TouchController"]
 }

@@ -13,6 +13,7 @@ loader.loadScript("compressed.js", main, function () {
   loader.loadScripts(["util/polyfills.js",
   "util/keyboard.js",
   "util/mixin.js",
+  "util/ie-touch.js",
   "model/gameengine.js",
   "model/simulation.js",
   "model/vector.js",
@@ -25,14 +26,19 @@ loader.loadScript("compressed.js", main, function () {
   "model/spaceship.js",
   "model/missile.js",
   "model/detonation.js",
+  "model/touchcontrol.js",
   "view/renderer.js",
   "view/domrenderer.js",
-  "controller/keyboardcontroller.js"], main);
+  "view/touchcontrolview.js",
+  "controller/keyboardcontroller.js",
+  "controller/touchcontroller.js"
+  ], main);
 });
 
 function main() {
   var simulation = new Simulation(60);
-  var renderer = new DOMRenderer(simulation, document.getElementById('area'));
+  var area = document.getElementById('area');
+  var renderer = new DOMRenderer(simulation, area);
 
   var ship = new SpaceShip(new Vector(250, 450), new Vector(-0.6, -1), 0.1);
 
@@ -42,6 +48,7 @@ function main() {
   };
 
   new KeyboardController(ship);
+  TouchController.createControllerFor(ship, area);
 
   simulation.start();
   renderer.start();

@@ -2,6 +2,8 @@ html,
 body {
   height: 100%;
   margin: 0;
+  -ms-touch-action: none;
+  touch-action: none;
 }
 
 .template {
@@ -20,6 +22,7 @@ body {
 .spaceobject {
   position: absolute;
   transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
 }
 
 .flame {
@@ -92,4 +95,37 @@ body {
   position: fixed;
   top: 18px;
   left: 0;
+}
+
+.touchControl {
+  font-size: 40px;
+  color: ivory;
+}
+
+.touchControl > * {
+  position: fixed;
+  background-color: aquamarine;
+  opacity: 0.4;
+  width: 200px;
+  height: 80px;
+}
+
+.leftControl {
+  bottom: 150px;
+  left: 40px;
+}
+
+.rightControl {
+  bottom: 150px;
+  right: 40px;
+}
+
+.fireControl {
+  bottom: 250px;
+  right: 20px
+}
+
+.engineControl {
+  bottom: 250px;
+  left: 20px;
 }
