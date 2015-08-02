@@ -13,23 +13,20 @@
 
 <body>
   <div id="area" class="gamearea"></div>
-  <div id="copyrightnotice"><a href="https://www.flickr.com/photos/24662369@N07/15884229752/">NASA imagery</a>, <a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a>
+  <div id="copyrightnotice"><a href="https://www.flickr.com/photos/24662369@N07/15884229752/">NASA imagery</a>, <a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a> <a href="index.html">RESTART GAME</a>
   </div>
   <div id="controlhint">Use arrow keys and space!</div>
-  <div class="template spaceobject" id="spaceobject">
-    SO
-  </div>
   <div class="template spaceobject star" id="star">
-    <img src="img/sun.png" width="60" height="60">
+    <img class="physicalview" src="img/sun.png" width="60" height="60">
   </div>
   <div class="template spaceobject planet" id="planet">
-    <img src="img/planet.png" width="240" height="240">
+    <img class="physicalview" src="img/planet.png" width="1500" height="1500">
   </div>
   <div class="template spaceobject moon" id="moon">
-    <img src="img/moon.png" width="25" height="25">
+    <img class="physicalview" src="img/moon.png" width="25" height="25">
   </div>
   <div class="template spaceobject spaceship" id="spaceship">
-    <div class="rotated">
+    <div class="physicalview">
       <img src="img/spaceship.png" width="50" height="20">
       <div class="flame">
         <img src="img/flame.png" height="10">
@@ -38,7 +35,7 @@
     </div>
   </div>
   <div class="template spaceobject missile" id="missile">
-    <div class="rotated">
+    <div class="physicalview">
       <img src="img/missile.png" height="16" width="25">
       <div class="flame">
         <img src="img/flame.png" height="11">
@@ -46,12 +43,12 @@
     </div>
   </div>
   <div class="template spaceobject detonation" id="detonation">
-    <img src="img/detonation.png">
+    <img class="physicalview" src="img/detonation.png">
   </div>
   <div class="template touchControl" id="touchcontrol">
     <div class="leftControl">Left</div>
     <div class="rightControl">Right</div>
-    <div class="engineControl">Accelerate</div>
+    <div class="engineControl">Engine</div>
     <div class="fireControl">Fire</div>
   </div>
   <script src="util/loader.js"></script>

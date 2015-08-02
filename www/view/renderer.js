@@ -3,6 +3,7 @@
 function Renderer(simulation) {
   this.simulation = simulation;
   this.redrawNeeded = true;
+  this.viewPort = new ViewPort();
   if (simulation) {
     simulation.setRenderer(this);
   }

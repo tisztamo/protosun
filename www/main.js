@@ -27,6 +27,7 @@ loader.loadScript("compressed.js", main, function () {
   "model/missile.js",
   "model/detonation.js",
   "model/touchcontrol.js",
+  "view/viewport.js",
   "view/renderer.js",
   "view/domrenderer.js",
   "view/touchcontrolview.js",
@@ -40,11 +41,13 @@ function main() {
   var area = document.getElementById('area');
   var renderer = new DOMRenderer(simulation, area);
 
-  var ship = new SpaceShip(new Vector(250, 450), new Vector(-0.6, -1), 0.1);
+  var ship = new SpaceShip(new Vector(-370, 350), new Vector(-0.4, 0), 0.1, Math.PI);
 
   simulation.setUpModel = function () {
-    this.addSpaceObject(new Planet(new Vector(400, 350), new Vector(0, 0), 5));
     this.addSpaceObject(ship);
+    this.addSpaceObject(new Planet(new Vector(400, 350), new Vector(0, 0), 105));
+        this.addSpaceObject(new Moon(new Vector(-460, 300), new Vector(0, -2.6), 0.1));
+
   };
 
   new KeyboardController(ship);

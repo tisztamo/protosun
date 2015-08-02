@@ -19,7 +19,6 @@ body {
   height: 100%;
   overflow: hidden;
   background-image: url(img/background.jpg);
-  background-size: cover;
 }
 
 .spaceobject {
@@ -109,8 +108,9 @@ body {
   position: fixed;
   background-color: aquamarine;
   opacity: 0.4;
-  width: 200px;
+  width: 150px;
   height: 80px;
+  z-index: 40000;
 }
 
 .leftControl {
@@ -125,10 +125,10 @@ body {
 
 .fireControl {
   bottom: 250px;
-  right: 20px
+  left: 20px
 }
 
 .engineControl {
   bottom: 250px;
-  left: 20px;
+  right: 20px;
 }

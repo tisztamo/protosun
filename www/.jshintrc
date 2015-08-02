@@ -11,6 +11,7 @@
              "SpaceObject",
              "Vector",
              "Renderer",
+             "ViewPort",
              "DOMRenderer",
              "Planet",
              "Star",
@@ -21,5 +22,6 @@
              "KeyboardController",
              "TouchControl",
              "TouchControlView",
-             "TouchController"]
+             "TouchController"
+             ]
 }
