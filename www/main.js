@@ -28,6 +28,8 @@ loader.loadScript("compressed.js", main, function () {
   "model/detonation.js",
   "model/touchcontrol.js",
   "view/viewport.js",
+  "view/camera.js",
+  "view/distancecamera.js",
   "view/renderer.js",
   "view/domrenderer.js",
   "view/touchcontrolview.js",
@@ -42,13 +44,18 @@ function main() {
   var renderer = new DOMRenderer(simulation, area);
 
   var ship = new SpaceShip(new Vector(-370, 350), new Vector(-0.4, 0), 0.1, Math.PI);
+  var planet = new Planet(new Vector(400, 350), new Vector(0, 0), 105);
 
   simulation.setUpModel = function () {
     this.addSpaceObject(ship);
-    this.addSpaceObject(new Planet(new Vector(400, 350), new Vector(0, 0), 105));
-        this.addSpaceObject(new Moon(new Vector(-460, 300), new Vector(0, -2.6), 0.1));
-
+    this.addSpaceObject(planet);
+    this.addSpaceObject(new Moon(new Vector(-460, 300), new Vector(0, -2.6), 0.1));
+    for (var i = 1;i < 20; i++) {
+      this.addSpaceObject(new Moon(new Vector(Math.random() * 2000 - 600, Math.random() * 1500), new Vector(Math.random() * 5 - 2.5, Math.random() * 5 - 2.5), 0.1));
+    }
   };
+
+  renderer.setCamera(new DistanceCamera(simulation, renderer.viewPort, ship, planet));
 
   new KeyboardController(ship);
   TouchController.createControllerFor(ship, area);

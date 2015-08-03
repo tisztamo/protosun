@@ -12,6 +12,8 @@
              "Vector",
              "Renderer",
              "ViewPort",
+             "Camera",
+             "DistanceCamera",
              "DOMRenderer",
              "Planet",
              "Star",

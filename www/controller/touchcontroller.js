@@ -19,7 +19,6 @@ function TouchController(touchControl, touchControlView) {
     },
     fireControl: {
       touchstart: "launchMissile",
-      touchend: "stopEngine"
     }
   };
   this.bindEvents();
@@ -39,7 +38,12 @@ TouchController.createControllerFor = function (spaceShip, targetElement) {
 TouchController.prototype.bindEvents = function () {
   for (var controlName in this.eventMapping) {
     var control = this.view.rootElement.getElementsByClassName(controlName).item(0);
-    control.addEventListener("touchstart", this.spaceShip[this.eventMapping[controlName].touchstart].bind(this.spaceShip));
-    control.addEventListener("touchend", this.spaceShip[this.eventMapping[controlName].touchend].bind(this.spaceShip));
+    var eventMapping = this.eventMapping[controlName];
+    if (eventMapping.touchstart) {
+      control.addEventListener("touchstart", this.spaceShip[eventMapping.touchstart].bind(this.spaceShip));
+    }
+    if (eventMapping.touchend) {
+      control.addEventListener("touchend", this.spaceShip[eventMapping.touchend].bind(this.spaceShip));
+    }
   }
 };

@@ -4,14 +4,15 @@ function DOMRenderer(simulation, targetElement) {
   Renderer.call(this, simulation);
   this.targetElement = targetElement;
   this.views = [];
-  this.backgroundSpeedRatio = 1.5;
+  this.backgroundSpeedRatio = 2;
+  this.defaultBgSize = 1024;
 }
 
 DOMRenderer.prototype = new Renderer();
 
 DOMRenderer.prototype.redraw = function () {
   var shipModel = this.ship.model;
-  this.viewPort.setModelViewPort(shipModel.pos.x - 512, shipModel.pos.y - 384, 1024, 768);
+  this.camera.updateView();
   var length = this.views.length;
   for (var i = 0; i < length; i++) {
     this.updateView(this.views[i]);
@@ -74,9 +75,10 @@ DOMRenderer.prototype.updateView = function (view) {
 };
 
 DOMRenderer.prototype.updateBackground = function () {
-  var shipModel = this.ship.model;
-  this.targetElement.style.backgroundPosition = Math.round(-shipModel.pos.x / this. backgroundSpeedRatio) + "px " + Math.round(-shipModel.pos.y / this. backgroundSpeedRatio) + "px";
-  this.targetElement.style.backgroundSize = Math.round(1024 * this.backgroundSpeedRatio * (this.viewPort.onScreenScale)) + "px";
+  var center = this.viewPort.modelViewPort.center;
+  var bgSizeRatio = 1 + (this.viewPort.onScreenScale - 1) / this.backgroundSpeedRatio;
+  this.targetElement.style.backgroundPosition = Math.round(-center.x / this.backgroundSpeedRatio * bgSizeRatio) + "px " + Math.round(-center.y / this.backgroundSpeedRatio * bgSizeRatio) + "px";
+  this.targetElement.style.backgroundSize = Math.round(bgSizeRatio * this.defaultBgSize) + "px";
 };
 
 DOMRenderer.prototype.updateSpaceShipView = function (view) {

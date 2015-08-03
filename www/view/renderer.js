@@ -4,6 +4,7 @@ function Renderer(simulation) {
   this.simulation = simulation;
   this.redrawNeeded = true;
   this.viewPort = new ViewPort();
+  this.camera = null;
   if (simulation) {
     simulation.setRenderer(this);
   }
@@ -27,6 +28,10 @@ Renderer.prototype.redraw = function () {
 
 Renderer.prototype.oneStepTaken = function () {
   this.redrawNeeded = true;
+};
+
+Renderer.prototype.setCamera = function (camera) {
+  this.camera = camera;
 };
 
 /*jshint -W098 */

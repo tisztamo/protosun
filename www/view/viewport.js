@@ -28,10 +28,19 @@ ViewPort.prototype.setModelViewPort = function (x, y, width, height) {
     x: x,
     y: y,
     width: width,
-    height: height
+    height: height,
+    center: new Vector(x + width /2, y + width / 2)
   };
   this.zoom =  this.baseWidth / width;
   this.onScreenScale = this.zoom * this.screenToBaseRatio;
+};
+
+ViewPort.prototype.setModelViewPortWithCenterZoom = function (center, zoom) {
+  var width = Math.round(this.baseWidth / zoom);
+  var height = Math.round(this.baseHeight / zoom);
+  this.setModelViewPort(Math.round(center.x - width / 2),
+                        Math.round(center.y - height / 2),
+                        width, height);                 
 };
 
 ViewPort.prototype.projectToScreen = function (pos) {
