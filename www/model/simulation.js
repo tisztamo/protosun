@@ -72,4 +72,5 @@ Simulation.prototype.oneStep = function () {
   }
   this.purgeSpaceObjects();
   this.renderer.oneStepTaken();
+  GameEngine.prototype.oneStep.call(this);
 };
