@@ -26,9 +26,13 @@ function TouchController(touchControl, touchControlView) {
 
 /**
  * @static
- * Creates a touch controller (TouchControl, TouchControlView and TouchControlelr) for the given spaceship.
+ * Creates a touch controller (TouchControl, TouchControlView and TouchController) for the given spaceship. If the browser does not support touching, 
+ then returns null
  */
 TouchController.createControllerFor = function (spaceShip, targetElement) {
+  if (!BrowserFeatures.hasTouch) {
+    return null;
+  }
   var touchControl = new TouchControl(spaceShip);
   var touchControlView = new TouchControlView(touchControl, targetElement);
   var touchController = new TouchController(touchControl, touchControlView);

@@ -2,8 +2,9 @@
 
 function ViewPort() {
   this.setBaseSize(1024, 768);
-  this.setScreenResolution(document.body.clientWidth, document.body.clientHeight);
+  this.resizeHandler();
   this.setModelViewPort(0, 0, 1024, 768);
+  window.addEventListener('resize', this.resizeHandler.bind(this));
 }
 
 ViewPort.prototype.setBaseSize = function (baseWidth, baseHeight) {
@@ -18,6 +19,10 @@ ViewPort.prototype.setScreenResolution = function (screenWidth, screenHeight) {
   this.screenToBaseRatio = this.screenWidth / this.baseWidth;
 };
 
+ViewPort.prototype.resizeHandler = function () {
+  this.setScreenResolution(document.body.clientWidth, document.body.clientHeight);
+};
+
 ViewPort.prototype.setModelViewPort = function (x, y, width, height) {
   if (height * this.modelAspectRatio > width) {
     width = Math.round(height * this.modelAspectRatio);
@@ -29,9 +34,9 @@ ViewPort.prototype.setModelViewPort = function (x, y, width, height) {
     y: y,
     width: width,
     height: height,
-    center: new Vector(x + width /2, y + width / 2)
+    center: new Vector(x + width / 2, y + width / 2)
   };
-  this.zoom =  this.baseWidth / width;
+  this.zoom = this.baseWidth / width;
   this.onScreenScale = this.zoom * this.screenToBaseRatio;
 };
 
@@ -39,8 +44,8 @@ ViewPort.prototype.setModelViewPortWithCenterZoom = function (center, zoom) {
   var width = Math.round(this.baseWidth / zoom);
   var height = Math.round(this.baseHeight / zoom);
   this.setModelViewPort(Math.round(center.x - width / 2),
-                        Math.round(center.y - height / 2),
-                        width, height);                 
+    Math.round(center.y - height / 2),
+    width, height);
 };
 
 ViewPort.prototype.projectToScreen = function (pos) {

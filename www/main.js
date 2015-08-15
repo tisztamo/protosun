@@ -11,6 +11,7 @@ loader.loadScript("compressed.js", main, function () {
 
   console.info("compressed.js not found, loading scripts in debug mode.");
   loader.loadScripts(["util/polyfills.js",
+  "util/browserfeatures.js",
   "util/keyboard.js",
   "util/mixin.js",
   "util/ie-touch.js",
@@ -42,11 +43,11 @@ loader.loadScript("compressed.js", main, function () {
 });
 
 function generateDebris(centerObject, minDistance, maxDistance) {
-  var angle = Math.PI;
+  var angle = Math.random() * Math.PI;
   var distance = Math.random() * (maxDistance - minDistance) + minDistance;
   var relPos = Vector.createFromPolar(angle, distance);
   var pos = centerObject.pos.clone().add(relPos);
-  var speed = Math.sqrt(6000 / distance) * (1 + Math.random() / 5);
+  var speed = Math.sqrt((5500 + 600 * Math.random()) / distance);
   return new SpaceDebris(pos, Vector.createFromPolar(angle - Math.PI / 2, speed));
 }
 
@@ -55,17 +56,16 @@ function main() {
   var area = document.getElementById('area');
   var renderer = new DOMRenderer(simulation, area);
 
-  var ship = new SpaceShip(new Vector(-370, 350), new Vector(-0.4, 0), 0.1, Math.PI);
+  var ship = new SpaceShip(new Vector(400, -550), new Vector(2.3, 0), 0.1, 0);
   var earth = new Earth(new Vector(400, 350), new Vector(0, 0), 105, 755);
   earth.maxDistance = 4000;
 
   simulation.setUpModel = function () {
     this.addSpaceObject(ship);
     this.addSpaceObject(earth);
-    this.addSpaceObject(new Moon(new Vector(-460, 300), new Vector(0, -2.6), 0.1));
     setInterval(function () {
-      if (simulation.spaceObjects.length < 10) {
-        simulation.addSpaceObject(generateDebris(earth, 1000, 1400));
+      if (simulation.spaceObjects.length < 12) {
+        simulation.addSpaceObject(generateDebris(earth, 800, 1200));
       }
     }, 2000);
   };

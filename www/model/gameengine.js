@@ -30,6 +30,6 @@ GameEngine.prototype.timerCallback = function () {
   }
   this.avgStepsPerCB = 0.99 * this.avgStepsPerCB + 0.01 * currentSteps;
   if (this.stepsTaken % 100 == 1) {
-    console.log("Avg step per timer cb: " + this.avgStepsPerCB);
+    console.log("Avg steps per timer cb: " + this.avgStepsPerCB);
   }
 };
