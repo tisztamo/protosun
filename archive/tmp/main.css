@@ -1,0 +1,134 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+  -ms-touch-action: none;
+  touch-action: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.template {
+  display: none;
+}
+
+.gamearea {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-image: url(img/background.jpg);
+}
+
+.spaceobject {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+}
+
+.flame {
+  opacity: 1;
+  position: absolute;
+  width: 0;
+  left: 0;
+  margin-left: 0;
+  top: 1px;
+  transition-property: width, margin-left, opacity;
+  transition-duration: 0.2s;
+}
+
+.flame img {
+  width: 100%;
+  margin-left: -100%;
+  margin-right: 100%;
+}
+
+.spaceship .flame {
+  top: -7px;
+}
+
+.spaceship.enginerunning .flame {
+  width: 100px;
+  opacity: 0.5;
+}
+
+.missile.enginerunning .flame {
+  width: 50px;
+  opacity: 0.5;  
+}
+
+.spaceship {
+  z-index: 1000;
+}
+
+.detonation {
+  z-index: 20000;
+  opacity: 1;
+  width: 0;
+  height: 0;
+}
+
+.detonation img {
+  width: 100%;
+  height: 100%;
+}
+
+.detonated.detonation {
+  opacity: 0;
+  width: 600px;
+  height: 600px;
+  transition: all 1.5s;
+  -webkit-transition: all 1.5s;
+}
+
+#copyrightnotice {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}
+
+#copyrightnotice a {
+  color: dimgray;
+}
+
+#controlhint {
+  color: dimgray;
+  position: fixed;
+  bottom: 18px;
+  right: 0;
+}
+
+.touchControl {
+  font-size: 40px;
+  color: ivory;
+}
+
+.touchControl > * {
+  position: fixed;
+  background-color: aquamarine;
+  opacity: 0.4;
+  width: 150px;
+  height: 80px;
+  z-index: 40000;
+}
+
+.leftControl {
+  bottom: 150px;
+  left: 40px;
+}
+
+.rightControl {
+  bottom: 150px;
+  right: 40px;
+}
+
+.fireControl {
+  bottom: 250px;
+  left: 20px
+}
+
+.engineControl {
+  bottom: 250px;
+  right: 20px;
+}
