@@ -52,3 +52,12 @@ ViewPort.prototype.setModelViewPortWithCenterZoom = function (center, zoom) {
 ViewPort.prototype.projectToScreen = function (pos) {
   return new Vector((pos.x - this.modelViewPort.x) * this.onScreenScale + this.horizontalViewShift, (pos.y - this.modelViewPort.y) * this.onScreenScale);
 };
+
+ViewPort.prototype.isOnScreen = function (modelPos, radius) {
+  radius = radius || 20;
+  var screenPos = this.projectToScreen(modelPos);
+  if (screenPos.x >= -radius && screenPos.y >= -radius && screenPos.x < this.screenWidth + radius && screenPos.y < this.screenHeight + radius) {
+    return screenPos;
+  }
+  return false;
+};

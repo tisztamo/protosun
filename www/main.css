@@ -84,8 +84,8 @@ body {
 
 #copyrightnotice {
   position: fixed;
-  top: 0;
-  left: 0;
+  bottom: 0;
+  right: 0;
 }
 
 #copyrightnotice a {
@@ -95,8 +95,8 @@ body {
 #controlhint {
   color: dimgray;
   position: fixed;
-  top: 18px;
-  left: 0;
+  bottom: 18px;
+  right: 0;
 }
 
 .touchControl {

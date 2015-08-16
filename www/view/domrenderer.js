@@ -57,20 +57,25 @@ DOMRenderer.prototype.createView = function (templateid, spaceObject) {
 DOMRenderer.prototype.updateView = function (view) {
   var spaceObject = view.model;
   var style = view.style;
-  var projectedPos = this.viewPort.projectToScreen(spaceObject.pos);
-  style.left = projectedPos.x + "px";
-  style.top = projectedPos.y + "px";
-  if (view.physicalElement) {
-    var transform = "rotate(" + spaceObject.heading + "rad)" + "scale(" + this.viewPort.onScreenScale + ")";
-    var rotatedStyle = view.physicalElement.style;
-    rotatedStyle.webkitTransform = transform;
-    rotatedStyle.msTransform = transform;
-    rotatedStyle.transform = transform;
-  }
-  if (spaceObject instanceof Detonation) {
-    this.updateDetonationView(view);
-  } else if (spaceObject.mixinOverride && spaceObject.mixinOverride.EnginePowered) {
-    this.updateSpaceShipView(view);
+  var projectedPos = this.viewPort.isOnScreen(spaceObject.pos, spaceObject.radius);
+  if (projectedPos) {
+    style.left = projectedPos.x + "px";
+    style.top = projectedPos.y + "px";
+    if (view.physicalElement) {
+      var transform = "rotate(" + spaceObject.heading + "rad)" + "scale(" + this.viewPort.onScreenScale + ")";
+      var rotatedStyle = view.physicalElement.style;
+      rotatedStyle.webkitTransform = transform;
+      rotatedStyle.msTransform = transform;
+      rotatedStyle.transform = transform;
+    }
+    style.display = "block";
+    if (spaceObject instanceof Detonation) {
+      this.updateDetonationView(view);
+    } else if (spaceObject.mixinOverride && spaceObject.mixinOverride.EnginePowered) {
+      this.updateEnginePoweredView(view);
+    }
+  } else {
+    style.display = "none";
   }
 };
 
@@ -78,10 +83,10 @@ DOMRenderer.prototype.updateBackground = function () {
   var center = this.viewPort.modelViewPort.center;
   var bgSizeRatio = 1 + (this.viewPort.onScreenScale - 1) / this.backgroundSpeedRatio;
   this.targetElement.style.backgroundPosition = Math.round(-center.x / this.backgroundSpeedRatio * bgSizeRatio) + "px " + Math.round(-center.y / this.backgroundSpeedRatio * bgSizeRatio) + "px";
-  this.targetElement.style.backgroundSize = Math.round(bgSizeRatio * this.defaultBgSize) + "px";
+  //this.targetElement.style.backgroundSize = Math.round(bgSizeRatio * this.defaultBgSize) + "px";
 };
 
-DOMRenderer.prototype.updateSpaceShipView = function (view) {
+DOMRenderer.prototype.updateEnginePoweredView = function (view) {
   if (view.model.engineRunning) {
     view.classList.add("enginerunning");
   } else {

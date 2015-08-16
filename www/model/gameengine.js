@@ -8,12 +8,12 @@ function GameEngine(fps) {
 }
 
 GameEngine.prototype.getTS = function () {
-  return window.performance ? window.performance.now() : Date.now();
+  return window.performance && window.performance.now ? window.performance.now() : Date.now();
 };
 
 GameEngine.prototype.start = function () {
   this.startTS = this.getTS();
-  setInterval(this.timerCallback.bind(this),
+  setInterval(this.timerCB.bind(this),
     this.stepTime);
 };
 
@@ -21,7 +21,7 @@ GameEngine.prototype.oneStep = function () {
   this.stepsTaken += 1;
 };
 
-GameEngine.prototype.timerCallback = function () {
+GameEngine.prototype.timerCB = function () {
   var elapsedTime = this.getTS() - this.startTS;
   var currentSteps = 0;
   while (currentSteps < 3 && this.stepsTaken * this.stepTime <= elapsedTime) {
@@ -29,7 +29,4 @@ GameEngine.prototype.timerCallback = function () {
     currentSteps += 1;
   }
   this.avgStepsPerCB = 0.99 * this.avgStepsPerCB + 0.01 * currentSteps;
-  if (this.stepsTaken % 100 == 1) {
-    console.log("Avg steps per timer cb: " + this.avgStepsPerCB);
-  }
 };

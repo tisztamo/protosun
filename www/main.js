@@ -15,6 +15,7 @@ loader.loadScript("compressed.js", main, function () {
   "util/keyboard.js",
   "util/mixin.js",
   "util/ie-touch.js",
+  "view/viewport.js",
   "model/gameengine.js",
   "model/simulation.js",
   "model/vector.js",
@@ -31,7 +32,6 @@ loader.loadScript("compressed.js", main, function () {
   "model/missile.js",
   "model/detonation.js",
   "model/touchcontrol.js",
-  "view/viewport.js",
   "view/camera.js",
   "view/distancecamera.js",
   "view/renderer.js",
@@ -42,13 +42,15 @@ loader.loadScript("compressed.js", main, function () {
   ], main);
 });
 
-function generateDebris(centerObject, minDistance, maxDistance) {
+function generateDebris(centerObject, minDistance, maxDistance, viewPort) {
   var angle = Math.random() * Math.PI;
   var distance = Math.random() * (maxDistance - minDistance) + minDistance;
   var relPos = Vector.createFromPolar(angle, distance);
   var pos = centerObject.pos.clone().add(relPos);
-  var speed = Math.sqrt((5500 + 600 * Math.random()) / distance);
-  return new SpaceDebris(pos, Vector.createFromPolar(angle - Math.PI / 2, speed));
+  if (!viewPort.isOnScreen(pos)) {
+    var speed = Math.sqrt((5400 + 600 * Math.random()) / distance);
+    return new SpaceDebris(pos, Vector.createFromPolar(angle - Math.PI / 2, speed));
+  }
 }
 
 function main() {
@@ -64,10 +66,13 @@ function main() {
     this.addSpaceObject(ship);
     this.addSpaceObject(earth);
     setInterval(function () {
-      if (simulation.spaceObjects.length < 12) {
-        simulation.addSpaceObject(generateDebris(earth, 800, 1200));
+      if (simulation.spaceObjects.length < 25) {
+        var debris = generateDebris(earth, 800, 1200, renderer.viewPort);
+        if (debris) {
+          simulation.addSpaceObject(debris);
+        }
       }
-    }, 2000);
+    }, 1500);
   };
 
   renderer.setCamera(new DistanceCamera(simulation, renderer.viewPort, ship, earth));

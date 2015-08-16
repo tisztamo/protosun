@@ -13,6 +13,6 @@ DistanceCamera.prototype.constructor = DistanceCamera;
 
 DistanceCamera.prototype.updateView = function () {
   var distance = this.centerObject.pos.distanceFrom(this.distanceObject.pos);
-  var zoom = this.baseDistance / distance;
+  var zoom = 1;//this.baseDistance / distance;
   this.viewPort.setModelViewPortWithCenterZoom(this.centerObject.pos.clone().add(this.centerObject.v.clone().multiply(40 / zoom)), zoom);
 };
