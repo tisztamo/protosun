@@ -39,6 +39,7 @@ TouchController.createControllerFor = function (spaceShip, targetElement) {
   return touchController;
 };
 
+/** @private */
 TouchController.prototype.bindEvents = function () {
   for (var controlName in this.eventMapping) {
     var control = this.view.rootElement.getElementsByClassName(controlName).item(0);
