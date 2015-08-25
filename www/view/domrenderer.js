@@ -83,7 +83,7 @@ DOMRenderer.prototype.updateBackground = function () {
   var center = this.viewPort.modelViewPort.center;
   var bgSizeRatio = 1 + (this.viewPort.onScreenScale - 1) / this.backgroundSpeedRatio;
   this.targetElement.style.backgroundPosition = Math.round(-center.x / this.backgroundSpeedRatio * bgSizeRatio) + "px " + Math.round(-center.y / this.backgroundSpeedRatio * bgSizeRatio) + "px";
-  //this.targetElement.style.backgroundSize = Math.round(bgSizeRatio * this.defaultBgSize) + "px";
+  this.targetElement.style.backgroundSize = Math.round(bgSizeRatio * this.defaultBgSize) + "px";
 };
 
 DOMRenderer.prototype.updateEnginePoweredView = function (view) {

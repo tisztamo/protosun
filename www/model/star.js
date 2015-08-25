@@ -6,3 +6,5 @@ function Star(pos, v, mass) {
 
 Star.prototype = new SpaceObject();
 Star.prototype.constructor = Star;
+
+Star.prototype.isIndestructible = true;
