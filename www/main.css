@@ -19,6 +19,8 @@ body {
   height: 100%;
   overflow: hidden;
   background-image: url(img/background.jpg);
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
 
 .spaceobject {
@@ -55,7 +57,7 @@ body {
 
 .missile.enginerunning .flame {
   width: 50px;
-  opacity: 0.5;  
+  opacity: 0.5;
 }
 
 .spaceship {
