@@ -32,8 +32,10 @@ loader.loadScript("compressed.js", main, function () {
   "model/missile.js",
   "model/detonation.js",
   "model/touchcontrol.js",
+  "scene/scene.js",
+  "scene/spacedebrisscene.js",
   "view/camera.js",
-  "view/distancecamera.js",
+  "view/simplecamera.js",
   "view/renderer.js",
   "view/domrenderer.js",
   "view/touchcontrolview.js",
@@ -42,43 +44,12 @@ loader.loadScript("compressed.js", main, function () {
   ], main);
 });
 
-function generateDebris(centerObject, minDistance, maxDistance, viewPort) {
-  var angle = Math.random() * Math.PI;
-  var distance = Math.random() * (maxDistance - minDistance) + minDistance;
-  var relPos = Vector.createFromPolar(angle, distance);
-  var pos = centerObject.pos.clone().add(relPos);
-  if (!viewPort.isOnScreen(pos)) {
-    var speed = Math.sqrt((5400 + 600 * Math.random()) / distance);
-    return new SpaceDebris(pos, Vector.createFromPolar(angle - Math.PI / 2, speed));
-  }
-}
-
+/*jshint -W098 */
 function main() {
-  var simulation = new Simulation(60);
+  var simulation = new Simulation(69);
   var area = document.getElementById('area');
   var renderer = new DOMRenderer(simulation, area);
-
-  var ship = new SpaceShip(new Vector(400, -550), new Vector(2.3, 0), 0.1, 0);
-  var earth = new Earth(new Vector(400, 350), new Vector(0, 0), 105, 755);
-  earth.maxDistance = 4000;
-
-  simulation.setUpModel = function () {
-    this.addSpaceObject(ship);
-    this.addSpaceObject(earth);
-    setInterval(function () {
-      if (simulation.spaceObjects.length < 25) {
-        var debris = generateDebris(earth, 800, 1200, renderer.viewPort);
-        if (debris) {
-          simulation.addSpaceObject(debris);
-        }
-      }
-    }, 1500);
-  };
-
-  renderer.setCamera(new DistanceCamera(simulation, renderer.viewPort, ship, earth));
-
-  new KeyboardController(ship);
-  TouchController.createControllerFor(ship, area);
+  var scene = new SpaceDebrisScene(simulation, renderer);
 
   simulation.start();
   renderer.start();
