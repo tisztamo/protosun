@@ -9,6 +9,7 @@
              "Detonation",
              "DistanceCamera",
              "DOMRenderer",
+             "DOMViewPort",
              "Earth",
              "EnginePowered",
              "GameEngine",
