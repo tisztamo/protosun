@@ -11,42 +11,45 @@ loader.loadScript("compressed.js", main, function () {
 
   console.info("compressed.js not found, loading scripts in debug mode.");
   loader.loadScripts(["util/polyfills.js",
+  "util/browserfeatures.js",
   "util/keyboard.js",
   "util/mixin.js",
+  "util/ie-touch.js",
+  "view/viewport.js",
   "model/gameengine.js",
   "model/simulation.js",
   "model/vector.js",
   "model/spaceobject.js",
   "model/star.js",
   "model/planet.js",
+  "model/simulationcenter.js",
+  "model/earth.js",
   "model/moon.js",
   "model/enginepowered.js",
   "model/missilelauncher.js",
+  "model/spacedebris.js",
   "model/spaceship.js",
   "model/missile.js",
   "model/detonation.js",
+  "model/touchcontrol.js",
+  "scene/scene.js",
+  "scene/spacedebrisscene.js",
+  "view/camera.js",
+  "view/simplecamera.js",
   "view/renderer.js",
   "view/domrenderer.js",
-  "controller/keyboardcontroller.js"], main);
+  "view/touchcontrolview.js",
+  "controller/keyboardcontroller.js",
+  "controller/touchcontroller.js"
+  ], main);
 });
 
+/*jshint -W098 */
 function main() {
-  var simulation = new Simulation(60);
-  var renderer = new DOMRenderer(simulation, document.getElementById('area'));
-
-  var ship = new SpaceShip(new Vector(50, 450), new Vector(0, 0), 0.1);
-
-  simulation.setUpModel = function () {
-    this.addSpaceObject(new Star(new Vector(400, 200), new Vector(0, 0), 5));
-    this.addSpaceObject(new Planet(new Vector(200, 200), new Vector(0, 0.75)), 1);
-    this.addSpaceObject(new Moon(new Vector(170, 200), new Vector(0, 1.75), 0.1));
-    this.addSpaceObject(new Planet(new Vector(600, 200), new Vector(0, -0.75), 1));
-    this.addSpaceObject(new Moon(new Vector(630, 200), new Vector(0, -1.75), 0.1));
-    this.addSpaceObject(new Moon(new Vector(200, -1200), new Vector(0, 0.5), 0.1));
-    this.addSpaceObject(ship);
-  };
-
-  new KeyboardController(ship);
+  var simulation = new Simulation(69);
+  var area = document.getElementById('area');
+  var renderer = new DOMRenderer(simulation, area);
+  var scene = new SpaceDebrisScene(simulation, renderer);
 
   simulation.start();
   renderer.start();

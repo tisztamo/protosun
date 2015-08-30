@@ -12,7 +12,7 @@ SpaceShip.prototype.constructor = SpaceShip;
 EnginePowered.mixInto(SpaceShip);
 MissileLauncher.mixInto(SpaceShip);
 
-SpaceShip.prototype.rotationEnginePower = 0.03;
+SpaceShip.prototype.rotationEnginePower = 0.04;
 
 SpaceShip.prototype.startRotationLeft = function () {
   this.angularSpeed = -this.rotationEnginePower;

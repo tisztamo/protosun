@@ -3,11 +3,13 @@
   if (!nativeKeyboardEvent)
     global.KeyboardEvent = function KeyboardEvent() { throw TypeError('Illegal constructor'); };
 
+  try {
   global.KeyboardEvent.DOM_KEY_LOCATION_STANDARD = 0x00; // Default or unknown location
   global.KeyboardEvent.DOM_KEY_LOCATION_LEFT          = 0x01; // e.g. Left Alt key
   global.KeyboardEvent.DOM_KEY_LOCATION_RIGHT         = 0x02; // e.g. Right Alt key
-  global.KeyboardEvent.DOM_KEY_LOCATION_NUMPAD        = 0x03; // e.g. Numpad 0 or +
-
+  global.KeyboardEvent.DOM_KEY_LOCATION_NUMPAD        = 0x03; // e.g. Numpad 0 or +  
+  } catch (e) {}
+  
   var STANDARD = window.KeyboardEvent.DOM_KEY_LOCATION_STANDARD,
       LEFT = window.KeyboardEvent.DOM_KEY_LOCATION_LEFT,
       RIGHT = window.KeyboardEvent.DOM_KEY_LOCATION_RIGHT,

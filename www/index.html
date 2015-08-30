@@ -6,27 +6,30 @@
   <title>Solar System Simulation</title>
   <link rel="stylesheet" href="main.css">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="viewport" content="user-scalable=no" />
 </head>
 
 <body>
   <div id="area" class="gamearea"></div>
-  <div id="copyrightnotice"><a href="https://www.flickr.com/photos/24662369@N07/15884229752/">NASA imagery</a>, <a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a>
+  <div id="copyrightnotice"><a href="https://www.flickr.com/photos/24662369@N07/15884229752/">NASA imagery</a>, <a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a> <a href="index.html">RESTART GAME</a>
   </div>
   <div id="controlhint">Use arrow keys and space!</div>
-  <div class="template spaceobject" id="spaceobject">
-    SO
-  </div>
   <div class="template spaceobject star" id="star">
-    <img src="img/sun.png" width="60" height="60">
+    <img class="physicalview" src="img/sun.png" width="60" height="60">
   </div>
   <div class="template spaceobject planet" id="planet">
-    <img src="img/planet.png" width="40" height="40">
+    <img class="physicalview" src="img/earth.png" width="50" height="50">
+  </div>
+  <div class="template spaceobject earth" id="earth">
+    <img class="physicalview" src="img/earth.png" width="1500" height="1500">
   </div>
   <div class="template spaceobject moon" id="moon">
-    <img src="img/moon.png" width="25" height="25">
+    <img class="physicalview" src="img/moon.png" width="25" height="25">
   </div>
   <div class="template spaceobject spaceship" id="spaceship">
-    <div class="rotated">
+    <div class="physicalview">
       <img src="img/spaceship.png" width="50" height="20">
       <div class="flame">
         <img src="img/flame.png" height="10">
@@ -35,7 +38,7 @@
     </div>
   </div>
   <div class="template spaceobject missile" id="missile">
-    <div class="rotated">
+    <div class="physicalview">
       <img src="img/missile.png" height="16" width="25">
       <div class="flame">
         <img src="img/flame.png" height="11">
@@ -43,7 +46,16 @@
     </div>
   </div>
   <div class="template spaceobject detonation" id="detonation">
-    <img src="img/detonation.png">
+    <img class="physicalview" src="img/detonation.png">
+  </div>
+  <div class="template spaceobject spacedebris" id="spacedebris">
+    <img class="physicalview" src="img/spacedebris.png" width="40" height="26">
+  </div>
+  <div class="template touchControl" id="touchcontrol">
+    <div class="leftControl">Left</div>
+    <div class="rightControl">Right</div>
+    <div class="engineControl">Engine</div>
+    <div class="fireControl">Fire</div>
   </div>
   <script src="util/loader.js"></script>
   <script src="main.js"></script>

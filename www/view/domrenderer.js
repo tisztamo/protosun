@@ -1,24 +1,31 @@
 "use strict";
 
-function DOMRenderer(simulation, targetElement) {
-  Renderer.call(this, simulation);
-  this.targetElement = targetElement;
+function DOMRenderer(simulation, viewElement) {
+  Renderer.call(this, simulation, viewElement);
   this.views = [];
+  this.backgroundSpeedRatio = 2;
+  this.defaultBgSize = 1024;
 }
 
 DOMRenderer.prototype = new Renderer();
 
 DOMRenderer.prototype.redraw = function () {
+  var shipModel = this.ship.model;
+  this.camera.updateView();
   var length = this.views.length;
   for (var i = 0; i < length; i++) {
     this.updateView(this.views[i]);
   }
+  this.updateBackground();
 };
 
 DOMRenderer.prototype.spaceObjectAdded = function (spaceObject) {
   Renderer.prototype.spaceObjectAdded.call(this, spaceObject);
 
-  this.createView(spaceObject.constructor.name.toLowerCase(), spaceObject);
+  var view = this.createView(spaceObject.constructor.name.toLowerCase(), spaceObject);
+  if (spaceObject instanceof SpaceShip) {
+    this.ship = view;
+  }
 };
 
 DOMRenderer.prototype.spaceObjectRemoved = function (spaceObject) {
@@ -39,9 +46,9 @@ DOMRenderer.prototype.createView = function (templateid, spaceObject) {
   var view = template.cloneNode(true);
   view.id = spaceObject.id;
   view.model = spaceObject;
-  view.rotatedElement = view.getElementsByClassName("rotated").item(0);
+  view.physicalElement = view.getElementsByClassName("physicalview").item(0);
   view.classList.remove("template");
-  this.targetElement.appendChild(view);
+  this.viewElement.appendChild(view);
   this.views.push(view);
   return view;
 };
@@ -49,25 +56,36 @@ DOMRenderer.prototype.createView = function (templateid, spaceObject) {
 DOMRenderer.prototype.updateView = function (view) {
   var spaceObject = view.model;
   var style = view.style;
-  style.left = spaceObject.pos.x + "px";
-  style.top = spaceObject.pos.y + "px";
-  if (view.rotatedElement) {
-    var transform = "rotate(" + spaceObject.heading + "rad)";
-    var rotatedStyle = view.rotatedElement.style;
-    rotatedStyle.webkitTransform = transform;
-    rotatedStyle.msTransform = transform;
-    rotatedStyle.transform = transform;
-  }
-  if (spaceObject instanceof Detonation) {
-    this.updateDetonationView(view);
-  } else if (spaceObject instanceof SpaceShip) {
-    this.updateSpaceShipView(view);
-  } else if (spaceObject instanceof Missile) {
-    this.updateSpaceShipView(view);
+  var projectedPos = this.viewPort.isInView(spaceObject.pos, spaceObject.radius);
+  if (projectedPos) {
+    style.left = projectedPos.x + "px";
+    style.top = projectedPos.y + "px";
+    if (view.physicalElement) {
+      var transform = "rotate(" + spaceObject.heading + "rad)" + "scale(" + this.viewPort.viewScale + ")";
+      var rotatedStyle = view.physicalElement.style;
+      rotatedStyle.webkitTransform = transform;
+      rotatedStyle.msTransform = transform;
+      rotatedStyle.transform = transform;
+    }
+    style.display = "block";
+    if (spaceObject instanceof Detonation) {
+      this.updateDetonationView(view);
+    } else if (spaceObject.mixinOverride && spaceObject.mixinOverride.EnginePowered) {
+      this.updateEnginePoweredView(view);
+    }
+  } else {
+    style.display = "none";
   }
 };
 
-DOMRenderer.prototype.updateSpaceShipView = function (view) {
+DOMRenderer.prototype.updateBackground = function () {
+  var center = this.viewPort.modelViewPort.center;
+  var bgSizeRatio = 1 + (this.viewPort.viewScale - 1) / this.backgroundSpeedRatio;
+  this.viewElement.style.backgroundPosition = Math.round(-center.x / this.backgroundSpeedRatio * bgSizeRatio) + "px " + Math.round(-center.y / this.backgroundSpeedRatio * bgSizeRatio) + "px";
+  this.viewElement.style.backgroundSize = Math.round(bgSizeRatio * this.defaultBgSize) + "px";
+};
+
+DOMRenderer.prototype.updateEnginePoweredView = function (view) {
   if (view.model.engineRunning) {
     view.classList.add("enginerunning");
   } else {

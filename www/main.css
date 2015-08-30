@@ -2,6 +2,11 @@ html,
 body {
   height: 100%;
   margin: 0;
+  -ms-touch-action: none;
+  touch-action: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 .template {
@@ -14,12 +19,14 @@ body {
   height: 100%;
   overflow: hidden;
   background-image: url(img/background.jpg);
-  background-size: cover;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
 
 .spaceobject {
   position: absolute;
   transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
 }
 
 .flame {
@@ -50,7 +57,7 @@ body {
 
 .missile.enginerunning .flame {
   width: 50px;
-  opacity: 0.5;  
+  opacity: 0.5;
 }
 
 .spaceship {
@@ -79,8 +86,8 @@ body {
 
 #copyrightnotice {
   position: fixed;
-  top: 0;
-  left: 0;
+  bottom: 0;
+  right: 0;
 }
 
 #copyrightnotice a {
@@ -90,6 +97,40 @@ body {
 #controlhint {
   color: dimgray;
   position: fixed;
-  top: 18px;
-  left: 0;
+  bottom: 18px;
+  right: 0;
+}
+
+.touchControl {
+  font-size: 40px;
+  color: ivory;
+}
+
+.touchControl > * {
+  position: fixed;
+  background-color: aquamarine;
+  opacity: 0.4;
+  width: 150px;
+  height: 80px;
+  z-index: 40000;
+}
+
+.leftControl {
+  bottom: 150px;
+  left: 40px;
+}
+
+.rightControl {
+  bottom: 150px;
+  right: 40px;
+}
+
+.fireControl {
+  bottom: 250px;
+  left: 20px
+}
+
+.engineControl {
+  bottom: 250px;
+  right: 20px;
 }
