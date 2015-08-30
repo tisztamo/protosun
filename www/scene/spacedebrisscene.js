@@ -27,7 +27,7 @@ SpaceDebrisScene.prototype.setUpModel = function () {
   this.renderer.setCamera(new SimpleCamera(this.simulation, this.renderer.viewPort, ship));
 
   new KeyboardController(ship);
-  TouchController.createControllerFor(ship, this.renderer.targetElement);
+  TouchController.createControllerFor(ship, this.renderer.viewElement);
 };
 
 SpaceDebrisScene.prototype.generateDebris = function (centerObject, minDistance, maxDistance, viewPort) {
@@ -35,7 +35,7 @@ SpaceDebrisScene.prototype.generateDebris = function (centerObject, minDistance,
   var distance = Math.random() * (maxDistance - minDistance) + minDistance;
   var relPos = Vector.createFromPolar(angle, distance);
   var pos = centerObject.pos.clone().add(relPos);
-  if (!viewPort.isOnScreen(pos, 20)) {
+  if (!viewPort.isInView(pos, 20)) {
     var speed = Math.sqrt((5400 + 600 * Math.random()) / distance);
     return new SpaceDebris(pos, Vector.createFromPolar(angle - Math.PI / 2, speed));
   }

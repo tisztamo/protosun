@@ -1,6 +1,8 @@
 "use strict";
 
-/** Base class to define a scene, e.g. a level of the game
+/** Base class to define a scene, e.g. a level of the game.
+* @param {Simulation} simulation
+* @param {Renderer} renderer
 * @class
 * @abstract
 */
@@ -13,7 +15,7 @@ function Scene(simulation, renderer) {
 }
 
 /**
-* Sets up the scene
+* Sets up the scene.
 * @abstract
 */
 Scene.prototype.setUpModel = function () {

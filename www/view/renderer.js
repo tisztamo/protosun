@@ -1,9 +1,10 @@
 "use strict";
 
-function Renderer(simulation) {
+function Renderer(simulation, viewElement) {
   this.simulation = simulation;
+  this.viewElement = viewElement;
   this.redrawNeeded = true;
-  this.viewPort = new ViewPort();
+  this.viewPort = new ViewPort(viewElement);
   this.camera = null;
   if (simulation) {
     simulation.setRenderer(this);

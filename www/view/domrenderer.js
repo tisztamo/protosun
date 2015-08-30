@@ -1,8 +1,7 @@
 "use strict";
 
-function DOMRenderer(simulation, targetElement) {
-  Renderer.call(this, simulation);
-  this.targetElement = targetElement;
+function DOMRenderer(simulation, viewElement) {
+  Renderer.call(this, simulation, viewElement);
   this.views = [];
   this.backgroundSpeedRatio = 2;
   this.defaultBgSize = 1024;
@@ -49,7 +48,7 @@ DOMRenderer.prototype.createView = function (templateid, spaceObject) {
   view.model = spaceObject;
   view.physicalElement = view.getElementsByClassName("physicalview").item(0);
   view.classList.remove("template");
-  this.targetElement.appendChild(view);
+  this.viewElement.appendChild(view);
   this.views.push(view);
   return view;
 };
@@ -57,12 +56,12 @@ DOMRenderer.prototype.createView = function (templateid, spaceObject) {
 DOMRenderer.prototype.updateView = function (view) {
   var spaceObject = view.model;
   var style = view.style;
-  var projectedPos = this.viewPort.isOnScreen(spaceObject.pos, spaceObject.radius);
+  var projectedPos = this.viewPort.isInView(spaceObject.pos, spaceObject.radius);
   if (projectedPos) {
     style.left = projectedPos.x + "px";
     style.top = projectedPos.y + "px";
     if (view.physicalElement) {
-      var transform = "rotate(" + spaceObject.heading + "rad)" + "scale(" + this.viewPort.onScreenScale + ")";
+      var transform = "rotate(" + spaceObject.heading + "rad)" + "scale(" + this.viewPort.viewScale + ")";
       var rotatedStyle = view.physicalElement.style;
       rotatedStyle.webkitTransform = transform;
       rotatedStyle.msTransform = transform;
@@ -81,9 +80,9 @@ DOMRenderer.prototype.updateView = function (view) {
 
 DOMRenderer.prototype.updateBackground = function () {
   var center = this.viewPort.modelViewPort.center;
-  var bgSizeRatio = 1 + (this.viewPort.onScreenScale - 1) / this.backgroundSpeedRatio;
-  this.targetElement.style.backgroundPosition = Math.round(-center.x / this.backgroundSpeedRatio * bgSizeRatio) + "px " + Math.round(-center.y / this.backgroundSpeedRatio * bgSizeRatio) + "px";
-  this.targetElement.style.backgroundSize = Math.round(bgSizeRatio * this.defaultBgSize) + "px";
+  var bgSizeRatio = 1 + (this.viewPort.viewScale - 1) / this.backgroundSpeedRatio;
+  this.viewElement.style.backgroundPosition = Math.round(-center.x / this.backgroundSpeedRatio * bgSizeRatio) + "px " + Math.round(-center.y / this.backgroundSpeedRatio * bgSizeRatio) + "px";
+  this.viewElement.style.backgroundSize = Math.round(bgSizeRatio * this.defaultBgSize) + "px";
 };
 
 DOMRenderer.prototype.updateEnginePoweredView = function (view) {
