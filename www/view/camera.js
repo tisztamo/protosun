@@ -1,8 +1,8 @@
 "use strict";
 
 /**
-* Base camera class. Cameras handle the change of the viewport based on
-* the model changes.
+* Base camera class. Cameras change the viewport based on
+* model changes.
 * 
 * @class
 * @abstract
