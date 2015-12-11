@@ -43,6 +43,7 @@ loader.loadScript("compressed.js", main, function () {
   "view/domrenderer.js",
   "view/touchcontrolview.js",
   "view/debugview.js",
+  "controller/controller.js",
   "controller/keyboardcontroller.js",
   "controller/touchcontroller.js"
   ], main);
@@ -50,7 +51,7 @@ loader.loadScript("compressed.js", main, function () {
 
 /*jshint -W098 */
 function main() {
-  var simulation = new Simulation(60);
+  var simulation = new Simulation(69);
   var area = document.getElementById('area');
   var renderer = new DOMRenderer(simulation, area);
   var scene = new SpaceDebrisScene(simulation, renderer);

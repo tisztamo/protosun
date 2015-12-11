@@ -101,12 +101,12 @@ body {
   right: 0;
 }
 
-.touchControl {
+.touchcontrol {
   font-size: 40px;
   color: ivory;
 }
 
-.touchControl > * {
+.touchcontrol > * {
   position: fixed;
   background-color: aquamarine;
   opacity: 0.4;
@@ -115,22 +115,22 @@ body {
   z-index: 40000;
 }
 
-.leftControl {
+.leftcontrol {
   bottom: 150px;
   left: 40px;
 }
 
-.rightControl {
+.rightcontrol {
   bottom: 150px;
   right: 40px;
 }
 
-.fireControl {
+.firecontrol {
   bottom: 250px;
   left: 20px
 }
 
-.engineControl {
+.enginecontrol {
   bottom: 250px;
   right: 20px;
 }

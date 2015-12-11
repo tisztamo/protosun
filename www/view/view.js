@@ -2,7 +2,7 @@
 
 function View(model, templateId) {
   this.rootElement = this.createRootElement(model, templateId);
-  this.loadViewElements();
+  this.viewElements = this.loadElementsToObject("[data-view]", "data-view");
 }
 
 View.prototype.idPrefix = "view_";
@@ -22,14 +22,15 @@ View.prototype.createRootElement = function (model, templateId) {
   return view;
 };
 
-View.prototype.loadViewElements = function () {
+View.prototype.loadElementsToObject = function (selector, namingAttribute) {
   if (!this.rootElement) {
     return;
   }
-  var viewElementList = this.rootElement.querySelectorAll("[data-view]");
-  this.viewElements = {};
-  for (var i = 0; i < viewElementList.length; i++) {
-    var element = viewElementList[i];
-    this.viewElements[element.getAttribute("data-view")] = element;
+  var elementList = this.rootElement.querySelectorAll(selector);
+  var retval = {};
+  for (var i = 0; i < elementList.length; i++) {
+    var element = elementList[i];
+    retval[element.getAttribute(namingAttribute)] = element;
   }
+  return retval;
 };
