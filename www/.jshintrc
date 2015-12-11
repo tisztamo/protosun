@@ -6,6 +6,8 @@
   "unused": true,
   "predef": ["BrowserFeatures",
              "Camera",
+             "CustomEventTarget",
+             "DebugView",
              "Detonation",
              "DistanceCamera",
              "DOMRenderer",
@@ -25,15 +27,16 @@
              "SimpleCamera",
              "Simulation",
              "SimulationCenter",
+             "SimulationObserver",
              "SpaceDebris",
              "SpaceDebrisScene",
              "SpaceObject",
              "SpaceShip",
              "Star",
-             "TouchControl",
              "TouchControlView",
              "TouchController",
              "Vector",
+             "View",
              "ViewPort"
              ]
 }

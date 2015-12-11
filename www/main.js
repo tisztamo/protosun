@@ -14,6 +14,7 @@ loader.loadScript("compressed.js", main, function () {
   "util/browserfeatures.js",
   "util/keyboard.js",
   "util/mixin.js",
+  "util/customeventtarget.js",
   "util/ie-touch.js",
   "model/vector.js",
   "view/viewport.js",
@@ -32,14 +33,16 @@ loader.loadScript("compressed.js", main, function () {
   "model/spaceship.js",
   "model/missile.js",
   "model/detonation.js",
-  "model/touchcontrol.js",
   "scene/scene.js",
   "scene/spacedebrisscene.js",
   "view/camera.js",
   "view/simplecamera.js",
+  "view/simulationobserver.js",
+  "view/view.js",
   "view/renderer.js",
   "view/domrenderer.js",
   "view/touchcontrolview.js",
+  "view/debugview.js",
   "controller/keyboardcontroller.js",
   "controller/touchcontroller.js"
   ], main);
@@ -47,10 +50,12 @@ loader.loadScript("compressed.js", main, function () {
 
 /*jshint -W098 */
 function main() {
-  var simulation = new Simulation(69);
+  var simulation = new Simulation(60);
   var area = document.getElementById('area');
   var renderer = new DOMRenderer(simulation, area);
   var scene = new SpaceDebrisScene(simulation, renderer);
+  var debugView = new DebugView(simulation, renderer);
+  document.body.appendChild(debugView.rootElement);
 
   simulation.start();
   renderer.start();

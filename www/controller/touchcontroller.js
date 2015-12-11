@@ -1,8 +1,7 @@
 "use strict";
 
-function TouchController(touchControl, touchControlView) {
-  this.model = touchControl;
-  this.spaceShip = this.model.spaceShip;
+function TouchController(spaceShip, touchControlView) {
+  this.spaceShip = spaceShip;
   this.view = touchControlView;
   this.eventMapping = {
     leftControl: {
@@ -33,9 +32,8 @@ TouchController.createControllerFor = function (spaceShip, targetElement) {
   if (!BrowserFeatures.hasTouch) {
     return null;
   }
-  var touchControl = new TouchControl(spaceShip);
-  var touchControlView = new TouchControlView(touchControl, targetElement);
-  var touchController = new TouchController(touchControl, touchControlView);
+  var touchControlView = new TouchControlView(spaceShip, targetElement);
+  var touchController = new TouchController(spaceShip, touchControlView);
   return touchController;
 };
 

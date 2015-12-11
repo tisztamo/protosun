@@ -27,7 +27,10 @@ SpaceDebrisScene.prototype.setUpModel = function () {
   this.renderer.setCamera(new SimpleCamera(this.simulation, this.renderer.viewPort, ship));
 
   new KeyboardController(ship);
-  TouchController.createControllerFor(ship, this.renderer.viewElement);
+  var touchController = TouchController.createControllerFor(ship);
+  if (touchController) {
+    this.renderer.viewElement.appendChild(touchController.view.rootElement);
+  }
 };
 
 SpaceDebrisScene.prototype.generateDebris = function (centerObject, minDistance, maxDistance, viewPort) {

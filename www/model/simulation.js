@@ -1,18 +1,19 @@
 "use strict";
 
 /**
-* Main simulation class: handles all the game modeling.
-* @class
-*/
+ * Main simulation class: handles all the game modeling.
+ * @class
+ */
 function Simulation(fps) {
   GameEngine.call(this, fps);
+  CustomEventTarget.call(this);
   this.spaceObjects = [];
   this.objectsToRemove = [];
-  this.renderer = null;
 }
 
 Simulation.prototype = new GameEngine();
 Simulation.prototype.constructor = Simulation;
+CustomEventTarget.mixInto(Simulation);
 
 Simulation.prototype.start = function () {
   this.setUpModel();
@@ -20,41 +21,36 @@ Simulation.prototype.start = function () {
 };
 
 /**
-* Sets the renderer to use. This renderer wil be notified about model changes
-*/
-Simulation.prototype.setRenderer = function (renderer) {
-  this.renderer = renderer;
-};
-
-/**
-* Sets up the model.
-* @abstract
-*/
+ * Sets up the model.
+ * @abstract
+ */
 Simulation.prototype.setUpModel = function () {
   console.log("Default setUpModel, you have to override it!");
 };
 
 /**
-* Adds a SpaceObject to the simulation. Will trigger rendering it with the current renderer.
-*/
+ * Adds a SpaceObject to the simulation.
+ */
 Simulation.prototype.addSpaceObject = function (spaceObject) {
   this.spaceObjects.push(spaceObject);
   spaceObject.simulation = this;
-  if (this.renderer) {
-    this.renderer.spaceObjectAdded(spaceObject);
-  }
+  this.dispatchEvent(new CustomEvent("spaceobjectadded", {
+    detail: {
+      spaceObject: spaceObject
+    }
+  }));
 };
 
 /**
-* Marks the {@link SpaceObject} for removal. It will be removed at the end of the current step.
-*/
+ * Marks the {@link SpaceObject} for removal. It will be removed at the end of the current step.
+ */
 Simulation.prototype.removeSpaceObject = function (spaceObject) {
   this.objectsToRemove.push(spaceObject);
 };
 
 /**
-* @private
-*/
+ * @private
+ */
 Simulation.prototype.purgeSpaceObjects = function () {
   var removeIdx = this.objectsToRemove.length - 1;
   while (removeIdx >= 0) {
@@ -63,7 +59,11 @@ Simulation.prototype.purgeSpaceObjects = function () {
     while (i >= 0) {
       if (this.spaceObjects[i] === objectToRemove) {
         this.spaceObjects.splice(i, 1);
-        this.renderer.spaceObjectRemoved(objectToRemove);
+        this.dispatchEvent(new CustomEvent("spaceobjectremoved", {
+          detail: {
+            spaceObject: objectToRemove
+          }
+        }));
         break;
       }
       i--;
@@ -91,6 +91,7 @@ Simulation.prototype.oneStep = function () {
     outerIdx++;
   }
   this.purgeSpaceObjects();
-  this.renderer.oneStepTaken();
+
+  this.dispatchEvent(new CustomEvent("onesteptaken"));
   GameEngine.prototype.oneStep.call(this);
 };

@@ -45,5 +45,5 @@ GameEngine.prototype.timerCB = function () {
     this.oneStep();
     currentSteps += 1;
   }
-  this.avgStepsPerCB = 0.99 * this.avgStepsPerCB + 0.01 * currentSteps;
+  this.avgStepsPerCB = 0.95 * this.avgStepsPerCB + 0.05 * currentSteps;
 };

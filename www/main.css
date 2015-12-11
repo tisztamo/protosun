@@ -134,3 +134,20 @@ body {
   bottom: 250px;
   right: 20px;
 }
+
+.debug {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 130px;
+  overflow: hidden;
+  color: white;
+  pointer-events: none;
+}
+
+.debug > label {
+  width: 80px;
+  margin-right: 10px;
+  float: left;
+  text-align: right;
+}

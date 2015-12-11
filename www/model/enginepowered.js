@@ -9,8 +9,8 @@
 * @mixin
 */
 function EnginePowered(enginePower, fuel, engineRunning) {
-  this.fuel = fuel || Infinity;
   this.enginePower = enginePower || 0.001;
+  this.fuel = fuel || Infinity;
   this.engineRunning = engineRunning || false;
 }
 
