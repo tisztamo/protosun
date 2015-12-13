@@ -1,9 +1,20 @@
 "use strict";
 
 function DebugView(simulation, renderer) {
-  View.call(this, simulation);
+  this.projection = {
+    timerLag: function() {
+      var val = Math.round(simulation.avgStepsPerCB * 100) / 100;
+      return {
+        textContent: val,
+        className: val < 1.1 ? "normal" : "warning"
+      };
+    },
+    viewCount: function() {
+      return renderer.displayedViewCount + "/" + renderer.views.length;
+    },
+  };
+  View.call(this, simulation, "debug");
   SimulationObserver.call(this, simulation);
-  this.renderer = renderer;
 }
 
 DebugView.prototype = new View();
@@ -11,11 +22,6 @@ DebugView.prototype.constructor = DebugView;
 
 SimulationObserver.mixInto(DebugView);
 
-DebugView.prototype.idPrefix = "debug_";
-DebugView.prototype.templateId = "debug";
-
 DebugView.prototype.oneStepTaken = function () {
-  var v = this.viewElements;
-  v.timerlag.textContent = Math.round(this.simulation.avgStepsPerCB * 100) / 100;
-  v.viewcount.textContent = this.renderer.displayedViewCount + "/" + this.renderer.views.length;
+  this.updateAll();
 };

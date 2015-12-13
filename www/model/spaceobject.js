@@ -84,3 +84,8 @@ SpaceObject.prototype.oneStep = function () {
  * @abstract
  */
 SpaceObject.prototype.actOn = function (another, distance) {};
+
+
+SpaceObject.prototype.toString = function() {
+  return " " + this.constructor.name;
+};

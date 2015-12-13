@@ -151,3 +151,7 @@ body {
   float: left;
   text-align: right;
 }
+
+.debug > .warning {
+  color: red;
+}
