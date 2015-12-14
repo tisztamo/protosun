@@ -29,11 +29,11 @@ TouchController.prototype.constructor = TouchController;
  * Creates a touch screen controller (TouchControlView and TouchController) for the given spaceship. If the browser does not support touching, 
  then returns null
  */
-TouchController.createControllerFor = function (spaceShip, targetElement) {
+TouchController.createControllerFor = function (spaceShip) {
   if (!BrowserFeatures.hasTouch) {
     //return null;
   }
-  var touchControlView = new TouchControlView(spaceShip, targetElement);
+  var touchControlView = new TouchControlView();
   var touchController = new TouchController(spaceShip, touchControlView);
   return touchController;
 };
