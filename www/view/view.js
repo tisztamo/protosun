@@ -29,12 +29,11 @@ View.prototype.loadElementsToObject = function (selector, namingAttribute) {
   if (!this.rootElement) {
     return;
   }
-  var elementList = this.rootElement.querySelectorAll(selector);
   var retval = {};
-  for (var i = 0; i < elementList.length; i++) {
-    var element = elementList[i];
-    retval[element.getAttribute(namingAttribute)] = element;
-  }
+  Array.from(this.rootElement.querySelectorAll(selector))
+    .forEach(function (element) {
+      retval[element.getAttribute(namingAttribute)] = element;
+    });
   return retval;
 };
 
