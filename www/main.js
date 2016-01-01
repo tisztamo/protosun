@@ -34,6 +34,7 @@ loader.loadScript("compressed.js", main, function () {
   "model/missile.js",
   "model/detonation.js",
   "scene/scene.js",
+  "scene/puzzlescene.js",
   "scene/spacedebrisscene.js",
   "view/camera.js",
   "view/simplecamera.js",
@@ -51,10 +52,10 @@ loader.loadScript("compressed.js", main, function () {
 
 /*jshint -W098 */
 function main() {
-  var simulation = new Simulation(69);
+  var simulation = new Simulation(25);
   var area = document.getElementById('area');
   var renderer = new DOMRenderer(simulation, area);
-  var scene = new SpaceDebrisScene(simulation, renderer);
+  var scene = new PuzzleScene(simulation, renderer);
   var debugView = new DebugView(simulation, renderer);
   document.body.appendChild(debugView.rootElement);
 

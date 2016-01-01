@@ -27,7 +27,9 @@ EnginePowered.prototype.oneStep = function () {
 };
 
 EnginePowered.prototype.startEngine = function () {
-  this.engineRunning = true;
+    if (this.fuel > 0) {
+    this.engineRunning = true;
+  }
 };
 
 EnginePowered.prototype.stopEngine = function () {
