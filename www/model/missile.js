@@ -20,7 +20,7 @@ Missile.prototype.oneStep = function () {
 };
 
 Missile.prototype.actOn = function (another, distance) {
-  if (distance < 10 + another.radius && !this.detonated && !another.permeable) {
+  if (distance < another.radius && !this.detonated && !another.permeable) {
     this.detonate(another);
   }
 };

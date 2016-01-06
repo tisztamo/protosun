@@ -8,10 +8,7 @@ function DebugView(simulation, renderer) {
         textContent: val,
         className: val < 1.1 ? "normal" : "warning"
       };
-    },
-    viewCount: function() {
-      return renderer.displayedViewCount + "/" + renderer.views.length;
-    },
+    }
   };
   View.call(this, simulation, "debug");
   SimulationObserver.call(this, simulation);
