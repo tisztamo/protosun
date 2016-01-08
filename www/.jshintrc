@@ -17,6 +17,7 @@
              "DOMViewPort",
              "Earth",
              "EnginePowered",
+             "EnginePoweredCanvasView",
              "FixedStar",
              "GameEngine",
              "KeyboardController",

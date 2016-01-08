@@ -3,8 +3,8 @@
 function SpaceDebrisCanvasView(model, viewPort) {
   CanvasView.call(this, model, viewPort, [{
     image: CanvasView.loadImage("spacedebris"),
-    width: 40,
-    height: 40
+    width: model.radius * 2,
+    height: model.radius * 2
   }]);
 }
 

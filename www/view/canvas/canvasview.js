@@ -13,10 +13,13 @@ CanvasView.images = {};
 CanvasRenderer.registerViewClass(CanvasView);
 
 CanvasView.prototype.drawImage = function (descriptor) {
+  var offsetX = descriptor.offsetX || 0;
+  var offsetY = descriptor.offsetY || 0;
   this.ctx.translate(this.projectedPos.x, this.projectedPos.y);
   this.ctx.rotate(this.model.heading);
   this.ctx.scale(this.viewPort.viewScale, this.viewPort.viewScale);
-  this.ctx.globalAlpha = descriptor.alpha === undefined ? 1 : descriptor.alpha;
+  this.ctx.translate(offsetX, offsetY);
+  this.ctx.globalAlpha = typeof descriptor.alpha === "undefined" ? 1 : descriptor.alpha;
   this.ctx.drawImage(descriptor.image, Math.round(-descriptor.width / 2), Math.round(-descriptor.height / 2), descriptor.width, descriptor.height);
 };
 

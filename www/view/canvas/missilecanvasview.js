@@ -6,8 +6,17 @@ function MissileCanvasView(model, viewPort) {
     width: 30,
     height: 12
   }]);
+  var flame = {
+    image: CanvasView.loadImage("flame"),
+    width: 50,
+    height: 10,
+    offsetX: -18,
+    offsetY: 0
+  };
+  EnginePoweredCanvasView.call(this, flame);
 }
 
 MissileCanvasView.prototype = new CanvasView();
+EnginePoweredCanvasView.mixInto(MissileCanvasView);
 
 CanvasRenderer.registerViewClass("missile", MissileCanvasView);

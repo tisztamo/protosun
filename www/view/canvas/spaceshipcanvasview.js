@@ -6,8 +6,17 @@ function SpaceShipCanvasView(model, viewPort) {
     width: 40,
     height: 20
   }]);
+  var flame = {
+    image: CanvasView.loadImage("doubleflame"),
+    width: 120,
+    height: 30,
+    offsetX: -57,
+    offsetY: 0
+  };
+  EnginePoweredCanvasView.call(this, flame);
 }
 
 SpaceShipCanvasView.prototype = new CanvasView();
+EnginePoweredCanvasView.mixInto(SpaceShipCanvasView);
 
 CanvasRenderer.registerViewClass("spaceship", SpaceShipCanvasView);

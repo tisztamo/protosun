@@ -95,3 +95,11 @@ if (Function.prototype.name === undefined && Object.defineProperty !== undefined
 		'writable': true
 	});
 }());
+
+
+if (!String.prototype.startsWith) {
+  String.prototype.startsWith = function(searchString, position) {
+    position = position || 0;
+    return this.indexOf(searchString, position) === position;
+  };
+}

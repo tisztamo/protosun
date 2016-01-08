@@ -47,6 +47,7 @@ loader.loadScript("compressed.js", main, function () {
   "view/domrenderer.js",
   "view/canvas/canvasrenderer.js",
   "view/canvas/canvasview.js",
+  "view/canvas/enginepoweredcanvasview.js",
   "view/canvas/detonationcanvasview.js",
   "view/canvas/earthcanvasview.js",
   "view/canvas/mooncanvasview.js",
@@ -80,7 +81,7 @@ document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
   var sound = new Sound();
-  sound.playMusic("sound/Tortue_Super_Sonic_-_05_-_Neogrotesque.mp3");
+  sound.playMusic("sound/Leisure-B_-_17_-_Man_On_The_Moon.mp3");
   //Leisure-B_-_17_-_Man_On_The_Moon.mp3
   //Andy_G_Cohen_-_11_-_Space_Outro.mp3
   //Tortue_Super_Sonic_-_05_-_Neogrotesque.mp3
