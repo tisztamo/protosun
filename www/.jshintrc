@@ -23,7 +23,6 @@
              "KeyboardController",
              "Missile",
              "MissileLauncher",
-             "Mixin",
              "Moon",
              "Loader",
              "OutlineCamera",

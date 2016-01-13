@@ -9,8 +9,6 @@ function Renderer(simulation, viewElement) {
   this.camera = null;
 }
 
-SimulationObserver.mixInto(Renderer);
-
 Renderer.prototype.start = function () {
   window.requestAnimationFrame(this.tick.bind(this));
 };

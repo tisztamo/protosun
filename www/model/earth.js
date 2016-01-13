@@ -23,5 +23,3 @@ Earth.prototype.actOn = function (another, distance) {
     this.simulation.removeSpaceObject(another);
   }
 };
-
-SimulationCenter.mixInto(Earth);

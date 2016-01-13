@@ -11,9 +11,6 @@ function SpaceShip(simulation, pos, v, mass, heading, enginePower, fuel) {
 SpaceShip.prototype = new SpaceObject();
 SpaceShip.prototype.constructor = SpaceShip;
 
-EnginePowered.mixInto(SpaceShip);
-MissileLauncher.mixInto(SpaceShip);
-
 SpaceShip.prototype.startRotationLeft = function () {
   this.angularSpeed = -this.rotationEnginePower;
 };

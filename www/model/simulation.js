@@ -1,3 +1,4 @@
+/*jshint -W098 */
 "use strict";
 
 /**
@@ -13,7 +14,6 @@ function Simulation(fps) {
 
 Simulation.prototype = new GameEngine();
 Simulation.prototype.constructor = Simulation;
-CustomEventTarget.mixInto(Simulation);
 
 Simulation.prototype.start = function () {
   this.setUpModel();

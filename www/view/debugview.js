@@ -17,8 +17,6 @@ function DebugView(simulation, renderer) {
 DebugView.prototype = new View();
 DebugView.prototype.constructor = DebugView;
 
-SimulationObserver.mixInto(DebugView);
-
 DebugView.prototype.oneStepTaken = function () {
   this.updateAll();
 };

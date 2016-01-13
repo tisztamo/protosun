@@ -10,8 +10,8 @@ function EnginePoweredCanvasView(flameDescriptor) {
   var animationStartedAt;
 
   this.calcAnimationState = function (age) {
-    if (engineRunning !== this.model.engineRunning) {
-      engineRunning = this.model.engineRunning;
+    if (engineRunning !== this.model.enginePowered.engineRunning) {
+      engineRunning = this.model.enginePowered.engineRunning;
       animationStartedAt = age;
     }
     var transitionState = Math.min((age - animationStartedAt) / animationDuration, 1);

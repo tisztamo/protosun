@@ -38,5 +38,3 @@ Missile.prototype.detonate = function (spaceObjectHit) {
     this.simulation.removeSpaceObject(spaceObjectHit);
   }
 };
-
-EnginePowered.mixInto(Missile);

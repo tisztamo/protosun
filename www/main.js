@@ -13,7 +13,6 @@ loader.loadScript("compressed.js", main, function () {
   loader.loadScripts(["util/polyfills.js",
   "util/browserfeatures.js",
   "util/keyboard.js",
-  "util/mixin.js",
   "util/customeventtarget.js",
   "util/ie-touch.js",
   "model/vector.js",
