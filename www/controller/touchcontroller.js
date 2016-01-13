@@ -18,7 +18,7 @@ function TouchController(spaceShip, camera, touchControlView) {
       touchcancel: spaceShip.stopEngine.bind(spaceShip)
     },
     firecontrol: {
-      touchstart: spaceShip.launchMissile.bind(spaceShip),
+      touchstart: spaceShip.launchMissile.bind(spaceShip)
     },
     outlinecontrol: {
       touchstart: camera.switchOutlined.bind(camera)

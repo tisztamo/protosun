@@ -17,6 +17,5 @@ function SpaceShipCanvasView(model, viewPort) {
 }
 
 SpaceShipCanvasView.prototype = new CanvasView();
-EnginePoweredCanvasView.mixInto(SpaceShipCanvasView);
 
 CanvasRenderer.registerViewClass("spaceship", SpaceShipCanvasView);

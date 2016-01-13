@@ -17,6 +17,5 @@ function MissileCanvasView(model, viewPort) {
 }
 
 MissileCanvasView.prototype = new CanvasView();
-EnginePoweredCanvasView.mixInto(MissileCanvasView);
 
 CanvasRenderer.registerViewClass("missile", MissileCanvasView);
