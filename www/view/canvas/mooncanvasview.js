@@ -3,8 +3,8 @@
 function MoonCanvasView(model, viewPort) {
   CanvasView.call(this, model, viewPort, [{
     image: CanvasView.loadImage("moon"),
-    width: 25,
-    height: 25
+    width: model.radius * 2,
+    height: model.radius * 2
   }]);
 }
 

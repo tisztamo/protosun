@@ -14,17 +14,17 @@ PuzzleScene.prototype.setUpModel = function () {
   var moon = new Moon(new Vector(400, 650), new Vector(-1.3, 0.3), 1);
   var star = new FixedStar(new Vector(1400, 1050), new Vector(0, 0), 10);
   star.isIndestructible = false;
-  var moon2 = new Moon(new Vector(200, 0), new Vector(2, 0.1), 0.1);
-  var moon3 = new Moon(new Vector(1600, 1350), new Vector(0.3, -1.52), 1);
+  var asteroids = [new Asteroid(new Vector(200, 0), new Vector(2, 0.1), 0.1),
+  new Asteroid(new Vector(1600, 1350), new Vector(0.3, -1.52), 1),
+  new Asteroid(new Vector(2900, 1750), new Vector(-0.7, -0.28), 1)];
 
   simulation.addSpaceObject(ship);
   simulation.addSpaceObject(planet);
   simulation.addSpaceObject(moon);
-  simulation.addSpaceObject(moon2);
-  simulation.addSpaceObject(moon3);
+  asteroids.forEach(simulation.addSpaceObject.bind(simulation));
   simulation.addSpaceObject(star);
 
-  var camera = new OutlineCamera(new SimpleCamera(this.simulation, this.renderer.viewPort, ship));
+  var camera = new OutlineCamera(new SimpleCamera(this.simulation, this.renderer.viewPort, ship), 0, 0, 3000, 1800);
   this.renderer.setCamera(camera);
 
   new KeyboardController(ship, camera);

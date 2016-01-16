@@ -28,6 +28,7 @@ loader.loadScript("compressed.js", main, function () {
   "model/earth.js",
   "model/moon.js",
   "model/enginepowered.js",
+  "model/asteroid.js",
   "model/missilelauncher.js",
   "model/spacedebris.js",
   "model/spaceship.js",
@@ -46,6 +47,7 @@ loader.loadScript("compressed.js", main, function () {
   "view/domrenderer.js",
   "view/canvas/canvasrenderer.js",
   "view/canvas/canvasview.js",
+  "view/canvas/asteroidcanvasview.js",
   "view/canvas/enginepoweredcanvasview.js",
   "view/canvas/detonationcanvasview.js",
   "view/canvas/earthcanvasview.js",
@@ -68,7 +70,7 @@ function main() {
   var simulation = new Simulation(60);
   var area = document.getElementById('area');
   var renderer = new CanvasRenderer(simulation, area);
-  var scene = new SpaceDebrisScene(simulation, renderer);
+  var scene = new PuzzleScene(simulation, renderer);
   var debugView = new DebugView(simulation, renderer);
   document.body.appendChild(debugView.rootElement);
 

@@ -21,7 +21,7 @@ function EnginePowered(enginePower, fuel, engineRunning) {
   this.oneStep = function () {
     if (this.enginePowered.engineRunning) {
       this.stepForce.add(Vector.createFromPolar(this.heading, enginePower));
-      if (--this.fuel <= 0) {
+      if (--props.fuel <= 0) {
         props.engineRunning = false;
       }
     }
@@ -29,7 +29,7 @@ function EnginePowered(enginePower, fuel, engineRunning) {
   };
 
   this.startEngine = function () {
-    if (this.enginePowered.fuel > 0) {
+    if (props.fuel > 0) {
       props.engineRunning = true;
     }
   };

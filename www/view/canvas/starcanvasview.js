@@ -3,8 +3,8 @@
 function StarCanvasView(model, viewPort) {
   CanvasView.call(this, model, viewPort, [{
     image: CanvasView.loadImage("star"),
-    width: model.radius * 2,
-    height: model.radius * 2
+    width: model.radius * 2.2,
+    height: model.radius * 2.2
   }]);
 }
 
