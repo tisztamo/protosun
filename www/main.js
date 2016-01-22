@@ -63,21 +63,16 @@ loader.loadScript("compressed.js", main, function () {
   "view/debugview.js",
   "controller/controller.js",
   "controller/keyboardcontroller.js",
-  "controller/touchcontroller.js"
+  "controller/touchcontroller.js",
+  "controller/sceneselector.js",
+  "controller/maincontroller.js"
   ], main);
 });
 
 /*jshint -W098 */
 function main() {
-  var simulation = new Simulation(60);
-  var area = document.getElementById('area');
-  var renderer = new CanvasRenderer(simulation, area);
-  var scene = new PuzzleScene(simulation, renderer);
-  var debugView = new DebugView(simulation, renderer);
-  document.body.appendChild(debugView.rootElement);
-
-  simulation.start();
-  renderer.start();
+  var mainController = new MainController();
+  document.body.appendChild(mainController.view.rootElement);  
 }
 
 document.addEventListener("deviceready", onDeviceReady, false);

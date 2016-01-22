@@ -11,15 +11,22 @@ Controller.prototype.eventMapping = {};
 
 /** @private */
 Controller.prototype.bindEvents = function () {
+  var that = this;
+  function createHandler(eventName, eventHandler, control) {
+    try {
+      control.addEventListener(eventName, function (evt) {
+        evt.preventDefault();
+        eventHandler.call(that, evt);
+      });
+    } catch (e) {
+      console.error("Cannot bind event " + eventName + " to control " + controlName, e);
+    }
+  }
   for (var controlName in this.eventMapping) {
     var control = this.controlElements[controlName];
     var events = this.eventMapping[controlName];
     for (var eventName in events) {
-      try {
-        control.addEventListener(eventName, events[eventName]);
-      } catch (e) {
-        console.error("Cannot bind event " + eventName + " to control " + controlName, e);
-      }
+      createHandler(eventName, events[eventName], control);
     }
   }
 };

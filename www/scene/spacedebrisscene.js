@@ -6,6 +6,7 @@ function SpaceDebrisScene(simulation, renderer) {
 
 SpaceDebrisScene.prototype = new Scene();
 SpaceDebrisScene.prototype.constructor = SpaceDebrisScene;
+Scene.registerScene(SpaceDebrisScene);
 
 SpaceDebrisScene.prototype.setUpModel = function () {
   var simulation = this.simulation;

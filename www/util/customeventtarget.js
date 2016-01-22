@@ -15,4 +15,10 @@ function CustomEventTarget() {
   this.dispatchEvent = function (event) {
     customEventTarget.dispatchEvent(event);
   };
+
+  this.emit = function (eventName, detail) {
+    this.dispatchEvent(new CustomEvent(eventName, {
+      detail: detail
+    }));
+  };
 }

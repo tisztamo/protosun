@@ -7,13 +7,23 @@ function Renderer(simulation, viewElement) {
   this.redrawNeeded = true;
   this.viewPort = new DOMViewPort(viewElement);
   this.camera = null;
+  this.stopped = false;
 }
 
 Renderer.prototype.start = function () {
   window.requestAnimationFrame(this.tick.bind(this));
+  this.stopped = false;
 };
 
+Renderer.prototype.stop = function () {
+  this.stopped = true;
+};
+
+
 Renderer.prototype.tick = function () {
+  if (this.stopped) {
+    return;
+  }
   if (this.redrawNeeded) {
     this.redraw();
     this.redrawNeeded = false;

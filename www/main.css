@@ -1,3 +1,13 @@
+@font-face {
+  font-family: space_age;
+  src: url("img/space_age.otf");
+}
+
+@font-face {
+  font-family: radiospace;
+  src: url("img/radiospace.ttf");
+}
+
 html,
 body {
   height: 100%;
@@ -7,6 +17,7 @@ body {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+  font-family: radiospace;
 }
 
 .template {
@@ -102,7 +113,7 @@ body {
 }
 
 .touchcontrol {
-  font-size: 40px;
+  font-size: 30px;
   color: ivory;
 }
 
@@ -141,21 +152,21 @@ body {
   left: 0px;
   height: 25px;
   width: 80px;
-  font-size: 24px;
+  font-size: 22px;
 }
 
 .debug {
   position: absolute;
   top: 2px;
   right: 2px;
-  width: 130px;
+  width: 140px;
   overflow: hidden;
   color: white;
   pointer-events: none;
 }
 
 .debug > label {
-  width: 80px;
+  width: 90px;
   margin-right: 10px;
   float: left;
   text-align: right;
@@ -163,4 +174,26 @@ body {
 
 .debug > .warning {
   color: red;
+}
+
+.sceneselector {
+  position: fixed;
+  top: 20%;
+  bottom: 20%;
+  left: 20%;
+  right: 20%;
+  background-color: rgba(255, 255, 255, 0.5); 
+  border-radius: 10px;
+  text-shadow: 1px 1px rgba(255, 255, 255, 0.6);
+}
+
+.sceneselector ul {
+  list-style-type: none;
+  font-size: 25px;
+  font-family: space_age;
+  transform: scale3d(1, 1.5, 1);
+}
+
+.sceneselector h1 {
+  text-align: center;
 }

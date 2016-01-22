@@ -7,7 +7,8 @@ function CanvasRenderer(simulation, area) {
   this.defaultBgSize = 1024;
   this.displayedViewCount = 0;
   this.canvas = document.createElement("canvas");
-  area.appendChild(this.canvas);
+  this.area = area;
+  this.area.appendChild(this.canvas);
   this.canvas.width = area.width || 1000;
   this.canvas.height = area.height || 800;
   this.ctx = this.canvas.getContext('2d');
@@ -16,6 +17,11 @@ function CanvasRenderer(simulation, area) {
 CanvasRenderer.prototype = new Renderer();
 CanvasRenderer.prototype.constructor = CanvasRenderer;
 CanvasRenderer.viewClasses = [];
+
+CanvasRenderer.prototype.stop = function () {
+  this.area.removeChild(this.canvas);
+  Renderer.prototype.stop.call(this);
+};
 
 CanvasRenderer.registerViewClass = function (modelName, canvasViewClass) {
   CanvasRenderer.viewClasses[modelName] = canvasViewClass;

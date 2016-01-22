@@ -59,8 +59,17 @@
     <div class="outlinecontrol" data-control="outlinecontrol">Outline</div>
   </div>
   <div class="template debug" id="debug">
-    <label>Timer lag:</label><span data-view="timerLag"></span><br>
+    <label>Timer lag:</label><span data-view="timerLag"></span>
+    <br>
   </div>
+  <div class="template sceneselector" id="sceneselector">
+    <h1>Select Level</h1>
+    <ul data-control="loadscene">
+      <li data-scene="SpaceDebrisScene">Space Debris</li>
+      <li data-scene="PuzzleScene">Gravity Puzzle</li>
+    </ul>
+  </div>
+  <div class="template main" id="main"></div>
   <script src="util/loader.js"></script>
   <script src="main.js"></script>
   <script src="cordova.js"></script>

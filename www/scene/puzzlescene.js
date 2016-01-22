@@ -6,6 +6,8 @@ function PuzzleScene(simulation, renderer) {
 
 PuzzleScene.prototype = new Scene();
 PuzzleScene.prototype.constructor = PuzzleScene;
+Scene.registerScene(PuzzleScene);
+
 
 PuzzleScene.prototype.setUpModel = function () {
   var simulation = this.simulation;
