@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="format-detection" content="telephone=no" />
-  <meta name="viewport" content="user-scalable=no" />
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0">
 </head>
 
 <body>
@@ -17,10 +17,10 @@
   </div>
   <div id="controlhint">Use arrow keys and space!</div>
   <div class="template spaceobject star" id="star">
-    <img class="physicalview" src="img/sun.png" width="60" height="60">
+    <img class="physicalview" src="img/star.png" width="60" height="60">
   </div>
   <div class="template spaceobject planet" id="planet">
-    <img class="physicalview" src="img/earth.png" width="50" height="50">
+    <img class="physicalview" src="img/planet.png" width="50" height="50">
   </div>
   <div class="template spaceobject earth" id="earth">
     <img class="physicalview" src="img/earth.png" width="1500" height="1500">
@@ -51,14 +51,28 @@
   <div class="template spaceobject spacedebris" id="spacedebris">
     <img class="physicalview" src="img/spacedebris.png" width="40" height="26">
   </div>
-  <div class="template touchControl" id="touchcontrol">
-    <div class="leftControl">Left</div>
-    <div class="rightControl">Right</div>
-    <div class="engineControl">Engine</div>
-    <div class="fireControl">Fire</div>
+  <div class="template touchcontrol" id="touchcontrol">
+    <div class="leftcontrol" data-control="leftcontrol">Left</div>
+    <div class="rightcontrol" data-control="rightcontrol">Right</div>
+    <div class="enginecontrol" data-control="enginecontrol">Engine</div>
+    <div class="firecontrol" data-control="firecontrol">Fire</div>
+    <div class="outlinecontrol" data-control="outlinecontrol">Outline</div>
   </div>
+  <div class="template debug" id="debug">
+    <label>Timer lag:</label><span data-view="timerLag"></span>
+    <br>
+  </div>
+  <div class="template sceneselector" id="sceneselector">
+    <h1>Select Level</h1>
+    <ul data-control="loadscene">
+      <li data-scene="SpaceDebrisScene">Space Debris</li>
+      <li data-scene="PuzzleScene">Gravity Puzzle</li>
+    </ul>
+  </div>
+  <div class="template main" id="main"></div>
   <script src="util/loader.js"></script>
   <script src="main.js"></script>
+  <script src="cordova.js"></script>
 </body>
 
 </html>

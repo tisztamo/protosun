@@ -6,11 +6,12 @@ function SpaceDebrisScene(simulation, renderer) {
 
 SpaceDebrisScene.prototype = new Scene();
 SpaceDebrisScene.prototype.constructor = SpaceDebrisScene;
+Scene.registerScene(SpaceDebrisScene);
 
 SpaceDebrisScene.prototype.setUpModel = function () {
   var simulation = this.simulation;
   var scene = this;
-  var ship = new SpaceShip(new Vector(400, -550), new Vector(2.3, 0), 0.1, 0);
+  var ship = new SpaceShip(simulation, new Vector(400, -550), new Vector(2.3, 0), 0.1, 0);
   var earth = new Earth(new Vector(400, 350), new Vector(0, 0), 105, 755);
   earth.maxDistance = 4000;
 
@@ -24,10 +25,15 @@ SpaceDebrisScene.prototype.setUpModel = function () {
       }
     }
   }, 1500);
-  this.renderer.setCamera(new SimpleCamera(this.simulation, this.renderer.viewPort, ship));
+  
+  var camera = new OutlineCamera(new SimpleCamera(this.simulation, this.renderer.viewPort, ship));
+  this.renderer.setCamera(camera);
 
-  new KeyboardController(ship);
-  TouchController.createControllerFor(ship, this.renderer.viewElement);
+  new KeyboardController(ship, camera);
+  var touchController = TouchController.createControllerFor(ship, camera);
+  if (touchController) {
+    this.renderer.viewElement.appendChild(touchController.view.rootElement);
+  }
 };
 
 SpaceDebrisScene.prototype.generateDebris = function (centerObject, minDistance, maxDistance, viewPort) {

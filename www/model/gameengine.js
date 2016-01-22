@@ -12,6 +12,7 @@ function GameEngine(fps) {
   this.stepsTaken = 0;
   /** Moving average of steps per timer callback. Values significantly higher than 1 indicate performance issues (timer was fired late regurarly during the last ~100 callbacks.)*/
   this.avgStepsPerCB = 1;
+  this.interval = null;
 }
 
 GameEngine.prototype.getTS = function () {
@@ -23,8 +24,15 @@ GameEngine.prototype.getTS = function () {
  */
 GameEngine.prototype.start = function () {
   this.startTS = this.getTS();
-  setInterval(this.timerCB.bind(this),
+  this.interval = setInterval(this.timerCB.bind(this),
     this.stepTime);
+};
+
+GameEngine.prototype.stop = function () {
+  if (this.interval !== null) {
+    clearInterval(this.interval);
+    this.interval = null;
+  }
 };
 
 /**
@@ -45,5 +53,5 @@ GameEngine.prototype.timerCB = function () {
     this.oneStep();
     currentSteps += 1;
   }
-  this.avgStepsPerCB = 0.99 * this.avgStepsPerCB + 0.01 * currentSteps;
+  this.avgStepsPerCB = 0.95 * this.avgStepsPerCB + 0.05 * currentSteps;
 };

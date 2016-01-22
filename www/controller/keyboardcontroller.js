@@ -1,7 +1,8 @@
 "use strict";
 
-function KeyboardController(spaceShip) {
+function KeyboardController(spaceShip, camera) {
   this.spaceShip = spaceShip;
+  this.camera = camera;
   document.addEventListener("keydown", this.keydownHandler.bind(this));
   document.addEventListener("keyup", this.keyupHandler.bind(this));
 }
@@ -22,6 +23,9 @@ KeyboardController.prototype.keydownHandler = function (keyEvent) {
   case " ":
   case "Spacebar":
     this.spaceShip.launchMissile();
+    break;
+  case "Control":
+    this.camera.switchOutlined();
   }
 };
 

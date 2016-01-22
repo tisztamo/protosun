@@ -1,11 +1,11 @@
 "use strict";
 
 /** Base class to define a scene, e.g. a level of the game.
-* @param {Simulation} simulation
-* @param {Renderer} renderer
-* @class
-* @abstract
-*/
+ * @param {Simulation} simulation
+ * @param {Renderer} renderer
+ * @class
+ * @abstract
+ */
 function Scene(simulation, renderer) {
   this.simulation = simulation;
   this.renderer = renderer;
@@ -15,8 +15,18 @@ function Scene(simulation, renderer) {
 }
 
 /**
-* Sets up the scene.
-* @abstract
-*/
-Scene.prototype.setUpModel = function () {
+ * Sets up the scene.
+ * @abstract
+ */
+Scene.prototype.setUpModel = function () {};
+
+
+Scene.scenes = {};
+
+Scene.registerScene = function (sceneClass) {
+  Scene.scenes[sceneClass.name] = sceneClass;
+};
+
+Scene.createScene = function (sceneName, simulation, renderer) {
+  return new (Scene.scenes[sceneName])(simulation, renderer);
 };

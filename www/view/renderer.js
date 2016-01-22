@@ -1,21 +1,29 @@
 "use strict";
 
 function Renderer(simulation, viewElement) {
+  SimulationObserver.call(this, simulation);
   this.simulation = simulation;
   this.viewElement = viewElement;
   this.redrawNeeded = true;
   this.viewPort = new DOMViewPort(viewElement);
   this.camera = null;
-  if (simulation) {
-    simulation.setRenderer(this);
-  }
+  this.stopped = false;
 }
 
 Renderer.prototype.start = function () {
   window.requestAnimationFrame(this.tick.bind(this));
+  this.stopped = false;
 };
 
+Renderer.prototype.stop = function () {
+  this.stopped = true;
+};
+
+
 Renderer.prototype.tick = function () {
+  if (this.stopped) {
+    return;
+  }
   if (this.redrawNeeded) {
     this.redraw();
     this.redrawNeeded = false;
@@ -35,12 +43,10 @@ Renderer.prototype.setCamera = function (camera) {
   this.camera = camera;
 };
 
-/*jshint -W098 */
-
-Renderer.prototype.spaceObjectAdded = function (spaceObject) {
+Renderer.prototype.spaceObjectAdded = function () {
   this.redrawNeeded = true;
 };
 
-Renderer.prototype.spaceObjectRemoved = function (spaceObject) {
+Renderer.prototype.spaceObjectRemoved = function () {
   this.redrawNeeded = true;
 };

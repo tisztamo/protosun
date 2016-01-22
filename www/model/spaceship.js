@@ -1,18 +1,15 @@
 "use strict";
 
-function SpaceShip(pos, v, mass, heading) {
+function SpaceShip(simulation, pos, v, mass, heading, enginePower, fuel) {
   SpaceObject.call(this, pos, v, mass, heading);
-  EnginePowered.call(this);
+  EnginePowered.call(this, enginePower, fuel);
   MissileLauncher.call(this);
+  this.radius = 20;
+  this.rotationEnginePower = 0.03 / simulation.fps * 100;
 }
 
 SpaceShip.prototype = new SpaceObject();
 SpaceShip.prototype.constructor = SpaceShip;
-
-EnginePowered.mixInto(SpaceShip);
-MissileLauncher.mixInto(SpaceShip);
-
-SpaceShip.prototype.rotationEnginePower = 0.04;
 
 SpaceShip.prototype.startRotationLeft = function () {
   this.angularSpeed = -this.rotationEnginePower;

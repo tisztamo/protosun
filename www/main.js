@@ -13,7 +13,7 @@ loader.loadScript("compressed.js", main, function () {
   loader.loadScripts(["util/polyfills.js",
   "util/browserfeatures.js",
   "util/keyboard.js",
-  "util/mixin.js",
+  "util/customeventtarget.js",
   "util/ie-touch.js",
   "model/vector.js",
   "view/viewport.js",
@@ -22,36 +22,66 @@ loader.loadScript("compressed.js", main, function () {
   "model/simulation.js",
   "model/spaceobject.js",
   "model/star.js",
+  "model/fixedstar.js",
   "model/planet.js",
   "model/simulationcenter.js",
   "model/earth.js",
   "model/moon.js",
   "model/enginepowered.js",
+  "model/asteroid.js",
   "model/missilelauncher.js",
   "model/spacedebris.js",
   "model/spaceship.js",
   "model/missile.js",
   "model/detonation.js",
-  "model/touchcontrol.js",
   "scene/scene.js",
+  "scene/objective.js",
+  "scene/protectobjective.js",
+  "scene/puzzlescene.js",
   "scene/spacedebrisscene.js",
+  "sound/sound.js",
   "view/camera.js",
   "view/simplecamera.js",
+  "view/outlinecamera.js",
+  "view/simulationobserver.js",
+  "view/view.js",
   "view/renderer.js",
   "view/domrenderer.js",
+  "view/canvas/canvasrenderer.js",
+  "view/canvas/canvasview.js",
+  "view/canvas/asteroidcanvasview.js",
+  "view/canvas/enginepoweredcanvasview.js",
+  "view/canvas/detonationcanvasview.js",
+  "view/canvas/earthcanvasview.js",
+  "view/canvas/mooncanvasview.js",
+  "view/canvas/missilecanvasview.js",
+  "view/canvas/planetcanvasview.js",
+  "view/canvas/spacedebriscanvasview.js",
+  "view/canvas/spaceshipcanvasview.js",
+  "view/canvas/starcanvasview.js",
   "view/touchcontrolview.js",
+  "view/debugview.js",
+  "controller/controller.js",
   "controller/keyboardcontroller.js",
-  "controller/touchcontroller.js"
+  "controller/touchcontroller.js",
+  "controller/sceneselector.js",
+  "controller/maincontroller.js"
   ], main);
 });
 
 /*jshint -W098 */
 function main() {
-  var simulation = new Simulation(69);
-  var area = document.getElementById('area');
-  var renderer = new DOMRenderer(simulation, area);
-  var scene = new SpaceDebrisScene(simulation, renderer);
+  var mainController = new MainController();
+  document.body.appendChild(mainController.view.rootElement);  
+}
 
-  simulation.start();
-  renderer.start();
+document.addEventListener("deviceready", onDeviceReady, false);
+
+function onDeviceReady() {
+  var sound = new Sound();
+  sound.playMusic("sound/Leisure-B_-_17_-_Man_On_The_Moon.mp3");
+  //Leisure-B_-_17_-_Man_On_The_Moon.mp3
+  //Andy_G_Cohen_-_11_-_Space_Outro.mp3
+  //Tortue_Super_Sonic_-_05_-_Neogrotesque.mp3
+  //Tortue_Super_Sonic_-_18_-_Youre_a_computer.mp3
 }

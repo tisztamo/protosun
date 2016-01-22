@@ -1,54 +1,45 @@
 "use strict";
 
-function TouchController(touchControl, touchControlView) {
-  this.model = touchControl;
-  this.spaceShip = this.model.spaceShip;
-  this.view = touchControlView;
+function TouchController(spaceShip, camera, touchControlView) {
   this.eventMapping = {
-    leftControl: {
-      touchstart: "startRotationLeft",
-      touchend: "stopRotation"
+    leftcontrol: {
+      touchstart: spaceShip.startRotationLeft.bind(spaceShip),
+      touchend: spaceShip.stopRotation.bind(spaceShip),
+      touchcancel: spaceShip.stopRotation.bind(spaceShip)
     },
-    rightControl: {
-      touchstart: "startRotationRight",
-      touchend: "stopRotation"
+    rightcontrol: {
+      touchstart: spaceShip.startRotationRight.bind(spaceShip),
+      touchend: spaceShip.stopRotation.bind(spaceShip),
+      touchcancel: spaceShip.stopRotation.bind(spaceShip)
     },
-    engineControl: {
-      touchstart: "startEngine",
-      touchend: "stopEngine"
+    enginecontrol: {
+      touchstart: spaceShip.startEngine.bind(spaceShip),
+      touchend: spaceShip.stopEngine.bind(spaceShip),
+      touchcancel: spaceShip.stopEngine.bind(spaceShip)
     },
-    fireControl: {
-      touchstart: "launchMissile",
+    firecontrol: {
+      touchstart: spaceShip.launchMissile.bind(spaceShip)
+    },
+    outlinecontrol: {
+      touchstart: camera.switchOutlined.bind(camera)
     }
   };
-  this.bindEvents();
+  Controller.call(this, spaceShip, touchControlView);
 }
+
+TouchController.prototype = new Controller();
+TouchController.prototype.constructor = TouchController;
 
 /**
  * @static
- * Creates a touch controller (TouchControl, TouchControlView and TouchController) for the given spaceship. If the browser does not support touching, 
+ * Creates a touch screen controller (TouchControlView and TouchController) for the given spaceship. If the browser does not support touching, 
  then returns null
  */
-TouchController.createControllerFor = function (spaceShip, targetElement) {
+TouchController.createControllerFor = function (spaceShip, simulation) {
   if (!BrowserFeatures.hasTouch) {
-    return null;
+    //return null;
   }
-  var touchControl = new TouchControl(spaceShip);
-  var touchControlView = new TouchControlView(touchControl, targetElement);
-  var touchController = new TouchController(touchControl, touchControlView);
+  var touchControlView = new TouchControlView();
+  var touchController = new TouchController(spaceShip, simulation, touchControlView);
   return touchController;
-};
-
-/** @private */
-TouchController.prototype.bindEvents = function () {
-  for (var controlName in this.eventMapping) {
-    var control = this.view.rootElement.getElementsByClassName(controlName).item(0);
-    var eventMapping = this.eventMapping[controlName];
-    if (eventMapping.touchstart) {
-      control.addEventListener("touchstart", this.spaceShip[eventMapping.touchstart].bind(this.spaceShip));
-    }
-    if (eventMapping.touchend) {
-      control.addEventListener("touchend", this.spaceShip[eventMapping.touchend].bind(this.spaceShip));
-    }
-  }
 };

@@ -5,14 +5,15 @@ function DOMRenderer(simulation, viewElement) {
   this.views = [];
   this.backgroundSpeedRatio = 2;
   this.defaultBgSize = 1024;
+  this.displayedViewCount = 0;
 }
 
 DOMRenderer.prototype = new Renderer();
 
 DOMRenderer.prototype.redraw = function () {
-  var shipModel = this.ship.model;
   this.camera.updateView();
   var length = this.views.length;
+  this.displayedViewCount = 0;
   for (var i = 0; i < length; i++) {
     this.updateView(this.views[i]);
   }
@@ -73,6 +74,7 @@ DOMRenderer.prototype.updateView = function (view) {
     } else if (spaceObject.mixinOverride && spaceObject.mixinOverride.EnginePowered) {
       this.updateEnginePoweredView(view);
     }
+    this.displayedViewCount++;
   } else {
     style.display = "none";
   }

@@ -3,6 +3,7 @@
 function Missile(pos, v, heading, lifeSteps, fuel) {
   SpaceObject.call(this, pos, v, 0.001, heading);
   EnginePowered.call(this, 0.0001, fuel || 60, true);
+  this.radius = 10;
   this.lifeSteps = lifeSteps || 480;
   this.detonated = false;
 }
@@ -20,7 +21,7 @@ Missile.prototype.oneStep = function () {
 };
 
 Missile.prototype.actOn = function (another, distance) {
-  if (distance < 10 + another.radius && !this.detonated && !another.permeable) {
+  if (distance < another.radius + this.radius && !this.detonated && !another.permeable) {
     this.detonate(another);
   }
 };
@@ -38,5 +39,3 @@ Missile.prototype.detonate = function (spaceObjectHit) {
     this.simulation.removeSpaceObject(spaceObjectHit);
   }
 };
-
-EnginePowered.mixInto(Missile);

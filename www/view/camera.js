@@ -1,8 +1,8 @@
 "use strict";
 
 /**
-* Base camera class. Cameras change the viewport based on
-* model changes.
+* Base camera class. Cameras change the viewport to reflect
+* model changes, e.g. to follow the player.
 * 
 * @class
 * @abstract
