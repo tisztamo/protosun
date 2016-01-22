@@ -9,6 +9,99 @@ if (Function.prototype.name === undefined && Object.defineProperty !== undefined
             return (results && results.length > 1) ? results[1].trim() : "";
         }
     });
+}
+
+
+/*! https://mths.be/array-from v0.2.0 by @mathias */
+(function() {
+	'use strict';
+	var defineProperty = (function() {
+		// IE 8 only supports `Object.defineProperty` on DOM elements.
+		try {
+			var object = {};
+			var $defineProperty = Object.defineProperty;
+			var result = $defineProperty(object, object, object) && $defineProperty;
+		} catch(error) {}
+		return result || function put(object, key, descriptor) {
+			object[key] = descriptor.value;
+		};
+	}());
+	var toStr = Object.prototype.toString;
+	var isCallable = function(fn) {
+		// In a perfect world, the `typeof` check would be sufficient. However,
+		// in Chrome 1–12, `typeof /x/ == 'object'`, and in IE 6–8
+		// `typeof alert == 'object'` and similar for other host objects.
+		return typeof fn == 'function' || toStr.call(fn) == '[object Function]';
+	};
+	var toInteger = function(value) {
+		var number = Number(value);
+		if (isNaN(number)) {
+			return 0;
+		}
+		if (number == 0 || !isFinite(number)) {
+			return number;
+		}
+		return (number > 0 ? 1 : -1) * Math.floor(Math.abs(number));
+	};
+	var maxSafeInteger = Math.pow(2, 53) - 1;
+	var toLength = function(value) {
+		var len = toInteger(value);
+		return Math.min(Math.max(len, 0), maxSafeInteger);
+	};
+	var from = function from(arrayLike) {
+		var C = this;
+		if (arrayLike == null) {
+			throw new TypeError('`Array.from` requires an array-like object, not `null` or `undefined`');
+		}
+		var items = Object(arrayLike);
+		var mapping = arguments.length > 1;
+
+		var mapFn, T;
+		if (arguments.length > 1) {
+			mapFn = arguments[1];
+			if (!isCallable(mapFn)) {
+				throw new TypeError('When provided, the second argument to `Array.from` must be a function');
+			}
+			if (arguments.length > 2) {
+				T = arguments[2];
+			}
+		}
+
+		var len = toLength(items.length);
+		var A = isCallable(C) ? Object(new C(len)) : new Array(len);
+		var k = 0;
+		var kValue, mappedValue;
+		while (k < len) {
+			kValue = items[k];
+			if (mapFn) {
+				mappedValue = typeof T == 'undefined' ? mapFn(kValue, k) : mapFn.call(T, kValue, k);
+			} else {
+				mappedValue = kValue;
+			}
+			defineProperty(A, k, {
+				'value': mappedValue,
+				'configurable': true,
+				'enumerable': true,
+				'writable': true
+			});
+			++k;
+		}
+		A.length = len;
+		return A;
+	};
+	defineProperty(Array, 'from', {
+		'value': from,
+		'configurable': true,
+		'writable': true
+	});
+}());
+
+
+if (!String.prototype.startsWith) {
+  String.prototype.startsWith = function(searchString, position) {
+    position = position || 0;
+    return this.indexOf(searchString, position) === position;
+  };
 }/*globals BrowserFeatures: true */
 "use strict";
 
@@ -746,27 +839,30 @@ var BrowserFeatures = {
   };
 
 } (window));
+/*jshint -W098 */
 "use strict";
 
-function Mixin() {}
+function CustomEventTarget() {
+  var customEventTarget = document.createDocumentFragment();
 
-Mixin.mixInto = function (target) {
-  if (this === Mixin) {
-    target.mixInto = this.mixInto;
-    return;
-  }
+  this.addEventListener = function (type, listener) {
+    customEventTarget.addEventListener(type, listener, true);
+  };
 
-  target.prototype.mixinOverride = target.prototype.mixinOverride || {};
+  this.removeEventListener = function (type, listener) {
+    customEventTarget.removeEventListener(type, listener, true);
+  };
 
-  var overridenMethods = {};
-  for (var propertyName in this.prototype) {
-    if (typeof target.prototype[propertyName] === "function") {
-      overridenMethods[propertyName] = target.prototype[propertyName];
-    }
-    target.prototype[propertyName] = this.prototype[propertyName];
-  }
-  target.prototype.mixinOverride[this.name] = overridenMethods;
-};/*! Copyright (c) Andrea Giammarchi - MIT License */
+  this.dispatchEvent = function (event) {
+    customEventTarget.dispatchEvent(event);
+  };
+
+  this.emit = function (eventName, detail) {
+    this.dispatchEvent(new CustomEvent(eventName, {
+      detail: detail
+    }));
+  };
+}/*! Copyright (c) Andrea Giammarchi - MIT License */
 (function(d,f,l){function v(a){this._=a;this.currentTarget=a.currentTarget}if(!(!(l=!!d.pointerEnabled)&&!d.msPointerEnabled||"ontouchend"in f)){var w=l?"setPointerCapture":"msSetPointerCapture",x=l?"releasePointerCapture":"msReleasePointerCapture";d=Element.prototype;var m=Object.defineProperties,y=Object.defineProperty,n=function(a){var b=a.toLowerCase();a="MS"+a;t[a]=t[b];return l?b:a},g=function(a){return{value:function(){C[a].call(this);this._[a]()}}},p=function(a){var b="_on"+a;return{enumerable:!0,
 configurable:!0,get:function(){return this[b]||null},set:function(e){this[b]&&this.removeEventListener(a,this[b]);(this[b]=e)&&this.addEventListener(a,e)}}},q=function(a,b){var e=a[b];y(a,b,{configurable:!0,value:function(a,b,c){a in h&&e.call(this,h[a],D,c);e.call(this,a,b,c)}})},c=function(a){return{get:function(){return this._[a]}}},z=function(a){return function(b){var e=b.pointerId,c=k[e],d=b.currentTarget;delete k[e];if(x in d)d[x](b.pointerId);u(a,b,c);delete r[e]}},u=function(a,b,e){var c=
 f.createEvent("Event");c.initEvent(a,!0,!0);s.value=b;A.currentTarget.value=e.currentTarget;m(c,A);e.currentTarget.dispatchEvent(c)},B=function(a,b){function c(a){return b[a]}return function(){s.value=Object.keys(b).map(c);return y(this,a,s)[a]}},s={value:null},k=Object.create(null),r=Object.create(null),C=f.createEvent("Event"),A={_:s,touches:{configurable:!0,get:B("touches",k)},changedTouches:{configurable:!0,get:B("changedTouches",r)},currentTarget:{value:null},relatedTarget:c("relatedTarget"),
@@ -972,6 +1068,7 @@ function GameEngine(fps) {
   this.stepsTaken = 0;
   /** Moving average of steps per timer callback. Values significantly higher than 1 indicate performance issues (timer was fired late regurarly during the last ~100 callbacks.)*/
   this.avgStepsPerCB = 1;
+  this.interval = null;
 }
 
 GameEngine.prototype.getTS = function () {
@@ -983,8 +1080,15 @@ GameEngine.prototype.getTS = function () {
  */
 GameEngine.prototype.start = function () {
   this.startTS = this.getTS();
-  setInterval(this.timerCB.bind(this),
+  this.interval = setInterval(this.timerCB.bind(this),
     this.stepTime);
+};
+
+GameEngine.prototype.stop = function () {
+  if (this.interval !== null) {
+    clearInterval(this.interval);
+    this.interval = null;
+  }
 };
 
 /**
@@ -1005,18 +1109,19 @@ GameEngine.prototype.timerCB = function () {
     this.oneStep();
     currentSteps += 1;
   }
-  this.avgStepsPerCB = 0.99 * this.avgStepsPerCB + 0.01 * currentSteps;
-};"use strict";
+  this.avgStepsPerCB = 0.95 * this.avgStepsPerCB + 0.05 * currentSteps;
+};/*jshint -W098 */
+"use strict";
 
 /**
-* Main simulation class: handles all the game modeling.
-* @class
-*/
+ * Main simulation class: handles all the game modeling.
+ * @class
+ */
 function Simulation(fps) {
   GameEngine.call(this, fps);
+  CustomEventTarget.call(this);
   this.spaceObjects = [];
   this.objectsToRemove = [];
-  this.renderer = null;
 }
 
 Simulation.prototype = new GameEngine();
@@ -1028,41 +1133,36 @@ Simulation.prototype.start = function () {
 };
 
 /**
-* Sets the renderer to use. This renderer wil be notified about model changes
-*/
-Simulation.prototype.setRenderer = function (renderer) {
-  this.renderer = renderer;
-};
-
-/**
-* Sets up the model.
-* @abstract
-*/
+ * Sets up the model.
+ * @abstract
+ */
 Simulation.prototype.setUpModel = function () {
   console.log("Default setUpModel, you have to override it!");
 };
 
 /**
-* Adds a SpaceObject to the simulation. Will trigger rendering it with the current renderer.
-*/
+ * Adds a SpaceObject to the simulation.
+ */
 Simulation.prototype.addSpaceObject = function (spaceObject) {
   this.spaceObjects.push(spaceObject);
   spaceObject.simulation = this;
-  if (this.renderer) {
-    this.renderer.spaceObjectAdded(spaceObject);
-  }
+  this.dispatchEvent(new CustomEvent("spaceobjectadded", {
+    detail: {
+      spaceObject: spaceObject
+    }
+  }));
 };
 
 /**
-* Marks the {@link SpaceObject} for removal. It will be removed at the end of the current step.
-*/
+ * Marks the {@link SpaceObject} for removal. It will be removed at the end of the current step.
+ */
 Simulation.prototype.removeSpaceObject = function (spaceObject) {
   this.objectsToRemove.push(spaceObject);
 };
 
 /**
-* @private
-*/
+ * @private
+ */
 Simulation.prototype.purgeSpaceObjects = function () {
   var removeIdx = this.objectsToRemove.length - 1;
   while (removeIdx >= 0) {
@@ -1071,7 +1171,11 @@ Simulation.prototype.purgeSpaceObjects = function () {
     while (i >= 0) {
       if (this.spaceObjects[i] === objectToRemove) {
         this.spaceObjects.splice(i, 1);
-        this.renderer.spaceObjectRemoved(objectToRemove);
+        this.dispatchEvent(new CustomEvent("spaceobjectremoved", {
+          detail: {
+            spaceObject: objectToRemove
+          }
+        }));
         break;
       }
       i--;
@@ -1099,7 +1203,8 @@ Simulation.prototype.oneStep = function () {
     outerIdx++;
   }
   this.purgeSpaceObjects();
-  this.renderer.oneStepTaken();
+
+  this.dispatchEvent(new CustomEvent("onesteptaken"));
   GameEngine.prototype.oneStep.call(this);
 };"use strict";
 
@@ -1186,10 +1291,16 @@ SpaceObject.prototype.oneStep = function () {
  * @param distance The precalculated distance between this and another
  * @abstract
  */
-SpaceObject.prototype.actOn = function (another, distance) {};"use strict";
+SpaceObject.prototype.actOn = function (another, distance) {};
+
+
+SpaceObject.prototype.toString = function() {
+  return " " + this.constructor.name;
+};"use strict";
 
 function Star(pos, v, mass) {
   SpaceObject.call(this, pos, v, mass);
+  this.radius = 135;
 }
 
 Star.prototype = new SpaceObject();
@@ -1197,37 +1308,48 @@ Star.prototype.constructor = Star;
 
 Star.prototype.isIndestructible = true;"use strict";
 
+function FixedStar(pos, v, mass) {
+  Star.call(this, pos, v, mass);
+}
+
+FixedStar.prototype = new Star();
+FixedStar.prototype.constructor = FixedStar;
+
+FixedStar.prototype.oneStep = function () {
+  this.stepForce = Vector.zero.clone();
+  SpaceObject.prototype.oneStep.call(this);
+};"use strict";
+
 function Planet(pos, v, mass) {
   SpaceObject.call(this, pos, v, mass);
+  this.radius = 25;
 }
 
 Planet.prototype = new SpaceObject();
-Planet.prototype.constructor = Planet;"use strict";
+Planet.prototype.constructor = Planet;/*jshint -W098 */
+"use strict";
 
 /**
-* Marks the SpaceObject as the center of the simulation, for optimization purposes.
-* Silently removes SpaceObjects from the simulation when they are
-* too far from this object.
-* Only one object with this capability should be added to a simulation.
-* @TODO the SpaceShip is also removed silently, which should be handled with game over or so.
-* jsdoc limitation: cannot document mixin initialization params, check the source for more info!
-* @param {number} maxDistance The radius of the simulation, object farer from the simulation center will be removed silently.
-* @mixin
-*/
+ * Marks the SpaceObject as the center of the simulation, for optimization purposes.
+ * Silently removes SpaceObjects from the simulation when they are
+ * too far from this object.
+ * Only one object with this capability should be added to a simulation.
+ * @TODO the SpaceShip is also removed silently, which should be handled with game over or so.
+ * jsdoc limitation: cannot document mixin initialization params, check the source for more info!
+ * @param {number} maxDistance The radius of the simulation, object farer from the simulation center will be removed silently.
+ * @mixin
+ */
 function SimulationCenter(maxDistance) {
-  this.maxDistance = maxDistance || Infinity;
-}
+  maxDistance = maxDistance || Infinity;
 
-Mixin.mixInto(SimulationCenter);
-
-SimulationCenter.prototype.actOn = function (another, distance) {
-  if (distance > this.maxDistance) {
-    this.simulation.removeSpaceObject(another);
-  }
-  if (this.mixinOverride.SimulationCenter.actOn) {
-    this.mixinOverride.SimulationCenter.actOn.call(this, another, distance);
-  }
-};"use strict";
+  var superActOn = this.actOn || function () {};
+  this.actOn = function (another, distance) {
+    if (distance > this.maxDistance) {
+      this.simulation.removeSpaceObject(another);
+    }
+    superActOn.call(this, another, distance);
+  };
+}"use strict";
 
 function Earth(pos, v, mass, radius) {
   SpaceObject.call(this, pos, v, mass);
@@ -1252,70 +1374,84 @@ Earth.prototype.actOn = function (another, distance) {
     this.simulation.removeSpaceObject(another);
   }
 };
-
-SimulationCenter.mixInto(Earth);"use strict";
+"use strict";
 
 function Moon(pos, v, mass) {
   SpaceObject.call(this, pos, v, mass);
+  this.radius = 15;
 }
 
 Moon.prototype = new SpaceObject();
-Moon.prototype.constructor = Moon;"use strict";
+Moon.prototype.constructor = Moon;/*jshint -W098 */
+"use strict";
 
 /**
-* Propulsion engine capability, can be mixed into {@link SpaceObject}s.
-* jsdoc limitation: cannot document mixin initialization params, check the source for more info!
-* @param {number} enginePower - the force that is generated by the engine. Direction of the force is based on the heading of the object.
-* @param {number} fuel - Fuel is used while the engine is running, 1 unit per simulation step. This is the initial value.
-* @param {boolean} engineRunning - Initial state of the engine.
-* @mixin
-*/
+ * Propulsion engine capability, can be mixed into {@link SpaceObject}s.
+ * jsdoc limitation: cannot document mixin initialization params, check the source for more info!
+ * @param {number} enginePower - the force that is generated by the engine. Direction of the force is based on the heading of the object.
+ * @param {number} fuel - Fuel is used while the engine is running, 1 unit per simulation step. This is the initial value.
+ * @param {boolean} engineRunning - Initial state of the engine.
+ * @mixin
+ */
 function EnginePowered(enginePower, fuel, engineRunning) {
-  this.fuel = fuel || Infinity;
-  this.enginePower = enginePower || 0.001;
-  this.engineRunning = engineRunning || false;
-}
+  this.enginePowered = {
+    fuel: fuel || Infinity,
+    engineRunning: engineRunning || false
+  };
+  enginePower = enginePower || 0.001;
+  var props = this.enginePowered;
 
-Mixin.mixInto(EnginePowered);
-
-EnginePowered.prototype.oneStep = function () {
-  if (this.engineRunning) {
-    this.stepForce.add(Vector.createFromPolar(this.heading, this.enginePower));
-    if (--this.fuel <= 0) {
-      this.engineRunning = false;
+  var superOneStep = this.oneStep;
+  this.oneStep = function () {
+    if (this.enginePowered.engineRunning) {
+      this.stepForce.add(Vector.createFromPolar(this.heading, enginePower));
+      if (--props.fuel <= 0) {
+        props.engineRunning = false;
+      }
     }
-  }
-  this.mixinOverride.EnginePowered.oneStep.call(this);
-};
+    superOneStep.call(this);
+  };
 
-EnginePowered.prototype.startEngine = function () {
-  this.engineRunning = true;
-};
+  this.startEngine = function () {
+    if (props.fuel > 0) {
+      props.engineRunning = true;
+    }
+  };
 
-EnginePowered.prototype.stopEngine = function () {
-  this.engineRunning = false;
-};"use strict";
+  this.stopEngine = function () {
+    props.engineRunning = false;
+  };
+}"use strict";
 
-/**
-* Misile launching capability. Can be mixed into {@link SpaceObject}s.
-* @mixin
-*/
-function MissileLauncher() {
+function Asteroid(pos, v, mass) {
+  SpaceObject.call(this, pos, v, mass, 0, Math.random() / 10 - 0.05);
+  this.radius = 15;
 }
 
-Mixin.mixInto(MissileLauncher);
+Asteroid.prototype = new SpaceObject();
+Asteroid.prototype.constructor = Asteroid;
+/*jshint -W098 */
+"use strict";
 
 
 /**
-* Launches a missile to the current heading of this {@link SpaceObject}
-*/
-MissileLauncher.prototype.launchMissile = function () {
-  var direction = Vector.createFromPolar(this.heading, 1);
-  var pos = this.pos.clone().add(direction.clone().multiply(35));
-  var v = this.v.clone();
-  var missile = new Missile(pos, v, this.heading);
-  this.simulation.addSpaceObject(missile);
-};"use strict";
+ * Misile launching capability. Can be mixed into {@link SpaceObject}s.
+ * @mixin
+ */
+function MissileLauncher() {
+  /**
+   * Launches a missile to the current heading of this {@link SpaceObject}
+   */
+  this.launchMissile = function () {
+    var direction = Vector.createFromPolar(this.heading, 1);
+    var v = this.v.clone();
+    var missile = new Missile(this.pos.clone(), v, this.heading);
+    missile.pos.add(direction.clone().multiply(this.radius + missile.radius + 5));
+    this.simulation.addSpaceObject(missile);
+  };
+}
+
+"use strict";
 
 function SpaceDebris(pos, v, mass, heading) {
   SpaceObject.call(this, pos, v, mass, heading);
@@ -1326,19 +1462,16 @@ SpaceDebris.prototype = new SpaceObject();
 SpaceDebris.prototype.constructor = SpaceDebris;
 "use strict";
 
-function SpaceShip(pos, v, mass, heading) {
+function SpaceShip(simulation, pos, v, mass, heading, enginePower, fuel) {
   SpaceObject.call(this, pos, v, mass, heading);
-  EnginePowered.call(this);
+  EnginePowered.call(this, enginePower, fuel);
   MissileLauncher.call(this);
+  this.radius = 20;
+  this.rotationEnginePower = 0.03 / simulation.fps * 100;
 }
 
 SpaceShip.prototype = new SpaceObject();
 SpaceShip.prototype.constructor = SpaceShip;
-
-EnginePowered.mixInto(SpaceShip);
-MissileLauncher.mixInto(SpaceShip);
-
-SpaceShip.prototype.rotationEnginePower = 0.04;
 
 SpaceShip.prototype.startRotationLeft = function () {
   this.angularSpeed = -this.rotationEnginePower;
@@ -1355,6 +1488,7 @@ SpaceShip.prototype.stopRotation = function () {
 function Missile(pos, v, heading, lifeSteps, fuel) {
   SpaceObject.call(this, pos, v, 0.001, heading);
   EnginePowered.call(this, 0.0001, fuel || 60, true);
+  this.radius = 10;
   this.lifeSteps = lifeSteps || 480;
   this.detonated = false;
 }
@@ -1372,7 +1506,7 @@ Missile.prototype.oneStep = function () {
 };
 
 Missile.prototype.actOn = function (another, distance) {
-  if (distance < 10 + another.radius && !this.detonated && !another.permeable) {
+  if (distance < another.radius + this.radius && !this.detonated && !another.permeable) {
     this.detonate(another);
   }
 };
@@ -1390,8 +1524,6 @@ Missile.prototype.detonate = function (spaceObjectHit) {
     this.simulation.removeSpaceObject(spaceObjectHit);
   }
 };
-
-EnginePowered.mixInto(Missile);
 "use strict";
 
 function Detonation(pos, v) {
@@ -1412,18 +1544,12 @@ Detonation.prototype.oneStep = function () {
 };
 "use strict";
 
-function TouchControl(spaceShip) {
-  this.spaceShip = spaceShip;
-}
-
-"use strict";
-
 /** Base class to define a scene, e.g. a level of the game.
-* @param {Simulation} simulation
-* @param {Renderer} renderer
-* @class
-* @abstract
-*/
+ * @param {Simulation} simulation
+ * @param {Renderer} renderer
+ * @class
+ * @abstract
+ */
 function Scene(simulation, renderer) {
   this.simulation = simulation;
   this.renderer = renderer;
@@ -1433,10 +1559,135 @@ function Scene(simulation, renderer) {
 }
 
 /**
-* Sets up the scene.
+ * Sets up the scene.
+ * @abstract
+ */
+Scene.prototype.setUpModel = function () {};
+
+
+Scene.scenes = {};
+
+Scene.registerScene = function (sceneClass) {
+  Scene.scenes[sceneClass.name] = sceneClass;
+};
+
+Scene.createScene = function (sceneName, simulation, renderer) {
+  return new (Scene.scenes[sceneName])(simulation, renderer);
+};"use strict";
+
+/** Base class to define the objective of a scene.
+* @param {Simulation} simulation
+* @class
 * @abstract
 */
-Scene.prototype.setUpModel = function () {
+function Objective(simulation, winAtStep, failAtStep) {
+  this.simulation = simulation;
+  SimulationObserver.call(this, simulation);
+  CustomEventTarget.call(this);
+  this.winAtStep = winAtStep || -1;
+  this.failAtStep = failAtStep || -1;
+  this.stepCount = 0;
+  this.ended = false;
+}
+
+Objective.prototype.oneStepTaken = function () {
+  this.stepCount += 1;
+  if (this.stepCount == this.winAtStep) {
+    this.emitWin();
+  }
+  if (this.stepCount == this.failAtStep) {
+    this.emitFail();
+  }
+};
+
+Objective.prototype.emitWin = function () {
+  if (this.ended) {
+    return;
+  }
+  this.ended = true;
+  this.dispatchEvent(new CustomEvent("win"));
+};
+
+Objective.prototype.emitFail = function (eventData) {
+  if (this.ended) {
+    return;
+  }
+  this.ended = true;
+  this.dispatchEvent(new CustomEvent("fail", {
+    detail: eventData
+  }));
+};"use strict";
+
+function ProtectObjective(simulation, protectedObjects, winAtStep) {
+  Objective.call(this, simulation, winAtStep);
+  this.protectedObjects = protectedObjects;
+}
+
+ProtectObjective.prototype = Object.create(Objective.prototype);
+
+ProtectObjective.prototype.spaceObjectRemoved = function (spaceObject) {
+  if (this.protectedObjects.indexOf(spaceObject) !== -1) {
+    this.emitFail({
+      lostObject: spaceObject
+    });
+  }
+};"use strict";
+
+function PuzzleScene(simulation, renderer) {
+  Scene.call(this, simulation, renderer);
+}
+
+PuzzleScene.prototype = new Scene();
+PuzzleScene.prototype.constructor = PuzzleScene;
+Scene.registerScene(PuzzleScene);
+
+
+PuzzleScene.prototype.setUpModel = function () {
+  var simulation = this.simulation;
+  var ship = new SpaceShip(simulation, new Vector(500, 350), new Vector(3, 0), 0.1, 0, 0.0015);
+  var planet = new Planet(new Vector(400, 350), new Vector(-0.3, 0.3), 15);
+  var moon = new Moon(new Vector(400, 650), new Vector(-1.3, 0.3), 1);
+  var star = new FixedStar(new Vector(1400, 1050), new Vector(0, 0), 10);
+  star.isIndestructible = false;
+  var asteroids = [new Asteroid(new Vector(200, 0), new Vector(2, 0.1), 0.1),
+  new Asteroid(new Vector(1600, 1350), new Vector(0.3, -1.51), 1),
+  new Asteroid(new Vector(2900, 1750), new Vector(-0.7, -0.28), 1)];
+
+  simulation.addSpaceObject(ship);
+  simulation.addSpaceObject(planet);
+  simulation.addSpaceObject(moon);
+  asteroids.forEach(simulation.addSpaceObject.bind(simulation));
+  simulation.addSpaceObject(star);
+
+  var objectToProtect = [ship, planet, moon, star];
+  objectToProtect.forEach(function (spaceObject) {
+    spaceObject.actOn = function (another, distance) {
+      if (distance < another.radius + spaceObject.radius - 8 && !another.permeable) {
+        simulation.removeSpaceObject(spaceObject);
+      }
+    };
+  });
+
+  this.objective = new ProtectObjective(simulation, objectToProtect, 1800);
+  this.objective.addEventListener("win", function () {
+    alert("win!");
+  });
+  this.objective.addEventListener("fail", function (event) {
+    var reason;
+    try {
+      reason = event.detail.lostObject.constructor.name;
+    } catch (e) {}
+    alert("fail: " + reason);
+  });
+
+  var camera = new OutlineCamera(new SimpleCamera(this.simulation, this.renderer.viewPort, ship), 0, 0, 3000, 1800);
+  this.renderer.setCamera(camera);
+
+  new KeyboardController(ship, camera);
+  var touchController = TouchController.createControllerFor(ship, camera);
+  if (touchController) {
+    this.renderer.viewElement.appendChild(touchController.view.rootElement);
+  }
 };"use strict";
 
 function SpaceDebrisScene(simulation, renderer) {
@@ -1445,11 +1696,12 @@ function SpaceDebrisScene(simulation, renderer) {
 
 SpaceDebrisScene.prototype = new Scene();
 SpaceDebrisScene.prototype.constructor = SpaceDebrisScene;
+Scene.registerScene(SpaceDebrisScene);
 
 SpaceDebrisScene.prototype.setUpModel = function () {
   var simulation = this.simulation;
   var scene = this;
-  var ship = new SpaceShip(new Vector(400, -550), new Vector(2.3, 0), 0.1, 0);
+  var ship = new SpaceShip(simulation, new Vector(400, -550), new Vector(2.3, 0), 0.1, 0);
   var earth = new Earth(new Vector(400, 350), new Vector(0, 0), 105, 755);
   earth.maxDistance = 4000;
 
@@ -1463,10 +1715,15 @@ SpaceDebrisScene.prototype.setUpModel = function () {
       }
     }
   }, 1500);
-  this.renderer.setCamera(new SimpleCamera(this.simulation, this.renderer.viewPort, ship));
+  
+  var camera = new OutlineCamera(new SimpleCamera(this.simulation, this.renderer.viewPort, ship));
+  this.renderer.setCamera(camera);
 
-  new KeyboardController(ship);
-  TouchController.createControllerFor(ship, this.renderer.viewElement);
+  new KeyboardController(ship, camera);
+  var touchController = TouchController.createControllerFor(ship, camera);
+  if (touchController) {
+    this.renderer.viewElement.appendChild(touchController.view.rootElement);
+  }
 };
 
 SpaceDebrisScene.prototype.generateDebris = function (centerObject, minDistance, maxDistance, viewPort) {
@@ -1478,11 +1735,53 @@ SpaceDebrisScene.prototype.generateDebris = function (centerObject, minDistance,
     var speed = Math.sqrt((5400 + 600 * Math.random()) / distance);
     return new SpaceDebris(pos, Vector.createFromPolar(angle - Math.PI / 2, speed));
   }
+};/*global Media*/
+"use strict";
+
+function Sound() {}
+
+
+Sound.prototype.playMusic = function (url) {
+  if (!window.Media) {
+    console.log("playMusic: Media plugin not found");
+    return;
+  }
+  this.stopMusic();
+  var mediaUrl = this.createLocalMediaUrl(url);
+  this.runningMusic = new Media(mediaUrl,
+    function () {
+      console.log("playMusic(): Audio Success");
+    },
+    function (err) {
+      console.log("playMusic():Audio Error: " + JSON.stringify(err));
+    }
+  );
+  this.runningMusic.play();
+};
+
+Sound.prototype.stopMusic = function () {
+  if (this.runningMusic) {
+    this.runningMusic.stop();
+    this.runningMusic.release();
+  }
+};
+
+Sound.prototype.createLocalMediaUrl = function (relativeUrl) {
+  if (window.device && window.device.platform == "Android") {
+    var path = window.location.pathname;
+    path = path.substr(path, path.lastIndexOf("/"));
+    if (!path.startsWith("http") && !path.startsWith("file")) {
+      path = "file://" + path;
+    }
+    return path + "/" + relativeUrl;
+  } else {
+    return relativeUrl;
+  }
 };"use strict";
 
 /**
-* Base camera class. Cameras change the viewport based on
-* model changes.
+* Base camera class. Cameras change the viewport to reflect
+* model changes, e.g. to follow the player.
 * 
 * @class
 * @abstract
@@ -1516,22 +1815,175 @@ SimpleCamera.prototype.updateView = function () {
   this.viewPort.setModelViewPortWithCenterZoom(this.centerObject.pos.clone().add(this.centerObject.v.clone().multiply(50)), 1);
 };"use strict";
 
+function OutlineCamera(originalCamera, x, y, width, height) {
+  Camera.call(this, originalCamera.simulation, originalCamera.viewPort);
+  this.originalCamera = originalCamera;
+  this.isOutLined = false;
+  this.x = x || 0;
+  this.width = width || 2048;
+  this.y = x || 0;
+  this.height = height || 1536;
+  this.animationLength = 500;
+}
+
+OutlineCamera.prototype = new Camera();
+OutlineCamera.prototype.constructor = OutlineCamera;
+
+OutlineCamera.prototype.updateView = function () {
+  if (this.animationRunning && this.animate()) {
+    return;
+  }
+  if (this.isOutlined) {
+    this.viewPort.setModelViewPort(this.x, this.y, this.width, this.height);
+  } else {
+    this.originalCamera.updateView();
+  }
+};
+
+OutlineCamera.prototype.animate = function () {
+  var phase = (Date.now() - this.animationStartedAt) / this.animationLength;
+  if (phase >= 1) {
+    this.animationRunning = false;
+    return false;
+  }
+  if (!this.isOutlined) {
+    phase = 1 - phase;
+  }
+  this.originalCamera.updateView();
+  
+  function animPos(a, b, phase) {
+    return a + phase * (b - a);
+  }
+  var x = animPos(this.viewPort.modelViewPort.x, this.x, phase);
+  var y = animPos(this.viewPort.modelViewPort.y, this.y, phase);
+  var width = animPos(this.viewPort.modelViewPort.width, this.width, phase);
+  var height = animPos(this.viewPort.modelViewPort.height, this.height, phase);
+  this.viewPort.setModelViewPort(x, y, width, height);
+  return true;
+};
+
+OutlineCamera.prototype.setOutlined = function (outlineFlag) {
+  this.isOutlined = outlineFlag;
+  this.animationRunning = true;
+  this.animationStartedAt = Date.now();
+};
+
+OutlineCamera.prototype.switchOutlined = function () {
+  this.setOutlined(!this.isOutlined);
+};/*jshint -W098 */
+"use strict";
+
+function SimulationObserver(simulation) {
+  this.simulation = simulation;
+  if (simulation) {
+    var observer = this;
+    if (observer.spaceObjectAdded) {
+      simulation.addEventListener("spaceobjectadded", function (event) {
+        observer.spaceObjectAdded(event.detail.spaceObject);
+      });
+    }
+    if (observer.spaceObjectRemoved) {
+      simulation.addEventListener("spaceobjectremoved", function (event) {
+        observer.spaceObjectRemoved(event.detail.spaceObject);
+      });
+    }
+    if (observer.oneStepTaken) {
+      simulation.addEventListener("onesteptaken", function (event) {
+        observer.oneStepTaken();
+      });
+    }
+  }
+}"use strict";
+
+function View(model, templateId) {
+  this.model = model;
+  this.rootElement = this.createRootElement(model, templateId);
+  this.viewElements = this.loadElementsToObject("[data-view]", "data-view");
+  this.updateAll();
+}
+
+View.prototype.idPrefix = "view_";
+View.prototype.templateId = "view";
+View.prototype.projection = {};
+
+View.prototype.createRootElement = function (model, templateId) {
+  templateId = templateId || this.templateId;
+  var template = document.getElementById(templateId);
+  if (!template) {
+    return null;
+  }
+  var rootElement = template.cloneNode(true);
+  var id = model && model.id ? model.id : "autogen" + Math.round(Math.random() * 100000);
+  rootElement.id = id;
+  rootElement.model = model;
+  rootElement.classList.remove("template");
+  return rootElement;
+};
+
+View.prototype.loadElementsToObject = function (selector, namingAttribute) {
+  if (!this.rootElement) {
+    return;
+  }
+  var retval = {};
+  Array.from(this.rootElement.querySelectorAll(selector))
+    .forEach(function (element) {
+      retval[element.getAttribute(namingAttribute)] = element;
+    });
+  return retval;
+};
+
+View.prototype.calculateFieldValue = function (fieldName) {
+  var fieldProjector = this.projection[fieldName];
+  if (typeof fieldProjector === "undefined") {
+    return this.model[fieldName];
+  } else if (typeof fieldProjector == "function") {
+    return fieldProjector.call(this, fieldName);
+  }
+  return fieldProjector;
+};
+
+View.prototype.updateField = function (fieldName) {
+  var viewElement = this.viewElements[fieldName];
+  var fieldValue = this.calculateFieldValue(fieldName);
+  if (typeof fieldValue === "object") {
+    for (var attributeName in fieldValue) {
+      viewElement[attributeName] = fieldValue[attributeName];
+    }
+  } else {
+    viewElement.textContent = fieldValue;
+  }
+};
+
+View.prototype.updateAll = function () {
+  for (var fieldName in this.viewElements) {
+    this.updateField(fieldName);
+  }
+};"use strict";
+
 function Renderer(simulation, viewElement) {
+  SimulationObserver.call(this, simulation);
   this.simulation = simulation;
   this.viewElement = viewElement;
   this.redrawNeeded = true;
   this.viewPort = new DOMViewPort(viewElement);
   this.camera = null;
-  if (simulation) {
-    simulation.setRenderer(this);
-  }
+  this.stopped = false;
 }
 
 Renderer.prototype.start = function () {
   window.requestAnimationFrame(this.tick.bind(this));
+  this.stopped = false;
 };
 
+Renderer.prototype.stop = function () {
+  this.stopped = true;
+};
+
+
 Renderer.prototype.tick = function () {
+  if (this.stopped) {
+    return;
+  }
   if (this.redrawNeeded) {
     this.redraw();
     this.redrawNeeded = false;
@@ -1551,13 +2003,11 @@ Renderer.prototype.setCamera = function (camera) {
   this.camera = camera;
 };
 
-/*jshint -W098 */
-
-Renderer.prototype.spaceObjectAdded = function (spaceObject) {
+Renderer.prototype.spaceObjectAdded = function () {
   this.redrawNeeded = true;
 };
 
-Renderer.prototype.spaceObjectRemoved = function (spaceObject) {
+Renderer.prototype.spaceObjectRemoved = function () {
   this.redrawNeeded = true;
 };"use strict";
 
@@ -1566,14 +2016,15 @@ function DOMRenderer(simulation, viewElement) {
   this.views = [];
   this.backgroundSpeedRatio = 2;
   this.defaultBgSize = 1024;
+  this.displayedViewCount = 0;
 }
 
 DOMRenderer.prototype = new Renderer();
 
 DOMRenderer.prototype.redraw = function () {
-  var shipModel = this.ship.model;
   this.camera.updateView();
   var length = this.views.length;
+  this.displayedViewCount = 0;
   for (var i = 0; i < length; i++) {
     this.updateView(this.views[i]);
   }
@@ -1634,6 +2085,7 @@ DOMRenderer.prototype.updateView = function (view) {
     } else if (spaceObject.mixinOverride && spaceObject.mixinOverride.EnginePowered) {
       this.updateEnginePoweredView(view);
     }
+    this.displayedViewCount++;
   } else {
     style.display = "none";
   }
@@ -1664,24 +2116,414 @@ DOMRenderer.prototype.updateDetonationView = function (view) {
   }
 };"use strict";
 
-function TouchControlView(touchControl, targetElement) {
-  this.model = touchControl;
-  this.rootElement = this.createView("touchcontrol", targetElement);
+function CanvasRenderer(simulation, area) {
+  Renderer.call(this, simulation, area);
+  this.views = [];
+  this.backgroundSpeedRatio = 2;
+  this.defaultBgSize = 1024;
+  this.displayedViewCount = 0;
+  this.canvas = document.createElement("canvas");
+  this.area = area;
+  this.area.appendChild(this.canvas);
+  this.canvas.width = area.width || 1000;
+  this.canvas.height = area.height || 800;
+  this.ctx = this.canvas.getContext('2d');
 }
 
-TouchControlView.prototype.createView = function (templateid, targetElement) {
-  var template = document.getElementById(templateid);
-  var view = template.cloneNode(true);
-  view.id = "control_" + this.model.spaceShip.id;
-  view.model = this.model.spaceship;
-  view.classList.remove("template");
-  targetElement.appendChild(view);
+CanvasRenderer.prototype = new Renderer();
+CanvasRenderer.prototype.constructor = CanvasRenderer;
+CanvasRenderer.viewClasses = [];
+
+CanvasRenderer.prototype.stop = function () {
+  this.area.removeChild(this.canvas);
+  Renderer.prototype.stop.call(this);
+};
+
+CanvasRenderer.registerViewClass = function (modelName, canvasViewClass) {
+  CanvasRenderer.viewClasses[modelName] = canvasViewClass;
+};
+
+CanvasRenderer.prototype.redraw = function () {
+  this.camera.updateView();
+  this.clearCanvas();
+  this.updateBackground();
+  var length = this.views.length;
+  this.displayedViewCount = 0;
+  for (var i = 0; i < length; i++) {
+    this.updateView(this.views[i]);
+  }
+};
+
+CanvasRenderer.prototype.clearCanvas = function () {
+  if (this.canvas.width != this.viewElement.clientWidth || this.canvas.height != this.viewElement.clientHeight) {
+    this.canvas.width = this.viewElement.clientWidth;
+    this.canvas.height = this.viewElement.clientHeight;
+  }
+  // this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+};
+
+CanvasRenderer.prototype.spaceObjectAdded = function (spaceObject) {
+  Renderer.prototype.spaceObjectAdded.call(this, spaceObject);
+
+  var view = this.createView(spaceObject);
+  if (spaceObject instanceof SpaceShip) {
+    this.ship = view;
+  }
+};
+
+CanvasRenderer.prototype.spaceObjectRemoved = function (spaceObject) {
+  Renderer.prototype.spaceObjectRemoved.call(this, spaceObject);
+  var i = this.views.length - 1;
+  while (i >= 0) {
+    if (this.views[i].model === spaceObject) {
+      this.views.splice(i, 1);
+      return;
+    }
+    i--;
+  }
+};
+
+CanvasRenderer.prototype.createView = function (spaceObject) {
+  var viewClassName = spaceObject.constructor.name.toLowerCase();
+  var ViewClass = CanvasRenderer.viewClasses[viewClassName];
+  if (!ViewClass) {
+    throw "No View class for " + viewClassName;
+  }
+  var view = new ViewClass(spaceObject, this.viewPort);
+  this.views.push(view);
   return view;
 };
+
+CanvasRenderer.prototype.updateView = function (view) {
+  try {
+    view.drawTo(this.ctx);
+  } catch (e) {
+    console.warn(e);
+  }
+  this.displayedViewCount++;
+};
+
+CanvasRenderer.prototype.updateBackground = function () {
+  if (!this.backgroundImage) {
+    this.backgroundImage = new Image();
+    this.backgroundImage.src = "img/background.jpg";
+  }
+
+  function nonPositiveRemainder(value, width) {
+    value = value % width;
+    while (value > 0) {
+      value -= width;
+    }
+    return value;
+  }
+
+  var center = this.viewPort.modelViewPort.center;
+  var bgSizeRatio = 1 + (this.viewPort.viewScale - 1) / this.backgroundSpeedRatio;
+  var bgWidth = Math.round(bgSizeRatio * this.defaultBgSize);
+  var bgHeight = Math.round(bgWidth * this.backgroundImage.width / this.backgroundImage.height);
+  if (bgWidth < 100 || bgHeight < 100) {
+    return;
+  }
+  var x = nonPositiveRemainder(Math.round(-center.x / this.backgroundSpeedRatio * bgSizeRatio), bgWidth);
+  var y = nonPositiveRemainder(Math.round(-center.y / this.backgroundSpeedRatio * bgSizeRatio), bgHeight);
+  while (x < this.canvas.width) {
+    var yy = y;
+    while (yy < this.canvas.height) {
+      this.ctx.drawImage(this.backgroundImage, x, yy, bgWidth, bgHeight);
+      yy += bgHeight;
+    }
+    x += bgWidth;
+  }
+
+  /*this.viewElement.style.backgroundPosition = Math.round(-center.x / this.backgroundSpeedRatio * bgSizeRatio) + "px " + Math.round(-center.y / this.backgroundSpeedRatio * bgSizeRatio) + "px";
+  this.viewElement.style.backgroundSize = Math.round(bgSizeRatio * this.defaultBgSize) + "px";*/
+};"use strict";
+
+function CanvasView(model, viewPort, parts) {
+  this.model = model;
+  this.viewPort = viewPort;
+  this.parts = parts || [];
+  this.maxAge = Infinity;
+  this.createdAt = Date.now();
+}
+
+CanvasView.modelName = "spaceobject";
+CanvasView.images = {};
+CanvasRenderer.registerViewClass(CanvasView);
+
+CanvasView.prototype.drawImage = function (descriptor) {
+  var offsetX = descriptor.offsetX || 0;
+  var offsetY = descriptor.offsetY || 0;
+  this.ctx.translate(this.projectedPos.x, this.projectedPos.y);
+  this.ctx.rotate(this.model.heading);
+  this.ctx.scale(this.viewPort.viewScale, this.viewPort.viewScale);
+  this.ctx.translate(offsetX, offsetY);
+  this.ctx.globalAlpha = typeof descriptor.alpha === "undefined" ? 1 : descriptor.alpha;
+  this.ctx.drawImage(descriptor.image, Math.round(-descriptor.width / 2), Math.round(-descriptor.height / 2), descriptor.width, descriptor.height);
+};
+
+CanvasView.prototype.drawPart = function (descriptor) {
+  this.projectedPos = this.viewPort.isInView(this.model.pos, this.model.radius);
+  if (!this.projectedPos) return;
+
+  this.ctx.save();
+  this.drawImage(descriptor);
+  this.ctx.restore();
+};
+
+CanvasView.prototype.drawTo = function (ctx) {
+  this.ctx = ctx;
+  var age = Math.min(Date.now() - this.createdAt, this.maxAge);
+  this.calcAnimationState(age);
+  this.parts.forEach(this.drawPart.bind(this));
+};
+
+CanvasView.prototype.calcAnimationState = function (age) {
+  return age;
+};
+
+CanvasView.loadImage = function (imageName) {
+  if (CanvasView.images[imageName]) {
+    return CanvasView.images[imageName];
+  }
+  var image = new Image();
+  image.src = "img/" + imageName + ".png";
+  image.width = 60;
+  image.height = 60;
+  CanvasView.images[imageName] = image;
+  return image;
+};"use strict";
+
+function AteroidCanvasView(model, viewPort) {
+  CanvasView.call(this, model, viewPort, [{
+    image: CanvasView.loadImage("asteroid"),
+    width: model.radius * 2,
+    height: model.radius * 2
+  }]);
+}
+
+AteroidCanvasView.prototype = new CanvasView();
+
+CanvasRenderer.registerViewClass("asteroid", AteroidCanvasView);"use strict";
+
+function EnginePoweredCanvasView(flameDescriptor) {
+  var flame = flameDescriptor || EnginePoweredCanvasView.defaultFlame;
+  this.parts.unshift(flame);
+  var engineRunning = false;
+  var animationDuration = 200;
+  var flameWidth = flameDescriptor.width;
+  var flameOffsetX = flameDescriptor.offsetX;
+  var animationStartedAt;
+
+  this.calcAnimationState = function (age) {
+    if (engineRunning !== this.model.enginePowered.engineRunning) {
+      engineRunning = this.model.enginePowered.engineRunning;
+      animationStartedAt = age;
+    }
+    var transitionState = Math.min((age - animationStartedAt) / animationDuration, 1);
+    transitionState = engineRunning ? transitionState : 1 - transitionState;
+    flame.alpha = 1.5 - transitionState;
+    flame.width = flameWidth * transitionState;
+    flame.offsetX = -20 + flameOffsetX * transitionState;
+  };
+}
+
+EnginePoweredCanvasView.defaultFlame = {
+  image: CanvasView.loadImage("doubleflame"),
+  width: 120,
+  height: 30,
+  offsetX: -77,
+  offsetY: 0
+};"use strict";
+
+function DetonationCanvasView(model, viewPort) {
+  var detonationImage = {
+    image: CanvasView.loadImage("detonation"),
+    width: 400,
+    height: 400,
+    alpha: 0
+  };
+  CanvasView.call(this, model, viewPort, [detonationImage]);
+  this.detonationImage = detonationImage;
+  this.maxAge = 1000;
+}
+
+DetonationCanvasView.prototype = new CanvasView();
+
+CanvasRenderer.registerViewClass("detonation", DetonationCanvasView);
+
+
+DetonationCanvasView.prototype.calcAnimationState = function (age) {
+  var relativeAge = age / this.maxAge;
+  this.detonationImage.alpha = 1 - relativeAge;
+  this.detonationImage.width = Math.round(500 * relativeAge);
+  this.detonationImage.height = Math.round(500 * relativeAge);
+};"use strict";
+
+function EarthCanvasView(model, viewPort) {
+  CanvasView.call(this, model, viewPort, [{
+    image: CanvasView.loadImage("earth"),
+    width: model.radius * 2,
+    height: model.radius * 2
+  }]);
+}
+
+EarthCanvasView.prototype = new CanvasView();
+
+CanvasRenderer.registerViewClass("earth", EarthCanvasView);"use strict";
+
+function MoonCanvasView(model, viewPort) {
+  CanvasView.call(this, model, viewPort, [{
+    image: CanvasView.loadImage("moon"),
+    width: model.radius * 2,
+    height: model.radius * 2
+  }]);
+}
+
+MoonCanvasView.prototype = new CanvasView();
+
+CanvasRenderer.registerViewClass("moon", MoonCanvasView);"use strict";
+
+function MissileCanvasView(model, viewPort) {
+  CanvasView.call(this, model, viewPort, [{
+    image: CanvasView.loadImage("missile"),
+    width: 30,
+    height: 12
+  }]);
+  var flame = {
+    image: CanvasView.loadImage("flame"),
+    width: 50,
+    height: 10,
+    offsetX: -18,
+    offsetY: 0
+  };
+  EnginePoweredCanvasView.call(this, flame);
+}
+
+MissileCanvasView.prototype = new CanvasView();
+
+CanvasRenderer.registerViewClass("missile", MissileCanvasView);"use strict";
+
+function PlanetCanvasView(model, viewPort) {
+  CanvasView.call(this, model, viewPort, [{
+    image: CanvasView.loadImage("planet"),
+    width: model.radius * 2,
+    height: model.radius * 2
+  }]);
+}
+
+PlanetCanvasView.prototype = new CanvasView();
+
+CanvasRenderer.registerViewClass("planet", PlanetCanvasView);"use strict";
+
+function SpaceDebrisCanvasView(model, viewPort) {
+  CanvasView.call(this, model, viewPort, [{
+    image: CanvasView.loadImage("spacedebris"),
+    width: model.radius * 2,
+    height: model.radius * 2
+  }]);
+}
+
+SpaceDebrisCanvasView.prototype = new CanvasView();
+
+CanvasRenderer.registerViewClass("spacedebris", SpaceDebrisCanvasView);"use strict";
+
+function SpaceShipCanvasView(model, viewPort) {
+  CanvasView.call(this, model, viewPort, [{
+    image: CanvasView.loadImage("spaceship"),
+    width: 40,
+    height: 20
+  }]);
+  var flame = {
+    image: CanvasView.loadImage("doubleflame"),
+    width: 120,
+    height: 30,
+    offsetX: -57,
+    offsetY: 0
+  };
+  EnginePoweredCanvasView.call(this, flame);
+}
+
+SpaceShipCanvasView.prototype = new CanvasView();
+
+CanvasRenderer.registerViewClass("spaceship", SpaceShipCanvasView);"use strict";
+
+function StarCanvasView(model, viewPort) {
+  CanvasView.call(this, model, viewPort, [{
+    image: CanvasView.loadImage("star"),
+    width: model.radius * 2.2,
+    height: model.radius * 2.2
+  }]);
+}
+
+StarCanvasView.prototype = new CanvasView();
+
+CanvasRenderer.registerViewClass("star", StarCanvasView);
+CanvasRenderer.registerViewClass("fixedstar", StarCanvasView);"use strict";
+
+function TouchControlView() {
+  View.call(this, null, "touchcontrol");
+}
+
+TouchControlView.prototype = new View();
+TouchControlView.prototype.constructor = TouchControlView;
 "use strict";
 
-function KeyboardController(spaceShip) {
+function DebugView(simulation, renderer) {
+  this.projection = {
+    timerLag: function() {
+      var val = Math.round(simulation.avgStepsPerCB * 100) / 100;
+      return {
+        textContent: val,
+        className: val < 1.1 ? "normal" : "warning"
+      };
+    }
+  };
+  View.call(this, simulation, "debug");
+  SimulationObserver.call(this, simulation);
+}
+
+DebugView.prototype = new View();
+DebugView.prototype.constructor = DebugView;
+
+DebugView.prototype.oneStepTaken = function () {
+  this.updateAll();
+};"use strict";
+
+function Controller(model, view) {
+  this.model = model;
+  this.view = view;
+  this.controlElements = this.view && this.view.loadElementsToObject("[data-control]", "data-control");
+  this.bindEvents();
+}
+
+Controller.prototype.eventMapping = {};
+
+/** @private */
+Controller.prototype.bindEvents = function () {
+  var that = this;
+  function createHandler(eventName, eventHandler, control) {
+    try {
+      control.addEventListener(eventName, function (evt) {
+        evt.preventDefault();
+        eventHandler.call(that, evt);
+      });
+    } catch (e) {
+      console.error("Cannot bind event " + eventName + " to control " + controlName, e);
+    }
+  }
+  for (var controlName in this.eventMapping) {
+    var control = this.controlElements[controlName];
+    var events = this.eventMapping[controlName];
+    for (var eventName in events) {
+      createHandler(eventName, events[eventName], control);
+    }
+  }
+};"use strict";
+
+function KeyboardController(spaceShip, camera) {
   this.spaceShip = spaceShip;
+  this.camera = camera;
   document.addEventListener("keydown", this.keydownHandler.bind(this));
   document.addEventListener("keyup", this.keyupHandler.bind(this));
 }
@@ -1702,6 +2544,9 @@ KeyboardController.prototype.keydownHandler = function (keyEvent) {
   case " ":
   case "Spacebar":
     this.spaceShip.launchMissile();
+    break;
+  case "Control":
+    this.camera.switchOutlined();
   }
 };
 
@@ -1718,55 +2563,135 @@ KeyboardController.prototype.keyupHandler = function (keyEvent) {
   }
 };"use strict";
 
-function TouchController(touchControl, touchControlView) {
-  this.model = touchControl;
-  this.spaceShip = this.model.spaceShip;
-  this.view = touchControlView;
+function TouchController(spaceShip, camera, touchControlView) {
   this.eventMapping = {
-    leftControl: {
-      touchstart: "startRotationLeft",
-      touchend: "stopRotation"
+    leftcontrol: {
+      touchstart: spaceShip.startRotationLeft.bind(spaceShip),
+      touchend: spaceShip.stopRotation.bind(spaceShip),
+      touchcancel: spaceShip.stopRotation.bind(spaceShip)
     },
-    rightControl: {
-      touchstart: "startRotationRight",
-      touchend: "stopRotation"
+    rightcontrol: {
+      touchstart: spaceShip.startRotationRight.bind(spaceShip),
+      touchend: spaceShip.stopRotation.bind(spaceShip),
+      touchcancel: spaceShip.stopRotation.bind(spaceShip)
     },
-    engineControl: {
-      touchstart: "startEngine",
-      touchend: "stopEngine"
+    enginecontrol: {
+      touchstart: spaceShip.startEngine.bind(spaceShip),
+      touchend: spaceShip.stopEngine.bind(spaceShip),
+      touchcancel: spaceShip.stopEngine.bind(spaceShip)
     },
-    fireControl: {
-      touchstart: "launchMissile",
+    firecontrol: {
+      touchstart: spaceShip.launchMissile.bind(spaceShip)
+    },
+    outlinecontrol: {
+      touchstart: camera.switchOutlined.bind(camera)
     }
   };
-  this.bindEvents();
+  Controller.call(this, spaceShip, touchControlView);
 }
+
+TouchController.prototype = new Controller();
+TouchController.prototype.constructor = TouchController;
 
 /**
  * @static
- * Creates a touch controller (TouchControl, TouchControlView and TouchController) for the given spaceship. If the browser does not support touching, 
+ * Creates a touch screen controller (TouchControlView and TouchController) for the given spaceship. If the browser does not support touching, 
  then returns null
  */
-TouchController.createControllerFor = function (spaceShip, targetElement) {
+TouchController.createControllerFor = function (spaceShip, simulation) {
   if (!BrowserFeatures.hasTouch) {
-    return null;
+    //return null;
   }
-  var touchControl = new TouchControl(spaceShip);
-  var touchControlView = new TouchControlView(touchControl, targetElement);
-  var touchController = new TouchController(touchControl, touchControlView);
+  var touchControlView = new TouchControlView();
+  var touchController = new TouchController(spaceShip, simulation, touchControlView);
   return touchController;
+};"use strict";
+
+function SceneSelector() {
+  this.model = {};
+  this.view = new View(this.model, "sceneselector");
+  this.eventMapping = {
+    loadscene: {
+      click: this.loadScene.bind(this),
+    }
+  };
+  Controller.call(this, this.model, this.view);
+  CustomEventTarget.call(this);
+}
+
+SceneSelector.prototype = new Controller();
+SceneSelector.prototype.constructor = SceneSelector;
+
+SceneSelector.prototype.loadScene = function (event) {
+  var sceneName = event.target.dataset.scene;
+  this.emit("sceneselected", sceneName);
+};"use strict";
+
+function MainController() {
+  this.model = {};
+  this.view = new View(this.model, "main");
+  this.eventMapping = {
+    /*loadscene: {
+      click: this.loadScene.bind(this),
+    }*/
+  };
+  Controller.call(this, this.model, this.view);
+
+  this.selectScene("SpaceDebrisScene");
+  this.showSceneSelector();
+}
+
+MainController.prototype = new Controller();
+MainController.prototype.constructor = MainController;
+
+MainController.prototype.selectScene = function (sceneNameOrEvent) {
+  this.hideSceneSelector();
+  this.removeSimulation();
+
+  var sceneName = sceneNameOrEvent;
+  if (typeof sceneNameOrEvent === "object") {
+    sceneName = event.detail;
+  }
+
+  this.simulation = new Simulation(60);
+  var area = document.getElementById('area');
+  this.renderer = new CanvasRenderer(this.simulation, area);
+  this.scene = Scene.createScene(sceneName, this.simulation, this.renderer);
+  this.debugView = new DebugView(this.simulation, this.renderer);
+  document.body.appendChild(this.debugView.rootElement);
+
+  this.simulation.start();
+  this.renderer.start();
 };
 
-/** @private */
-TouchController.prototype.bindEvents = function () {
-  for (var controlName in this.eventMapping) {
-    var control = this.view.rootElement.getElementsByClassName(controlName).item(0);
-    var eventMapping = this.eventMapping[controlName];
-    if (eventMapping.touchstart) {
-      control.addEventListener("touchstart", this.spaceShip[eventMapping.touchstart].bind(this.spaceShip));
-    }
-    if (eventMapping.touchend) {
-      control.addEventListener("touchend", this.spaceShip[eventMapping.touchend].bind(this.spaceShip));
-    }
+
+MainController.prototype.removeSimulation = function () {
+  if (!this.simulation) {
+    return;
+  }
+  this.simulation.stop();
+  this.simulation = null;
+
+  this.renderer.stop();
+  this.renderer = null;
+
+  if (this.debugView) {
+    document.body.removeChild(this.debugView.rootElement);
+    this.debugView = null;
+  }
+  this.scene = null;
+};
+
+MainController.prototype.showSceneSelector = function () {
+  if (!this.sceneSelector) {
+    this.sceneSelector = new SceneSelector();
+    this.sceneSelector.addEventListener("sceneselected", this.selectScene.bind(this));
+    this.view.rootElement.appendChild(this.sceneSelector.view.rootElement);
+  }
+};
+
+MainController.prototype.hideSceneSelector = function () {
+  if (this.sceneSelector) {
+    this.view.rootElement.removeChild(this.sceneSelector.view.rootElement);
   }
 };
