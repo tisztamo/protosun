@@ -2650,7 +2650,7 @@ MainController.prototype.selectScene = function (sceneNameOrEvent) {
 
   var sceneName = sceneNameOrEvent;
   if (typeof sceneNameOrEvent === "object") {
-    sceneName = event.detail;
+    sceneName = sceneNameOrEvent.detail;
   }
 
   this.simulation = new Simulation(60);
