@@ -3,8 +3,8 @@
 function PlanetCanvasView(model, viewPort) {
   CanvasView.call(this, model, viewPort, [{
     image: CanvasView.loadImage("planet"),
-    width: 50,
-    height: 50
+    width: model.radius * 2,
+    height: model.radius * 2
   }]);
 }
 

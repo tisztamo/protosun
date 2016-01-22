@@ -35,6 +35,8 @@ loader.loadScript("compressed.js", main, function () {
   "model/missile.js",
   "model/detonation.js",
   "scene/scene.js",
+  "scene/objective.js",
+  "scene/protectobjective.js",
   "scene/puzzlescene.js",
   "scene/spacedebrisscene.js",
   "sound/sound.js",
