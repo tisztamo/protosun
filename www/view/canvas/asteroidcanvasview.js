@@ -8,6 +8,6 @@ function AteroidCanvasView(model, viewPort) {
   }]);
 }
 
-AteroidCanvasView.prototype = new CanvasView();
+AteroidCanvasView.prototype = Object.create(CanvasView.prototype);
 
 CanvasRenderer.registerViewClass("asteroid", AteroidCanvasView);

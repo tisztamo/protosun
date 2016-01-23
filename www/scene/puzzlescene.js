@@ -4,7 +4,7 @@ function PuzzleScene(simulation, renderer) {
   Scene.call(this, simulation, renderer);
 }
 
-PuzzleScene.prototype = new Scene();
+PuzzleScene.prototype = Object.create(Scene.prototype);
 PuzzleScene.prototype.constructor = PuzzleScene;
 Scene.registerScene(PuzzleScene);
 

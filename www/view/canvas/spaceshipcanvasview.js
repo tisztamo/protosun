@@ -16,6 +16,6 @@ function SpaceShipCanvasView(model, viewPort) {
   EnginePoweredCanvasView.call(this, flame);
 }
 
-SpaceShipCanvasView.prototype = new CanvasView();
+SpaceShipCanvasView.prototype = Object.create(CanvasView.prototype);
 
 CanvasRenderer.registerViewClass("spaceship", SpaceShipCanvasView);

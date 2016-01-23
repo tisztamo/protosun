@@ -12,7 +12,7 @@ function SceneSelector() {
   CustomEventTarget.call(this);
 }
 
-SceneSelector.prototype = new Controller();
+SceneSelector.prototype = Object.create(Controller.prototype);
 SceneSelector.prototype.constructor = SceneSelector;
 
 SceneSelector.prototype.loadScene = function (event) {

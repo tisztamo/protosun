@@ -14,7 +14,7 @@ function MainController() {
   this.showSceneSelector();
 }
 
-MainController.prototype = new Controller();
+MainController.prototype = Object.create(Controller.prototype);
 MainController.prototype.constructor = MainController;
 
 MainController.prototype.selectScene = function (sceneNameOrEvent) {

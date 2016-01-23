@@ -17,7 +17,7 @@ function DOMViewPort(viewElement) {
   }
 }
 
-DOMViewPort.prototype = new ViewPort();
+DOMViewPort.prototype = Object.create(ViewPort.prototype);
 DOMViewPort.prototype.constructor = DOMViewPort;
 
 /**

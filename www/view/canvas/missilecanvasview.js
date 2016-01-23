@@ -16,6 +16,6 @@ function MissileCanvasView(model, viewPort) {
   EnginePoweredCanvasView.call(this, flame);
 }
 
-MissileCanvasView.prototype = new CanvasView();
+MissileCanvasView.prototype = Object.create(CanvasView.prototype);
 
 CanvasRenderer.registerViewClass("missile", MissileCanvasView);

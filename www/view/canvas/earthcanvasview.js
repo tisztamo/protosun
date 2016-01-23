@@ -8,6 +8,6 @@ function EarthCanvasView(model, viewPort) {
   }]);
 }
 
-EarthCanvasView.prototype = new CanvasView();
+EarthCanvasView.prototype = Object.create(CanvasView.prototype);
 
 CanvasRenderer.registerViewClass("earth", EarthCanvasView);

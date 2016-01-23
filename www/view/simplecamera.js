@@ -10,7 +10,7 @@ function SimpleCamera(simulation, viewPort, centerObject) {
   this.centerObject = centerObject;
 }
 
-SimpleCamera.prototype = new Camera();
+SimpleCamera.prototype = Object.create(Camera.prototype);
 SimpleCamera.prototype.constructor = SimpleCamera;
 
 SimpleCamera.prototype.updateView = function () {

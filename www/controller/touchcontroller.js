@@ -27,7 +27,7 @@ function TouchController(spaceShip, camera, touchControlView) {
   Controller.call(this, spaceShip, touchControlView);
 }
 
-TouchController.prototype = new Controller();
+TouchController.prototype = Object.create(Controller.prototype);
 TouchController.prototype.constructor = TouchController;
 
 /**

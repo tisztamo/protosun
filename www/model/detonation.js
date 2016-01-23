@@ -6,7 +6,7 @@ function Detonation(pos, v) {
   this.lifeSteps = 100;
 }
 
-Detonation.prototype = new SpaceObject();
+Detonation.prototype = Object.create(SpaceObject.prototype);
 Detonation.prototype.constructor = Detonation;
 
 Detonation.prototype.oneStep = function () {

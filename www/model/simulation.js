@@ -12,7 +12,7 @@ function Simulation(fps) {
   this.objectsToRemove = [];
 }
 
-Simulation.prototype = new GameEngine();
+Simulation.prototype = Object.create(GameEngine.prototype);
 Simulation.prototype.constructor = Simulation;
 
 Simulation.prototype.start = function () {

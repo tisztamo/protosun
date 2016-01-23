@@ -4,7 +4,7 @@ function SpaceDebrisScene(simulation, renderer) {
   Scene.call(this, simulation, renderer);
 }
 
-SpaceDebrisScene.prototype = new Scene();
+SpaceDebrisScene.prototype = Object.create(Scene.prototype);
 SpaceDebrisScene.prototype.constructor = SpaceDebrisScene;
 Scene.registerScene(SpaceDebrisScene);
 

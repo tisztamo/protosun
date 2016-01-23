@@ -8,7 +8,7 @@ function SpaceShip(simulation, pos, v, mass, heading, enginePower, fuel) {
   this.rotationEnginePower = 0.03 / simulation.fps * 100;
 }
 
-SpaceShip.prototype = new SpaceObject();
+SpaceShip.prototype = Object.create(SpaceObject.prototype);
 SpaceShip.prototype.constructor = SpaceShip;
 
 SpaceShip.prototype.startRotationLeft = function () {

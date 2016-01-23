@@ -6,7 +6,7 @@ function Earth(pos, v, mass, radius) {
   SimulationCenter.call(this);
 }
 
-Earth.prototype = new SpaceObject();
+Earth.prototype = Object.create(SpaceObject.prototype);
 Earth.prototype.constructor = Earth;
 
 Earth.prototype.isIndestructible = true;

@@ -8,7 +8,7 @@ function StarCanvasView(model, viewPort) {
   }]);
 }
 
-StarCanvasView.prototype = new CanvasView();
+StarCanvasView.prototype = Object.create(CanvasView.prototype);
 
 CanvasRenderer.registerViewClass("star", StarCanvasView);
 CanvasRenderer.registerViewClass("fixedstar", StarCanvasView);

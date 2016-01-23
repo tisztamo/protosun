@@ -5,5 +5,5 @@ function Moon(pos, v, mass) {
   this.radius = 15;
 }
 
-Moon.prototype = new SpaceObject();
+Moon.prototype = Object.create(SpaceObject.prototype);
 Moon.prototype.constructor = Moon;
