@@ -2,107 +2,133 @@
 
 // Function.name (for IE). Source: http://matt.scharley.me/2012/03/09/monkey-patch-name-ie.html
 if (Function.prototype.name === undefined && Object.defineProperty !== undefined) {
-    Object.defineProperty(Function.prototype, 'name', {
-        get: function() {
-            var funcNameRegex = /function\s([^(]{1,})\(/;
-            var results = (funcNameRegex).exec((this).toString());
-            return (results && results.length > 1) ? results[1].trim() : "";
-        }
-    });
+  Object.defineProperty(Function.prototype, 'name', {
+    get: function () {
+      var funcNameRegex = /function\s([^(]{1,})\(/;
+      var results = (funcNameRegex).exec((this).toString());
+      return (results && results.length > 1) ? results[1].trim() : "";
+    }
+  });
 }
 
 
 /*! https://mths.be/array-from v0.2.0 by @mathias */
-(function() {
-	'use strict';
-	var defineProperty = (function() {
-		// IE 8 only supports `Object.defineProperty` on DOM elements.
-		try {
-			var object = {};
-			var $defineProperty = Object.defineProperty;
-			var result = $defineProperty(object, object, object) && $defineProperty;
-		} catch(error) {}
-		return result || function put(object, key, descriptor) {
-			object[key] = descriptor.value;
-		};
-	}());
-	var toStr = Object.prototype.toString;
-	var isCallable = function(fn) {
-		// In a perfect world, the `typeof` check would be sufficient. However,
-		// in Chrome 1–12, `typeof /x/ == 'object'`, and in IE 6–8
-		// `typeof alert == 'object'` and similar for other host objects.
-		return typeof fn == 'function' || toStr.call(fn) == '[object Function]';
-	};
-	var toInteger = function(value) {
-		var number = Number(value);
-		if (isNaN(number)) {
-			return 0;
-		}
-		if (number == 0 || !isFinite(number)) {
-			return number;
-		}
-		return (number > 0 ? 1 : -1) * Math.floor(Math.abs(number));
-	};
-	var maxSafeInteger = Math.pow(2, 53) - 1;
-	var toLength = function(value) {
-		var len = toInteger(value);
-		return Math.min(Math.max(len, 0), maxSafeInteger);
-	};
-	var from = function from(arrayLike) {
-		var C = this;
-		if (arrayLike == null) {
-			throw new TypeError('`Array.from` requires an array-like object, not `null` or `undefined`');
-		}
-		var items = Object(arrayLike);
-		var mapping = arguments.length > 1;
+(function () {
+  'use strict';
+  var defineProperty = (function () {
+    // IE 8 only supports `Object.defineProperty` on DOM elements.
+    try {
+      var object = {};
+      var $defineProperty = Object.defineProperty;
+      var result = $defineProperty(object, object, object) && $defineProperty;
+    } catch (error) {}
+    return result || function put(object, key, descriptor) {
+      object[key] = descriptor.value;
+    };
+  }());
+  var toStr = Object.prototype.toString;
+  var isCallable = function (fn) {
+    // In a perfect world, the `typeof` check would be sufficient. However,
+    // in Chrome 1–12, `typeof /x/ == 'object'`, and in IE 6–8
+    // `typeof alert == 'object'` and similar for other host objects.
+    return typeof fn == 'function' || toStr.call(fn) == '[object Function]';
+  };
+  var toInteger = function (value) {
+    var number = Number(value);
+    if (isNaN(number)) {
+      return 0;
+    }
+    if (number == 0 || !isFinite(number)) {
+      return number;
+    }
+    return (number > 0 ? 1 : -1) * Math.floor(Math.abs(number));
+  };
+  var maxSafeInteger = Math.pow(2, 53) - 1;
+  var toLength = function (value) {
+    var len = toInteger(value);
+    return Math.min(Math.max(len, 0), maxSafeInteger);
+  };
+  var from = function from(arrayLike) {
+    var C = this;
+    if (arrayLike == null) {
+      throw new TypeError('`Array.from` requires an array-like object, not `null` or `undefined`');
+    }
+    var items = Object(arrayLike);
+    var mapping = arguments.length > 1;
 
-		var mapFn, T;
-		if (arguments.length > 1) {
-			mapFn = arguments[1];
-			if (!isCallable(mapFn)) {
-				throw new TypeError('When provided, the second argument to `Array.from` must be a function');
-			}
-			if (arguments.length > 2) {
-				T = arguments[2];
-			}
-		}
+    var mapFn, T;
+    if (arguments.length > 1) {
+      mapFn = arguments[1];
+      if (!isCallable(mapFn)) {
+        throw new TypeError('When provided, the second argument to `Array.from` must be a function');
+      }
+      if (arguments.length > 2) {
+        T = arguments[2];
+      }
+    }
 
-		var len = toLength(items.length);
-		var A = isCallable(C) ? Object(new C(len)) : new Array(len);
-		var k = 0;
-		var kValue, mappedValue;
-		while (k < len) {
-			kValue = items[k];
-			if (mapFn) {
-				mappedValue = typeof T == 'undefined' ? mapFn(kValue, k) : mapFn.call(T, kValue, k);
-			} else {
-				mappedValue = kValue;
-			}
-			defineProperty(A, k, {
-				'value': mappedValue,
-				'configurable': true,
-				'enumerable': true,
-				'writable': true
-			});
-			++k;
-		}
-		A.length = len;
-		return A;
-	};
-	defineProperty(Array, 'from', {
-		'value': from,
-		'configurable': true,
-		'writable': true
-	});
+    var len = toLength(items.length);
+    var A = isCallable(C) ? Object(new C(len)) : new Array(len);
+    var k = 0;
+    var kValue, mappedValue;
+    while (k < len) {
+      kValue = items[k];
+      if (mapFn) {
+        mappedValue = typeof T == 'undefined' ? mapFn(kValue, k) : mapFn.call(T, kValue, k);
+      } else {
+        mappedValue = kValue;
+      }
+      defineProperty(A, k, {
+        'value': mappedValue,
+        'configurable': true,
+        'enumerable': true,
+        'writable': true
+      });
+      ++k;
+    }
+    A.length = len;
+    return A;
+  };
+  defineProperty(Array, 'from', {
+    'value': from,
+    'configurable': true,
+    'writable': true
+  });
 }());
 
 
 if (!String.prototype.startsWith) {
-  String.prototype.startsWith = function(searchString, position) {
+  String.prototype.startsWith = function (searchString, position) {
     position = position || 0;
     return this.indexOf(searchString, position) === position;
   };
-}/*globals BrowserFeatures: true */
+}
+
+
+// From MDN: https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent
+(function () {
+
+  var CustomEvent;
+
+  try {
+    var x = new CustomEvent("x");
+  } catch (e) {
+    CustomEvent = function CustomEvent(event, params) {
+      params = params || {
+        bubbles: false,
+        cancelable: false,
+        detail: undefined
+      };
+      var evt = document.createEvent('CustomEvent');
+      evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
+      return evt;
+    }
+
+    CustomEvent.prototype = window.Event.prototype;
+
+    window.CustomEvent = CustomEvent;
+  }
+})();/*globals BrowserFeatures: true */
 "use strict";
 
 var BrowserFeatures = {
@@ -1039,7 +1065,7 @@ function DOMViewPort(viewElement) {
   }
 }
 
-DOMViewPort.prototype = new ViewPort();
+DOMViewPort.prototype = Object.create(ViewPort.prototype);
 DOMViewPort.prototype.constructor = DOMViewPort;
 
 /**
@@ -1124,7 +1150,7 @@ function Simulation(fps) {
   this.objectsToRemove = [];
 }
 
-Simulation.prototype = new GameEngine();
+Simulation.prototype = Object.create(GameEngine.prototype);
 Simulation.prototype.constructor = Simulation;
 
 Simulation.prototype.start = function () {
@@ -1303,7 +1329,7 @@ function Star(pos, v, mass) {
   this.radius = 135;
 }
 
-Star.prototype = new SpaceObject();
+Star.prototype = Object.create(SpaceObject.prototype);
 Star.prototype.constructor = Star;
 
 Star.prototype.isIndestructible = true;"use strict";
@@ -1312,7 +1338,7 @@ function FixedStar(pos, v, mass) {
   Star.call(this, pos, v, mass);
 }
 
-FixedStar.prototype = new Star();
+FixedStar.prototype = Object.create(Star.prototype);
 FixedStar.prototype.constructor = FixedStar;
 
 FixedStar.prototype.oneStep = function () {
@@ -1325,7 +1351,7 @@ function Planet(pos, v, mass) {
   this.radius = 25;
 }
 
-Planet.prototype = new SpaceObject();
+Planet.prototype = Object.create(SpaceObject.prototype);
 Planet.prototype.constructor = Planet;/*jshint -W098 */
 "use strict";
 
@@ -1357,7 +1383,7 @@ function Earth(pos, v, mass, radius) {
   SimulationCenter.call(this);
 }
 
-Earth.prototype = new SpaceObject();
+Earth.prototype = Object.create(SpaceObject.prototype);
 Earth.prototype.constructor = Earth;
 
 Earth.prototype.isIndestructible = true;
@@ -1381,7 +1407,7 @@ function Moon(pos, v, mass) {
   this.radius = 15;
 }
 
-Moon.prototype = new SpaceObject();
+Moon.prototype = Object.create(SpaceObject.prototype);
 Moon.prototype.constructor = Moon;/*jshint -W098 */
 "use strict";
 
@@ -1428,7 +1454,7 @@ function Asteroid(pos, v, mass) {
   this.radius = 15;
 }
 
-Asteroid.prototype = new SpaceObject();
+Asteroid.prototype = Object.create(SpaceObject.prototype);
 Asteroid.prototype.constructor = Asteroid;
 /*jshint -W098 */
 "use strict";
@@ -1458,7 +1484,7 @@ function SpaceDebris(pos, v, mass, heading) {
   this.angularSpeed = Math.random() * 0.1 - 0.05;
 }
 
-SpaceDebris.prototype = new SpaceObject();
+SpaceDebris.prototype = Object.create(SpaceObject.prototype);
 SpaceDebris.prototype.constructor = SpaceDebris;
 "use strict";
 
@@ -1470,7 +1496,7 @@ function SpaceShip(simulation, pos, v, mass, heading, enginePower, fuel) {
   this.rotationEnginePower = 0.03 / simulation.fps * 100;
 }
 
-SpaceShip.prototype = new SpaceObject();
+SpaceShip.prototype = Object.create(SpaceObject.prototype);
 SpaceShip.prototype.constructor = SpaceShip;
 
 SpaceShip.prototype.startRotationLeft = function () {
@@ -1493,7 +1519,7 @@ function Missile(pos, v, heading, lifeSteps, fuel) {
   this.detonated = false;
 }
 
-Missile.prototype = new SpaceObject();
+Missile.prototype = Object.create(SpaceObject.prototype);
 Missile.prototype.constructor = Missile;
 
 Missile.prototype.oneStep = function () {
@@ -1532,7 +1558,7 @@ function Detonation(pos, v) {
   this.lifeSteps = 100;
 }
 
-Detonation.prototype = new SpaceObject();
+Detonation.prototype = Object.create(SpaceObject.prototype);
 Detonation.prototype.constructor = Detonation;
 
 Detonation.prototype.oneStep = function () {
@@ -1637,7 +1663,7 @@ function PuzzleScene(simulation, renderer) {
   Scene.call(this, simulation, renderer);
 }
 
-PuzzleScene.prototype = new Scene();
+PuzzleScene.prototype = Object.create(Scene.prototype);
 PuzzleScene.prototype.constructor = PuzzleScene;
 Scene.registerScene(PuzzleScene);
 
@@ -1669,17 +1695,6 @@ PuzzleScene.prototype.setUpModel = function () {
   });
 
   this.objective = new ProtectObjective(simulation, objectToProtect, 1800);
-  this.objective.addEventListener("win", function () {
-    alert("win!");
-  });
-  this.objective.addEventListener("fail", function (event) {
-    var reason;
-    try {
-      reason = event.detail.lostObject.constructor.name;
-    } catch (e) {}
-    alert("fail: " + reason);
-  });
-
   var camera = new OutlineCamera(new SimpleCamera(this.simulation, this.renderer.viewPort, ship), 0, 0, 3000, 1800);
   this.renderer.setCamera(camera);
 
@@ -1694,7 +1709,7 @@ function SpaceDebrisScene(simulation, renderer) {
   Scene.call(this, simulation, renderer);
 }
 
-SpaceDebrisScene.prototype = new Scene();
+SpaceDebrisScene.prototype = Object.create(Scene.prototype);
 SpaceDebrisScene.prototype.constructor = SpaceDebrisScene;
 Scene.registerScene(SpaceDebrisScene);
 
@@ -1716,6 +1731,8 @@ SpaceDebrisScene.prototype.setUpModel = function () {
     }
   }, 1500);
   
+  this.objective = new ProtectObjective(simulation, [ship]);
+
   var camera = new OutlineCamera(new SimpleCamera(this.simulation, this.renderer.viewPort, ship));
   this.renderer.setCamera(camera);
 
@@ -1808,7 +1825,7 @@ function SimpleCamera(simulation, viewPort, centerObject) {
   this.centerObject = centerObject;
 }
 
-SimpleCamera.prototype = new Camera();
+SimpleCamera.prototype = Object.create(Camera.prototype);
 SimpleCamera.prototype.constructor = SimpleCamera;
 
 SimpleCamera.prototype.updateView = function () {
@@ -1826,7 +1843,7 @@ function OutlineCamera(originalCamera, x, y, width, height) {
   this.animationLength = 500;
 }
 
-OutlineCamera.prototype = new Camera();
+OutlineCamera.prototype = Object.create(Camera.prototype);
 OutlineCamera.prototype.constructor = OutlineCamera;
 
 OutlineCamera.prototype.updateView = function () {
@@ -2019,7 +2036,7 @@ function DOMRenderer(simulation, viewElement) {
   this.displayedViewCount = 0;
 }
 
-DOMRenderer.prototype = new Renderer();
+DOMRenderer.prototype = Object.create(Renderer.prototype);
 
 DOMRenderer.prototype.redraw = function () {
   this.camera.updateView();
@@ -2130,7 +2147,7 @@ function CanvasRenderer(simulation, area) {
   this.ctx = this.canvas.getContext('2d');
 }
 
-CanvasRenderer.prototype = new Renderer();
+CanvasRenderer.prototype = Object.create(Renderer.prototype);
 CanvasRenderer.prototype.constructor = CanvasRenderer;
 CanvasRenderer.viewClasses = [];
 
@@ -2302,7 +2319,7 @@ function AteroidCanvasView(model, viewPort) {
   }]);
 }
 
-AteroidCanvasView.prototype = new CanvasView();
+AteroidCanvasView.prototype = Object.create(CanvasView.prototype);
 
 CanvasRenderer.registerViewClass("asteroid", AteroidCanvasView);"use strict";
 
@@ -2348,7 +2365,7 @@ function DetonationCanvasView(model, viewPort) {
   this.maxAge = 1000;
 }
 
-DetonationCanvasView.prototype = new CanvasView();
+DetonationCanvasView.prototype = Object.create(CanvasView.prototype);
 
 CanvasRenderer.registerViewClass("detonation", DetonationCanvasView);
 
@@ -2368,7 +2385,7 @@ function EarthCanvasView(model, viewPort) {
   }]);
 }
 
-EarthCanvasView.prototype = new CanvasView();
+EarthCanvasView.prototype = Object.create(CanvasView.prototype);
 
 CanvasRenderer.registerViewClass("earth", EarthCanvasView);"use strict";
 
@@ -2380,7 +2397,7 @@ function MoonCanvasView(model, viewPort) {
   }]);
 }
 
-MoonCanvasView.prototype = new CanvasView();
+MoonCanvasView.prototype = Object.create(CanvasView.prototype);
 
 CanvasRenderer.registerViewClass("moon", MoonCanvasView);"use strict";
 
@@ -2400,7 +2417,7 @@ function MissileCanvasView(model, viewPort) {
   EnginePoweredCanvasView.call(this, flame);
 }
 
-MissileCanvasView.prototype = new CanvasView();
+MissileCanvasView.prototype = Object.create(CanvasView.prototype);
 
 CanvasRenderer.registerViewClass("missile", MissileCanvasView);"use strict";
 
@@ -2412,7 +2429,7 @@ function PlanetCanvasView(model, viewPort) {
   }]);
 }
 
-PlanetCanvasView.prototype = new CanvasView();
+PlanetCanvasView.prototype = Object.create(CanvasView.prototype);
 
 CanvasRenderer.registerViewClass("planet", PlanetCanvasView);"use strict";
 
@@ -2424,7 +2441,7 @@ function SpaceDebrisCanvasView(model, viewPort) {
   }]);
 }
 
-SpaceDebrisCanvasView.prototype = new CanvasView();
+SpaceDebrisCanvasView.prototype = Object.create(CanvasView.prototype);
 
 CanvasRenderer.registerViewClass("spacedebris", SpaceDebrisCanvasView);"use strict";
 
@@ -2444,7 +2461,7 @@ function SpaceShipCanvasView(model, viewPort) {
   EnginePoweredCanvasView.call(this, flame);
 }
 
-SpaceShipCanvasView.prototype = new CanvasView();
+SpaceShipCanvasView.prototype = Object.create(CanvasView.prototype);
 
 CanvasRenderer.registerViewClass("spaceship", SpaceShipCanvasView);"use strict";
 
@@ -2456,7 +2473,7 @@ function StarCanvasView(model, viewPort) {
   }]);
 }
 
-StarCanvasView.prototype = new CanvasView();
+StarCanvasView.prototype = Object.create(CanvasView.prototype);
 
 CanvasRenderer.registerViewClass("star", StarCanvasView);
 CanvasRenderer.registerViewClass("fixedstar", StarCanvasView);"use strict";
@@ -2465,7 +2482,7 @@ function TouchControlView() {
   View.call(this, null, "touchcontrol");
 }
 
-TouchControlView.prototype = new View();
+TouchControlView.prototype = Object.create(View.prototype);
 TouchControlView.prototype.constructor = TouchControlView;
 "use strict";
 
@@ -2483,7 +2500,7 @@ function DebugView(simulation, renderer) {
   SimulationObserver.call(this, simulation);
 }
 
-DebugView.prototype = new View();
+DebugView.prototype = Object.create(View.prototype);
 DebugView.prototype.constructor = DebugView;
 
 DebugView.prototype.oneStepTaken = function () {
@@ -2590,7 +2607,7 @@ function TouchController(spaceShip, camera, touchControlView) {
   Controller.call(this, spaceShip, touchControlView);
 }
 
-TouchController.prototype = new Controller();
+TouchController.prototype = Object.create(Controller.prototype);
 TouchController.prototype.constructor = TouchController;
 
 /**
@@ -2619,7 +2636,7 @@ function SceneSelector() {
   CustomEventTarget.call(this);
 }
 
-SceneSelector.prototype = new Controller();
+SceneSelector.prototype = Object.create(Controller.prototype);
 SceneSelector.prototype.constructor = SceneSelector;
 
 SceneSelector.prototype.loadScene = function (event) {
@@ -2630,18 +2647,14 @@ SceneSelector.prototype.loadScene = function (event) {
 function MainController() {
   this.model = {};
   this.view = new View(this.model, "main");
-  this.eventMapping = {
-    /*loadscene: {
-      click: this.loadScene.bind(this),
-    }*/
-  };
+
   Controller.call(this, this.model, this.view);
 
   this.selectScene("SpaceDebrisScene");
   this.showSceneSelector();
 }
 
-MainController.prototype = new Controller();
+MainController.prototype = Object.create(Controller.prototype);
 MainController.prototype.constructor = MainController;
 
 MainController.prototype.selectScene = function (sceneNameOrEvent) {
@@ -2662,8 +2675,45 @@ MainController.prototype.selectScene = function (sceneNameOrEvent) {
 
   this.simulation.start();
   this.renderer.start();
+  this.bindToObjective(this.scene.objective);
 };
 
+MainController.prototype.bindToObjective = function (objective) {
+  if (!objective) {
+    return;
+  }
+  this.unbindObjective();
+  this.objective = objective;
+  this.winHandler = (function winHandler() {
+    alert("win!");
+    this.showSceneSelector();
+  }).bind(this);
+
+  this.failhandler = (function failhandler(event) {
+    var reason;
+    try {
+      reason = event.detail.lostObject.constructor.name;
+    } catch (e) {}
+    alert("fail: " + reason);
+    this.showSceneSelector();
+  }).bind(this);
+
+  objective.addEventListener("win", this.winHandler);
+  objective.addEventListener("fail", this.failhandler);
+};
+
+MainController.prototype.unbindObjective = function () {
+  if (!this.objective) {
+    return;
+  }
+  if (this.winHandler) {
+    this.objective.removeEventListener("win", this.winHandler);
+  }
+  if (this.failHandler) {
+    this.objective.removeEventListener("fail", this.failHandler);
+  }
+  this.objective = null;
+};
 
 MainController.prototype.removeSimulation = function () {
   if (!this.simulation) {
@@ -2686,8 +2736,8 @@ MainController.prototype.showSceneSelector = function () {
   if (!this.sceneSelector) {
     this.sceneSelector = new SceneSelector();
     this.sceneSelector.addEventListener("sceneselected", this.selectScene.bind(this));
-    this.view.rootElement.appendChild(this.sceneSelector.view.rootElement);
   }
+  this.view.rootElement.appendChild(this.sceneSelector.view.rootElement);
 };
 
 MainController.prototype.hideSceneSelector = function () {
