@@ -3,11 +3,7 @@
 function MainController() {
   this.model = {};
   this.view = new View(this.model, "main");
-  this.eventMapping = {
-    /*loadscene: {
-      click: this.loadScene.bind(this),
-    }*/
-  };
+
   Controller.call(this, this.model, this.view);
 
   this.selectScene("SpaceDebrisScene");
@@ -35,8 +31,45 @@ MainController.prototype.selectScene = function (sceneNameOrEvent) {
 
   this.simulation.start();
   this.renderer.start();
+  this.bindToObjective(this.scene.objective);
 };
 
+MainController.prototype.bindToObjective = function (objective) {
+  if (!objective) {
+    return;
+  }
+  this.unbindObjective();
+  this.objective = objective;
+  this.winHandler = (function winHandler() {
+    alert("win!");
+    this.showSceneSelector();
+  }).bind(this);
+
+  this.failhandler = (function failhandler(event) {
+    var reason;
+    try {
+      reason = event.detail.lostObject.constructor.name;
+    } catch (e) {}
+    alert("fail: " + reason);
+    this.showSceneSelector();
+  }).bind(this);
+
+  objective.addEventListener("win", this.winHandler);
+  objective.addEventListener("fail", this.failhandler);
+};
+
+MainController.prototype.unbindObjective = function () {
+  if (!this.objective) {
+    return;
+  }
+  if (this.winHandler) {
+    this.objective.removeEventListener("win", this.winHandler);
+  }
+  if (this.failHandler) {
+    this.objective.removeEventListener("fail", this.failHandler);
+  }
+  this.objective = null;
+};
 
 MainController.prototype.removeSimulation = function () {
   if (!this.simulation) {
@@ -59,8 +92,8 @@ MainController.prototype.showSceneSelector = function () {
   if (!this.sceneSelector) {
     this.sceneSelector = new SceneSelector();
     this.sceneSelector.addEventListener("sceneselected", this.selectScene.bind(this));
-    this.view.rootElement.appendChild(this.sceneSelector.view.rootElement);
   }
+  this.view.rootElement.appendChild(this.sceneSelector.view.rootElement);
 };
 
 MainController.prototype.hideSceneSelector = function () {

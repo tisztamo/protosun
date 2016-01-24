@@ -26,6 +26,8 @@ SpaceDebrisScene.prototype.setUpModel = function () {
     }
   }, 1500);
   
+  this.objective = new ProtectObjective(simulation, [ship]);
+
   var camera = new OutlineCamera(new SimpleCamera(this.simulation, this.renderer.viewPort, ship));
   this.renderer.setCamera(camera);
 
