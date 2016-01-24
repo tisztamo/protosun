@@ -4,7 +4,7 @@ function SpaceDebrisScene(simulation, renderer) {
   Scene.call(this, simulation, renderer);
 }
 
-SpaceDebrisScene.prototype = new Scene();
+SpaceDebrisScene.prototype = Object.create(Scene.prototype);
 SpaceDebrisScene.prototype.constructor = SpaceDebrisScene;
 Scene.registerScene(SpaceDebrisScene);
 
@@ -26,6 +26,8 @@ SpaceDebrisScene.prototype.setUpModel = function () {
     }
   }, 1500);
   
+  this.objective = new ProtectObjective(simulation, [ship]);
+
   var camera = new OutlineCamera(new SimpleCamera(this.simulation, this.renderer.viewPort, ship));
   this.renderer.setCamera(camera);
 

@@ -4,7 +4,7 @@ function FixedStar(pos, v, mass) {
   Star.call(this, pos, v, mass);
 }
 
-FixedStar.prototype = new Star();
+FixedStar.prototype = Object.create(Star.prototype);
 FixedStar.prototype.constructor = FixedStar;
 
 FixedStar.prototype.oneStep = function () {

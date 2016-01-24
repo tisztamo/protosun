@@ -11,7 +11,7 @@ function OutlineCamera(originalCamera, x, y, width, height) {
   this.animationLength = 500;
 }
 
-OutlineCamera.prototype = new Camera();
+OutlineCamera.prototype = Object.create(Camera.prototype);
 OutlineCamera.prototype.constructor = OutlineCamera;
 
 OutlineCamera.prototype.updateView = function () {

@@ -4,7 +4,7 @@ function PuzzleScene(simulation, renderer) {
   Scene.call(this, simulation, renderer);
 }
 
-PuzzleScene.prototype = new Scene();
+PuzzleScene.prototype = Object.create(Scene.prototype);
 PuzzleScene.prototype.constructor = PuzzleScene;
 Scene.registerScene(PuzzleScene);
 
@@ -36,17 +36,6 @@ PuzzleScene.prototype.setUpModel = function () {
   });
 
   this.objective = new ProtectObjective(simulation, objectToProtect, 1800);
-  this.objective.addEventListener("win", function () {
-    alert("win!");
-  });
-  this.objective.addEventListener("fail", function (event) {
-    var reason;
-    try {
-      reason = event.detail.lostObject.constructor.name;
-    } catch (e) {}
-    alert("fail: " + reason);
-  });
-
   var camera = new OutlineCamera(new SimpleCamera(this.simulation, this.renderer.viewPort, ship), 0, 0, 3000, 1800);
   this.renderer.setCamera(camera);
 

@@ -5,5 +5,5 @@ function Asteroid(pos, v, mass) {
   this.radius = 15;
 }
 
-Asteroid.prototype = new SpaceObject();
+Asteroid.prototype = Object.create(SpaceObject.prototype);
 Asteroid.prototype.constructor = Asteroid;

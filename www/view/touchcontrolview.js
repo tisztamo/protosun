@@ -4,5 +4,5 @@ function TouchControlView() {
   View.call(this, null, "touchcontrol");
 }
 
-TouchControlView.prototype = new View();
+TouchControlView.prototype = Object.create(View.prototype);
 TouchControlView.prototype.constructor = TouchControlView;

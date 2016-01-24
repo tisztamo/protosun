@@ -8,6 +8,6 @@ function PlanetCanvasView(model, viewPort) {
   }]);
 }
 
-PlanetCanvasView.prototype = new CanvasView();
+PlanetCanvasView.prototype = Object.create(CanvasView.prototype);
 
 CanvasRenderer.registerViewClass("planet", PlanetCanvasView);

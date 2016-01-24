@@ -12,7 +12,7 @@ function DetonationCanvasView(model, viewPort) {
   this.maxAge = 1000;
 }
 
-DetonationCanvasView.prototype = new CanvasView();
+DetonationCanvasView.prototype = Object.create(CanvasView.prototype);
 
 CanvasRenderer.registerViewClass("detonation", DetonationCanvasView);
 

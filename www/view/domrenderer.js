@@ -8,7 +8,7 @@ function DOMRenderer(simulation, viewElement) {
   this.displayedViewCount = 0;
 }
 
-DOMRenderer.prototype = new Renderer();
+DOMRenderer.prototype = Object.create(Renderer.prototype);
 
 DOMRenderer.prototype.redraw = function () {
   this.camera.updateView();

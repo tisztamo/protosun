@@ -5,7 +5,7 @@ function Star(pos, v, mass) {
   this.radius = 135;
 }
 
-Star.prototype = new SpaceObject();
+Star.prototype = Object.create(SpaceObject.prototype);
 Star.prototype.constructor = Star;
 
 Star.prototype.isIndestructible = true;

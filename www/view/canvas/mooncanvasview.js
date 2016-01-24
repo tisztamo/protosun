@@ -8,6 +8,6 @@ function MoonCanvasView(model, viewPort) {
   }]);
 }
 
-MoonCanvasView.prototype = new CanvasView();
+MoonCanvasView.prototype = Object.create(CanvasView.prototype);
 
 CanvasRenderer.registerViewClass("moon", MoonCanvasView);

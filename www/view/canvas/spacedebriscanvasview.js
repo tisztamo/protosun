@@ -8,6 +8,6 @@ function SpaceDebrisCanvasView(model, viewPort) {
   }]);
 }
 
-SpaceDebrisCanvasView.prototype = new CanvasView();
+SpaceDebrisCanvasView.prototype = Object.create(CanvasView.prototype);
 
 CanvasRenderer.registerViewClass("spacedebris", SpaceDebrisCanvasView);

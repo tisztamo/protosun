@@ -8,7 +8,7 @@ function Missile(pos, v, heading, lifeSteps, fuel) {
   this.detonated = false;
 }
 
-Missile.prototype = new SpaceObject();
+Missile.prototype = Object.create(SpaceObject.prototype);
 Missile.prototype.constructor = Missile;
 
 Missile.prototype.oneStep = function () {

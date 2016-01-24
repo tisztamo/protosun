@@ -5,5 +5,5 @@ function Planet(pos, v, mass) {
   this.radius = 25;
 }
 
-Planet.prototype = new SpaceObject();
+Planet.prototype = Object.create(SpaceObject.prototype);
 Planet.prototype.constructor = Planet;

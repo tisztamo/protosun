@@ -14,7 +14,7 @@ function CanvasRenderer(simulation, area) {
   this.ctx = this.canvas.getContext('2d');
 }
 
-CanvasRenderer.prototype = new Renderer();
+CanvasRenderer.prototype = Object.create(Renderer.prototype);
 CanvasRenderer.prototype.constructor = CanvasRenderer;
 CanvasRenderer.viewClasses = [];
 

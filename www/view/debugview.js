@@ -14,7 +14,7 @@ function DebugView(simulation, renderer) {
   SimulationObserver.call(this, simulation);
 }
 
-DebugView.prototype = new View();
+DebugView.prototype = Object.create(View.prototype);
 DebugView.prototype.constructor = DebugView;
 
 DebugView.prototype.oneStepTaken = function () {
