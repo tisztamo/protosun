@@ -28,8 +28,8 @@ CanvasRenderer.registerViewClass = function (modelName, canvasViewClass) {
 };
 
 CanvasRenderer.prototype.redraw = function () {
+  this.updateCanvasSize();
   this.camera.updateView();
-  this.clearCanvas();
   this.updateBackground();
   var length = this.views.length;
   this.displayedViewCount = 0;
@@ -38,12 +38,11 @@ CanvasRenderer.prototype.redraw = function () {
   }
 };
 
-CanvasRenderer.prototype.clearCanvas = function () {
+CanvasRenderer.prototype.updateCanvasSize = function () {
   if (this.canvas.width != this.viewElement.clientWidth || this.canvas.height != this.viewElement.clientHeight) {
     this.canvas.width = this.viewElement.clientWidth;
     this.canvas.height = this.viewElement.clientHeight;
   }
-  // this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 };
 
 CanvasRenderer.prototype.spaceObjectAdded = function (spaceObject) {
@@ -118,7 +117,4 @@ CanvasRenderer.prototype.updateBackground = function () {
     }
     x += bgWidth;
   }
-
-  /*this.viewElement.style.backgroundPosition = Math.round(-center.x / this.backgroundSpeedRatio * bgSizeRatio) + "px " + Math.round(-center.y / this.backgroundSpeedRatio * bgSizeRatio) + "px";
-  this.viewElement.style.backgroundSize = Math.round(bgSizeRatio * this.defaultBgSize) + "px";*/
 };

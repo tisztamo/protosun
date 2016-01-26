@@ -10,6 +10,11 @@ function DOMRenderer(simulation, viewElement) {
 
 DOMRenderer.prototype = Object.create(Renderer.prototype);
 
+DOMRenderer.prototype.stop = function () {
+  this.viewElement.innerHTML = "";
+  Renderer.prototype.stop.call(this);
+};
+
 DOMRenderer.prototype.redraw = function () {
   this.camera.updateView();
   var length = this.views.length;
@@ -71,7 +76,7 @@ DOMRenderer.prototype.updateView = function (view) {
     style.display = "block";
     if (spaceObject instanceof Detonation) {
       this.updateDetonationView(view);
-    } else if (spaceObject.mixinOverride && spaceObject.mixinOverride.EnginePowered) {
+    } else if (spaceObject.enginePowered) {
       this.updateEnginePoweredView(view);
     }
     this.displayedViewCount++;
@@ -83,12 +88,13 @@ DOMRenderer.prototype.updateView = function (view) {
 DOMRenderer.prototype.updateBackground = function () {
   var center = this.viewPort.modelViewPort.center;
   var bgSizeRatio = 1 + (this.viewPort.viewScale - 1) / this.backgroundSpeedRatio;
+  this.viewElement.style.backgroundImage = "url(img/background.jpg)";
   this.viewElement.style.backgroundPosition = Math.round(-center.x / this.backgroundSpeedRatio * bgSizeRatio) + "px " + Math.round(-center.y / this.backgroundSpeedRatio * bgSizeRatio) + "px";
   this.viewElement.style.backgroundSize = Math.round(bgSizeRatio * this.defaultBgSize) + "px";
 };
 
 DOMRenderer.prototype.updateEnginePoweredView = function (view) {
-  if (view.model.engineRunning) {
+  if (view.model.enginePowered.engineRunning) {
     view.classList.add("enginerunning");
   } else {
     view.classList.remove("enginerunning");

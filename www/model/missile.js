@@ -32,7 +32,11 @@ Missile.prototype.detonate = function (spaceObjectHit) {
   }
   spaceObjectHit = spaceObjectHit || this;
   this.detonated = true;
-  var detonation = new Detonation(spaceObjectHit.pos.clone(), Vector.zero.clone());
+  var pos = spaceObjectHit.pos;
+  if (spaceObjectHit.isIndestructible) {
+    pos = this.pos;
+  }
+  var detonation = new Detonation(pos.clone(), Vector.zero.clone());
   this.simulation.addSpaceObject(detonation);
   this.simulation.removeSpaceObject(this);
   if (!spaceObjectHit.isIndestructible) {
