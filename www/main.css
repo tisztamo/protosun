@@ -121,30 +121,31 @@ body {
   position: fixed;
   background-color: aquamarine;
   opacity: 0.3;
-  width: 100px;
-  height: 60px;
+  width: 12%;
+  min-width: 100px;
+  height: 10%;
   padding: 10px;
   z-index: 40000;
 }
 
 .leftcontrol {
-  bottom: 150px;
-  left: 40px;
+  bottom: 15%;
+  left: 10%;
 }
 
 .rightcontrol {
-  bottom: 150px;
-  right: 40px;
+  bottom: 15%;
+  right: 10%;
 }
 
 .firecontrol {
-  bottom: 250px;
-  left: 20px
+  bottom: 35%;
+  left: 5%;
 }
 
 .enginecontrol {
-  bottom: 250px;
-  right: 20px;
+  bottom: 35%;
+  right: 5%;
 }
 
 .outlinecontrol {
