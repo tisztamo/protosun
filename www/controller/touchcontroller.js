@@ -37,7 +37,7 @@ TouchController.prototype.constructor = TouchController;
  */
 TouchController.createControllerFor = function (spaceShip, simulation) {
   if (!BrowserFeatures.hasTouch) {
-    //return null;
+    return null;
   }
   var touchControlView = new TouchControlView();
   var touchController = new TouchController(spaceShip, simulation, touchControlView);
