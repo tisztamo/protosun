@@ -72,7 +72,8 @@ loader.loadScript("compressed.js", main, function () {
 /*jshint -W098 */
 function main() {
   var mainController = new MainController();
-  document.body.appendChild(mainController.view.rootElement);  
+  document.body.appendChild(mainController.view.rootElement);
+  window.scrollTo(0,1);
 }
 
 document.addEventListener("deviceready", onDeviceReady, false);
