@@ -16,9 +16,9 @@ Renderer.prototype.start = function () {
 };
 
 Renderer.prototype.stop = function () {
+  this.unbindFromSimulation();
   this.stopped = true;
 };
-
 
 Renderer.prototype.tick = function () {
   if (this.stopped) {
