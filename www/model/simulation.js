@@ -34,11 +34,9 @@ Simulation.prototype.setUpModel = function () {
 Simulation.prototype.addSpaceObject = function (spaceObject) {
   this.spaceObjects.push(spaceObject);
   spaceObject.simulation = this;
-  this.dispatchEvent(new CustomEvent("spaceobjectadded", {
-    detail: {
-      spaceObject: spaceObject
-    }
-  }));
+  this.emit("spaceobjectadded", {
+    spaceObject: spaceObject
+  });
 };
 
 /**
@@ -59,11 +57,9 @@ Simulation.prototype.purgeSpaceObjects = function () {
     while (i >= 0) {
       if (this.spaceObjects[i] === objectToRemove) {
         this.spaceObjects.splice(i, 1);
-        this.dispatchEvent(new CustomEvent("spaceobjectremoved", {
-          detail: {
-            spaceObject: objectToRemove
-          }
-        }));
+        this.emit("spaceobjectremoved", {
+          spaceObject: objectToRemove
+        });
         break;
       }
       i--;
@@ -92,6 +88,6 @@ Simulation.prototype.oneStep = function () {
   }
   this.purgeSpaceObjects();
 
-  this.dispatchEvent(new CustomEvent("onesteptaken"));
+  this.emit("onesteptaken");
   GameEngine.prototype.oneStep.call(this);
 };
