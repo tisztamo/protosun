@@ -46,7 +46,6 @@ loader.loadScript("compressed.js", main, function () {
   "view/simulationobserver.js",
   "view/view.js",
   "view/renderer.js",
-  "view/domrenderer.js",
   "view/canvas/canvasrenderer.js",
   "view/canvas/canvasview.js",
   "view/canvas/asteroidcanvasview.js",
