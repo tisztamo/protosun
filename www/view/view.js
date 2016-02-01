@@ -1,10 +1,17 @@
 "use strict";
 
-function View(model, templateId) {
-  this.model = model;
+function View(model, templateId, containingViewOrElement) {
   this.rootElement = this.createRootElement(model, templateId);
-  this.viewElements = this.loadElementsToObject("[data-view]", "data-view");
-  this.updateAll();
+  if (containingViewOrElement) {
+    if (containingViewOrElement instanceof View) {
+      containingViewOrElement = containingViewOrElement.rootElement;
+    }
+    this.containingElement = containingViewOrElement;
+    this.containingElement.appendChild(this.rootElement);
+  }
+
+  this.viewElements = this.loadElementsToObject("[data-field]", "data-field");
+  this.setModel(model);
 }
 
 View.prototype.idPrefix = "view_";
@@ -20,7 +27,6 @@ View.prototype.createRootElement = function (model, templateId) {
   var rootElement = template.cloneNode(true);
   var id = model && model.id ? model.id : "autogen" + Math.round(Math.random() * 100000);
   rootElement.id = id;
-  rootElement.model = model;
   rootElement.classList.remove("template");
   return rootElement;
 };
@@ -38,13 +44,18 @@ View.prototype.loadElementsToObject = function (selector, namingAttribute) {
 };
 
 View.prototype.calculateFieldValue = function (fieldName) {
-  var fieldProjector = this.projection[fieldName];
-  if (typeof fieldProjector === "undefined") {
-    return this.model[fieldName];
-  } else if (typeof fieldProjector == "function") {
-    return fieldProjector.call(this, fieldName);
+  try {
+    var fieldProjector = this.projection[fieldName];
+    if (typeof fieldProjector === "undefined") {
+      return this.model[fieldName];
+    } else if (typeof fieldProjector == "function") {
+      return fieldProjector.call(this);
+    }
+    return fieldProjector;
+  } catch (ex) {
+    console.warn("Unable to calculate value for field " + fieldName, ex);
+    return "N/A";
   }
-  return fieldProjector;
 };
 
 View.prototype.updateField = function (fieldName) {
@@ -63,4 +74,9 @@ View.prototype.updateAll = function () {
   for (var fieldName in this.viewElements) {
     this.updateField(fieldName);
   }
+};
+
+View.prototype.setModel = function (model) {
+  this.model = model;
+  this.updateAll();
 };

@@ -64,15 +64,19 @@ loader.loadScript("compressed.js", main, function () {
   "controller/keyboardcontroller.js",
   "controller/touchcontroller.js",
   "controller/sceneselector.js",
-  "controller/maincontroller.js"
+  "controller/maincontroller.js",
+  "editor/controller/editor.js",
+  "editor/controller/toolbar.js",
+  "editor/controller/propertyeditor.js",
+  "editor/scene/editorscene.js",
+  "editor/view/propertyeditorview.js"
   ], main);
 });
 
 /*jshint -W098 */
 function main() {
-  var mainController = new MainController();
-  document.body.appendChild(mainController.view.rootElement);
-  window.scrollTo(0,1);
+  //var mainController = new MainController(document.body);
+  var editor = new Editor(document.body);
 }
 
 document.addEventListener("deviceready", onDeviceReady, false);

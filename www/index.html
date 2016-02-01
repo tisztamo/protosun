@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <title>Solar System Simulation</title>
   <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="editor.css">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
@@ -13,7 +14,9 @@
 </head>
 
 <body>
-  <div id="area" class="gamearea"></div>
+  <div id="area" class="template gamearea">
+    <canvas></canvas>
+  </div>
   <div id="copyrightnotice"><a href="https://www.flickr.com/photos/24662369@N07/15884229752/">NASA imagery</a>, <a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a> <a href="index.html">RESTART GAME</a>
   </div>
   <div id="controlhint">Use arrow keys and space!</div>
@@ -25,10 +28,10 @@
     <div class="outlinecontrol" data-control="outlinecontrol">Outline</div>
   </div>
   <div class="template debug" id="debug">
-    <label>Timer lag:</label><span data-view="timerLag"></span>
+    <label>Timer lag:</label><span data-field="timerLag"></span>
     <br>
   </div>
-  <div class="template sceneselector" id="sceneselector">
+  <div class="template sceneselector popup" id="sceneselector">
     <h1>Select Level</h1>
     <ul data-control="loadscene">
       <li data-scene="SpaceDebrisScene">Space Debris</li>
@@ -36,6 +39,50 @@
     </ul>
   </div>
   <div class="template main" id="main"></div>
+  <div class="template editor" id="editor">
+  </div>
+  <div class="template toolbar popup" id="toolbar">
+    <ul>
+      <li data-control="createobject">New Object</li>
+    </ul>
+  </div>
+  <div class="template propertyeditor popup" id="propertyeditor">
+    <ul>
+      <li>
+        <label>Type
+          <select name="type">
+            <option value="spaceship" selected>Space Ship</option>
+            <option value="planet">Planet</option>
+          </select>
+        </label>
+      </li>
+      <li>
+        <label>X
+          <input type="number" data-field="x" />
+        </label>
+      </li>
+      <li>
+        <label>Y
+          <input type="number" data-field="y" />
+        </label>
+      </li>
+      <li>
+        <label>VX
+          <input type="number" data-field="vx" />
+        </label>
+      </li>
+      <li>
+        <label>VY
+          <input type="number" data-field="vy" />
+        </label>
+      </li>
+      <li>
+        <label>Mass
+          <span type="number" data-field="mass" />
+        </label>
+      </li>
+    </ul>
+  </div>
   <script src="util/loader.js"></script>
   <script src="main.js"></script>
   <script src="cordova.js"></script>

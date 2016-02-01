@@ -1,6 +1,6 @@
 "use strict";
 
-function DebugView(simulation, renderer) {
+function DebugView(simulation, renderer, containingElement) {
   this.projection = {
     timerLag: function() {
       var val = Math.round(simulation.avgStepsPerCB * 100) / 100;
@@ -10,7 +10,7 @@ function DebugView(simulation, renderer) {
       };
     }
   };
-  View.call(this, simulation, "debug");
+  View.call(this, simulation, "debug", containingElement);
   SimulationObserver.call(this, simulation);
 }
 

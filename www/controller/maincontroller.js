@@ -1,8 +1,8 @@
 "use strict";
 
-function MainController() {
+function MainController(containingElement) {
   this.model = {};
-  this.view = new View(this.model, "main");
+  this.view = new View(this.model, "main", containingElement);
 
   Controller.call(this, this.model, this.view);
 
@@ -26,8 +26,7 @@ MainController.prototype.selectScene = function (sceneNameOrEvent) {
   var area = document.getElementById('area');
   this.renderer = new CanvasRenderer(this.simulation, area);
   this.scene = Scene.createScene(sceneName, this.simulation, this.renderer);
-  this.debugView = new DebugView(this.simulation, this.renderer);
-  document.body.appendChild(this.debugView.rootElement);
+  this.debugView = new DebugView(this.simulation, this.renderer, document.body);
 
   this.simulation.start();
   this.renderer.start();

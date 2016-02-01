@@ -4,6 +4,7 @@ function Controller(model, view) {
   this.model = model;
   this.view = view;
   this.controlElements = this.view && this.view.loadElementsToObject("[data-control]", "data-control");
+  this.setupDataBinding();
   this.bindEvents();
 }
 
@@ -12,6 +13,7 @@ Controller.prototype.eventMapping = {};
 /** @private */
 Controller.prototype.bindEvents = function () {
   var that = this;
+
   function createHandler(eventName, eventHandler, control) {
     try {
       control.addEventListener(eventName, function (evt) {
@@ -28,5 +30,35 @@ Controller.prototype.bindEvents = function () {
     for (var eventName in events) {
       createHandler(eventName, events[eventName], control);
     }
+  }
+};
+
+Controller.prototype.setupDataBinding = function () {
+  if (!this.view || !this.view.rootElement) {
+    return;
+  }
+  this.clearDataBinding();
+  this.dataElements = this.view.loadElementsToObject("input[data-field]", "data-field");
+  if (Object.keys(this.dataElements).length) {
+    this.installedChangeHandler = this.changeHandler.bind(this);
+    this.view.rootElement.addEventListener("change", this.installedChangeHandler);
+  }
+};
+
+Controller.prototype.clearDataBinding = function() {
+  if (this.installedChangeHandler) {
+    this.view.rootElement.removeEventListener("change", this.installedChangeHandler);
+    this.installedChangeHandler = null;
+  }
+};
+
+Controller.prototype.changeHandler = function (event) {
+  var fieldName = event.target.getAttribute("data-field");
+  var value = event.target.value;
+  var fieldProjector = this.view.projection[fieldName];
+  if (typeof fieldProjector === "undefined") {
+    this.model[fieldName] = value;
+  } else if (typeof fieldProjector == "function") {
+    fieldProjector.call(this.view, value);
   }
 };
