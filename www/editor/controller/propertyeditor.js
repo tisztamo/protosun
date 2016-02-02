@@ -42,7 +42,7 @@ PropertyEditor.prototype.typeChangeHandler = function (event) {
   simulation.addSpaceObject(newSpaceObject);
   simulation.purgeSpaceObjects();
   
-  this.loadSpaceObject(newSpaceObject);
+  this.editor.selectSpaceObject(newSpaceObject);
 };
 
 PropertyEditor.prototype.copySpaceObject = function (source, target) {

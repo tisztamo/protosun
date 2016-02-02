@@ -8,8 +8,8 @@
  * @class
  */
 function ViewPort() {
-    this.setBaseSize(1024, 768);
-    this.setModelViewPort(0, 0, 1024, 768);
+  this.setBaseSize(1024, 768);
+  this.setModelViewPort(0, 0, 1024, 768);
 }
 
 /**
@@ -77,19 +77,23 @@ ViewPort.prototype.setModelViewPortWithCenterZoom = function (center, zoom) {
 };
 
 /**
-* Projects a Vector from the model space to the view space.
-* @param {Vector} pos The vector to project
-*/
+ * Projects a Vector from the model space to the view space.
+ * @param {Vector} pos The vector to project
+ */
 ViewPort.prototype.projectToView = function (pos) {
   return new Vector((pos.x - this.modelViewPort.x) * this.viewScale + this.horizontalViewShift, (pos.y - this.modelViewPort.y) * this.viewScale);
 };
 
+ViewPort.prototype.projectToModel = function (pos) {
+  return new Vector((pos.x - this.horizontalViewShift) / this.viewScale + this.modelViewPort.x, pos.y / this.viewScale + this.modelViewPort.y);
+};
+
 /**
-* Checks if the given Vector is in the view.
-* @return the projected (view) vector if it is in the view, false otherwise.
-* @param {Vector} modelPos The vector to project
-* @param {number} radius 
-*/
+ * Checks if the given Vector is in the view.
+ * @return the projected (view) vector if it is in the view, false otherwise.
+ * @param {Vector} modelPos The vector to project
+ * @param {number} radius 
+ */
 ViewPort.prototype.isInView = function (modelPos, radius) {
   var viewPos = this.projectToView(modelPos);
   radius = radius || 0;

@@ -7,7 +7,6 @@
   -webkit-transform: translateZ(0);
 }
 
-
 .toolbar {
   position: absolute;
   top: 5px;
@@ -19,6 +18,14 @@
 .propertyeditor {
   position: absolute;
   top: 80px;
+  left: 5px;
+  z-index: 9000;
+  background-color: rgba(200, 200, 200, 0.5);
+}
+
+.selector {
+  position: absolute;
+  top: 280px;
   left: 5px;
   z-index: 9000;
   background-color: rgba(200, 200, 200, 0.5);

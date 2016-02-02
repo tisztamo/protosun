@@ -2,6 +2,10 @@
 
 function View(model, templateId, containingViewOrElement) {
   this.rootElement = this.createRootElement(model, templateId);
+  if (!this.rootElement) {
+    console.error("Template \"" + templateId + "\" not found.");
+    return;
+  }
   if (containingViewOrElement) {
     if (containingViewOrElement instanceof View) {
       containingViewOrElement = containingViewOrElement.rootElement;

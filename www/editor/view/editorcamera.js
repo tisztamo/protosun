@@ -28,7 +28,7 @@ EditorCamera.prototype.wheelHandler = function (event) {
   if (delta > 0) {
     this.zoom *= 1.04;
   } else if (delta < 0) {
-    this.zoom /= 1.04;    
+    this.zoom /= 1.04;
   }
   this.zoom = Math.max(Math.min(this.zoom, 5), 0.05);
   this.editor.render();
@@ -38,7 +38,6 @@ EditorCamera.prototype.downHandler = function (event) {
   if (event.target.tagName !== "CANVAS") {
     return;
   }
-  event.preventDefault();
   this.lastDragX = event.clientX;
   this.lastDragY = event.clientY;
 };
@@ -51,10 +50,8 @@ EditorCamera.prototype.moveHandler = function (event) {
   if (this.lastDragX === null) {
     return;
   }
-  event.preventDefault();
-  this.center.add(new Vector(this.lastDragX - event.clientX, this.lastDragY - event.clientY).multiply(1 /   this.viewPort.viewScale));
+  this.center.add(new Vector(this.lastDragX - event.clientX, this.lastDragY - event.clientY).multiply(1 / this.viewPort.viewScale));
   this.lastDragX = event.clientX;
   this.lastDragY = event.clientY;
   this.editor.render();
 };
-

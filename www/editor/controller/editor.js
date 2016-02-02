@@ -17,11 +17,13 @@ Editor.prototype.constructor = Editor;
 Editor.prototype.initControls = function () {
   this.toolbar = new Toolbar(this, this.view);
   this.propertyEditor = new PropertyEditor(this, this.view);
+  this.selector = new SelectorController(this, this.view);
+  this.dragger = new DragController(this);
 };
 
 Editor.prototype.load = function () {
   this.simulation = new Simulation();
-  this.renderer = new CanvasRenderer(this.simulation, this.view.rootElement);
+  this.renderer = new EditorRenderer(this, this.view.rootElement);
   this.scene = new EditorScene(this);
   this.simulation.setUpModel();
   this.renderer.start();

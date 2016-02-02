@@ -15,7 +15,7 @@
 
 <body>
   <div id="area" class="template gamearea">
-    <canvas></canvas>
+    <canvas touch-action="none"></canvas>
   </div>
   <div id="copyrightnotice"><a href="https://www.flickr.com/photos/24662369@N07/15884229752/">NASA imagery</a>, <a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a> <a href="index.html">RESTART GAME</a>
   </div>
@@ -85,6 +85,12 @@
           <input type="number" data-field="mass" />
         </label>
       </li>
+    </ul>
+  </div>
+  <div class="template selector popup" id="selector">
+    Objects
+    <ul>
+      <li></li>
     </ul>
   </div>
   <script src="util/loader.js"></script>

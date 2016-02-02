@@ -65,11 +65,14 @@ loader.loadScript("compressed.js", main, function () {
   "controller/touchcontroller.js",
   "controller/sceneselector.js",
   "controller/maincontroller.js",
+  "editor/controller/dragcontroller.js",
   "editor/controller/editor.js",
-  "editor/controller/toolbar.js",
   "editor/controller/propertyeditor.js",
+  "editor/controller/selectorcontroller.js",
+  "editor/controller/toolbar.js",
   "editor/scene/editorscene.js",
   "editor/view/editorcamera.js",
+  "editor/view/editorrenderer.js",
   "editor/view/propertyeditorview.js"
   ], main);
 });
