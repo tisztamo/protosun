@@ -69,6 +69,7 @@ loader.loadScript("compressed.js", main, function () {
   "editor/controller/toolbar.js",
   "editor/controller/propertyeditor.js",
   "editor/scene/editorscene.js",
+  "editor/view/editorcamera.js",
   "editor/view/propertyeditorview.js"
   ], main);
 });

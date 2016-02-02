@@ -17,6 +17,7 @@
              "DOMViewPort",
              "Earth",
              "Editor",
+             "EditorCamera",
              "EditorScene",
              "EnginePowered",
              "EnginePoweredCanvasView",

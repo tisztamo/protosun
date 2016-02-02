@@ -38,7 +38,7 @@ Controller.prototype.setupDataBinding = function () {
     return;
   }
   this.clearDataBinding();
-  this.dataElements = this.view.loadElementsToObject("input[data-field]", "data-field");
+  this.dataElements = this.view.loadElementsToObject("input[data-field],select[data-field]", "data-field");
   if (Object.keys(this.dataElements).length) {
     this.installedChangeHandler = this.changeHandler.bind(this);
     this.view.rootElement.addEventListener("change", this.installedChangeHandler);

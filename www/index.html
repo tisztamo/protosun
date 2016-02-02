@@ -50,9 +50,13 @@
     <ul>
       <li>
         <label>Type
-          <select name="type">
-            <option value="spaceship" selected>Space Ship</option>
-            <option value="planet">Planet</option>
+          <select data-field="type">
+            <option value="SpaceShip">Space Ship</option>
+            <option value="Star">Star</option>
+            <option value="Planet">Planet</option>
+            <option value="Moon">Moon</option>
+            <option value="Asteroid">Asteroid</option>
+            <option value="SpaceDebris">Space Debris</option>
           </select>
         </label>
       </li>
@@ -78,7 +82,7 @@
       </li>
       <li>
         <label>Mass
-          <span type="number" data-field="mass" />
+          <input type="number" data-field="mass" />
         </label>
       </li>
     </ul>

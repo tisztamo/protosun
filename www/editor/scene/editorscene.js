@@ -1,7 +1,8 @@
 "use strict";
 
-function EditorScene(simulation, renderer) {
-  Scene.call(this, simulation, renderer);
+function EditorScene(editor) {
+  Scene.call(this, editor.simulation, editor.renderer);
+  this.editor = editor;
 }
 
 EditorScene.prototype = Object.create(Scene.prototype);
@@ -14,8 +15,7 @@ EditorScene.prototype.setUpModel = function () {
 
   simulation.addSpaceObject(ship);
 
-  var camera = new OutlineCamera(new SimpleCamera(this.simulation, this.renderer.viewPort, ship), -1024, -1024, 2048, 2048);
-  camera.setOutlined(true);
+  var camera = new EditorCamera(this.editor, this.simulation, this.renderer.viewPort);  
   this.renderer.setCamera(camera);
 
   new KeyboardController(ship, camera);

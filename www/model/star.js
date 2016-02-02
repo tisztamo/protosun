@@ -1,7 +1,7 @@
 "use strict";
 
 function Star(pos, v, mass) {
-  SpaceObject.call(this, pos, v, mass);
+  SpaceObject.call(this, pos, v, mass || 10);
   this.radius = 135;
 }
 
