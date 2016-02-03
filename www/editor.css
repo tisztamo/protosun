@@ -17,7 +17,7 @@
 
 .propertyeditor {
   position: absolute;
-  top: 80px;
+  top: 120px;
   left: 5px;
   z-index: 9000;
   background-color: rgba(200, 200, 200, 0.5);
@@ -25,8 +25,25 @@
 
 .selector {
   position: absolute;
-  top: 280px;
+  top: 310px;
   left: 5px;
   z-index: 9000;
   background-color: rgba(200, 200, 200, 0.5);
+}
+
+.playing .toolbar, .playing .propertyeditor, .playing .selector {
+  display: none;
+}
+
+.editor .playcontrols {
+  display: none;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  z-index: 9000;
+  background-color: rgba(200, 200, 200, 0.5);
+}
+
+.editor.playing .playcontrols {
+  display: block;
 }

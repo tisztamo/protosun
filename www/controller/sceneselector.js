@@ -1,8 +1,8 @@
 "use strict";
 
-function SceneSelector() {
+function SceneSelector(containingViewOrElement) {
   this.model = {};
-  this.view = new View(this.model, "sceneselector");
+  this.view = new View(this.model, "sceneselector", containingViewOrElement);
   this.eventMapping = {
     loadscene: {
       click: this.loadScene.bind(this),

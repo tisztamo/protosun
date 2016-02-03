@@ -37,7 +37,15 @@ function PropertyEditorView(model, containingElement) {
     y: numberGetSet("pos", "y"),
     vx: numberGetSet("v", "x"),
     vy: numberGetSet("v", "y"),
-    mass: numberGetSet("mass")
+    mass: numberGetSet("mass"),
+    indestructible: function (value) {
+      if (typeof value !== "undefined") {
+        this.model.isIndestructible = value;
+      }
+      return {
+        checked: this.model.isIndestructible
+      };
+    }
   };
   View.call(this, model, "propertyeditor", containingElement);
   CustomEventTarget.call(this);

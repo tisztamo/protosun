@@ -44,6 +44,17 @@
   <div class="template toolbar popup" id="toolbar">
     <ul>
       <li data-control="createobject">New Object</li>
+      <li data-control="play">Play</li>
+      <li>
+        <label>Prediction length</label>
+        <div><input type="range" min="0" max="7200" data-field="forecastSteps" /></div>
+      </li>
+    </ul>
+  </div>
+  <div class="template playcontrols popup" id="playcontrols">
+    <ul>
+      <li data-control="edit">Edit</li>
+      <li data-control="restart">Restart</li>
     </ul>
   </div>
   <div class="template propertyeditor popup" id="propertyeditor">
@@ -62,27 +73,32 @@
       </li>
       <li>
         <label>X
-          <input type="number" data-field="x" />
+          <input type="number" step="0.1" data-field="x" />
         </label>
       </li>
       <li>
         <label>Y
-          <input type="number" data-field="y" />
+          <input type="number" step="0.1" data-field="y" />
         </label>
       </li>
       <li>
         <label>VX
-          <input type="number" data-field="vx" />
+          <input type="number" step="0.001" data-field="vx" />
         </label>
       </li>
       <li>
         <label>VY
-          <input type="number" data-field="vy" />
+          <input type="number" step="0.001" data-field="vy" />
         </label>
       </li>
       <li>
         <label>Mass
-          <input type="number" data-field="mass" />
+          <input type="number" step="0.1" data-field="mass" />
+        </label>
+      </li>
+      <li>
+        <label>Indestructible
+          <input type="checkbox" data-field="indestructible" />
         </label>
       </li>
     </ul>

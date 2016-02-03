@@ -82,6 +82,12 @@ Simulation.prototype.oneStep = function () {
       distance = SpaceObject.actGravityForce(outerObject, innerObject);
       outerObject.actOn(innerObject, distance);
       innerObject.actOn(outerObject, distance);
+      if (distance < innerObject.radius + outerObject.radius - 8 && !innerObject.permeable) {
+        this.emit("collision", {
+          first: outerObject,
+          second: innerObject
+        });
+      }
     }
     outerObject.oneStep();
     outerIdx++;
@@ -91,3 +97,28 @@ Simulation.prototype.oneStep = function () {
   this.emit("onesteptaken");
   GameEngine.prototype.oneStep.call(this);
 };
+
+Simulation.prototype.getState = function () {
+  var state = {};
+  state.spaceObjects = [];
+  state.stepsTaken = this.stepsTaken;
+  this.spaceObjects.forEach(function (spaceObject) {
+    var so = spaceObject.clone();
+    so.type = so.constructor.name;
+    delete so.simulation;
+    delete so.stepForce;
+    delete so.rotationEnginePower;
+    state.spaceObjects.push(so);
+  });
+  return state;
+};
+
+Simulation.prototype.setState = function (state) {
+  var simulation = this;
+  this.stepsTaken = state.stepsTaken;
+  state.spaceObjects.forEach(function (spaceObject) {
+    simulation.addSpaceObject(SpaceObject.createFromPOJO(spaceObject));
+  });
+  return state;
+};
+

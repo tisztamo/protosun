@@ -1,6 +1,9 @@
 "use strict";
 
-function View(model, templateId, containingViewOrElement) {
+function View(model, templateId, containingViewOrElement, projection) {
+  if (typeof projection === "object") {
+    this.projection = projection;
+  }
   this.rootElement = this.createRootElement(model, templateId);
   if (!this.rootElement) {
     console.error("Template \"" + templateId + "\" not found.");

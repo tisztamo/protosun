@@ -3,10 +3,18 @@
 function EditorRenderer(editor, containingViewOrElement) {
   CanvasRenderer.call(this, editor.simulation, containingViewOrElement);
   this.editor = editor;
+
+  this.forecastSteps = 1200;
+  this.forecaster = new Forecaster(editor.simulation, this.forecastSteps);
 }
 
 EditorRenderer.prototype = Object.create(CanvasRenderer.prototype);
 EditorRenderer.prototype.constructor = EditorRenderer;
+
+EditorRenderer.prototype.redraw = function () {
+  CanvasRenderer.prototype.redraw.call(this);
+  this.renderForecast();
+};
 
 EditorRenderer.prototype.updateView = function (view) {
   CanvasRenderer.prototype.updateView.call(this, view);
@@ -19,11 +27,41 @@ EditorRenderer.prototype.updateView = function (view) {
       });
     }
   } catch (e) {
-    console.warn(e);
+    console.error(e);
   }
 };
 
-EditorRenderer.prototype.nearestObject = function(clientX, clientY) {
+EditorRenderer.prototype.createColors = function () {
+  var baseColors = {
+    Planet: "blue",
+    Star: "orange",
+    SpaceShip: "yellow",
+    Moon: "gray"
+  };
+  var colors = {};
+  this.simulation.spaceObjects.forEach(function (spaceObject) {
+    colors[spaceObject.id] = baseColors[spaceObject.constructor.name] || "white";
+  });
+  return colors;
+};
+
+EditorRenderer.prototype.renderForecast = function () {
+  this.forecaster.steps = this.forecastSteps;
+  var forecast = this.forecaster.createForecast();
+    var colors = this.createColors();
+  for (var id in forecast) {
+    this.ctx.strokeStyle = colors[id];
+    this.ctx.beginPath();
+    var line = forecast[id];
+    for (var i = 0; i < line.length; ++i) {
+      var pos = this.viewPort.projectToView(line[i]);
+      this.ctx.lineTo(pos.x, pos.y);
+    }
+    this.ctx.stroke();
+  }
+};
+
+EditorRenderer.prototype.nearestObject = function (clientX, clientY) {
   var pos = this.viewPort.projectToModel(new Vector(clientX, clientY));
   var minDistance = Infinity;
   var found = null;

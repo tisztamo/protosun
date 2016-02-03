@@ -3,10 +3,24 @@
 function Toolbar(editor, containingViewOrElement) {
   this.editor = editor;
   this.model = {};
-  this.view = new View(this.model, "toolbar", containingViewOrElement);
+  var projection = {
+    forecastSteps: function (value) {
+      if (typeof value !== "undefined") {
+        editor.renderer.forecastSteps = Number(value);
+        editor.render();
+      }
+      return {
+        value: editor.renderer.forecastSteps
+      };
+    }
+  };
+  this.view = new View(this.model, "toolbar", containingViewOrElement, projection);
   this.eventMapping = {
     createobject: {
-      click: this.createObject.bind(this),
+      click: this.createObject.bind(this)
+    },
+    play: {
+      click: this.editor.play.bind(this.editor)
     }
   };
   Controller.call(this, this.model, this.view);

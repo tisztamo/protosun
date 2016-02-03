@@ -55,6 +55,9 @@ Controller.prototype.clearDataBinding = function() {
 Controller.prototype.changeHandler = function (event) {
   var fieldName = event.target.getAttribute("data-field");
   var value = event.target.value;
+  if (event.target.type == "checkbox") {
+    value = event.target.checked;
+  }
   var fieldProjector = this.view.projection[fieldName];
   if (typeof fieldProjector === "undefined") {
     this.model[fieldName] = value;

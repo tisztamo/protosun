@@ -5,7 +5,8 @@ function SpaceShip(simulation, pos, v, mass, heading, enginePower, fuel) {
   EnginePowered.call(this, enginePower, fuel);
   MissileLauncher.call(this);
   this.radius = 20;
-  this.rotationEnginePower = 0.03 / simulation.fps * 100;
+  var fps = simulation ? simulation.fps : 60;
+  this.rotationEnginePower = 0.03 / fps * 100;
 }
 
 SpaceShip.prototype = Object.create(SpaceObject.prototype);

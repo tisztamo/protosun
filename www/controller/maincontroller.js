@@ -23,10 +23,9 @@ MainController.prototype.selectScene = function (sceneNameOrEvent) {
   }
 
   this.simulation = new Simulation(60);
-  var area = document.getElementById('area');
-  this.renderer = new CanvasRenderer(this.simulation, area);
+  this.renderer = new CanvasRenderer(this.simulation, document.body);
   this.scene = Scene.createScene(sceneName, this.simulation, this.renderer);
-  this.debugView = new DebugView(this.simulation, this.renderer, document.body);
+  this.debugView = new DebugView(this.simulation, this.renderer, this.view);
 
   this.simulation.start();
   this.renderer.start();
@@ -81,7 +80,7 @@ MainController.prototype.removeSimulation = function () {
   this.renderer = null;
 
   if (this.debugView) {
-    document.body.removeChild(this.debugView.rootElement);
+    this.debugView.rootElement.parentNode.removeChild(this.debugView.rootElement);
     this.debugView = null;
   }
   this.scene = null;
@@ -89,10 +88,11 @@ MainController.prototype.removeSimulation = function () {
 
 MainController.prototype.showSceneSelector = function () {
   if (!this.sceneSelector) {
-    this.sceneSelector = new SceneSelector();
+    this.sceneSelector = new SceneSelector(this.view);
     this.sceneSelector.addEventListener("sceneselected", this.selectScene.bind(this));
+  } else {
+    this.view.rootElement.appendChild(this.sceneSelector.view.rootElement);
   }
-  this.view.rootElement.appendChild(this.sceneSelector.view.rootElement);
 };
 
 MainController.prototype.hideSceneSelector = function () {

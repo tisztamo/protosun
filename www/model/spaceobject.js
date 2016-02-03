@@ -85,7 +85,39 @@ SpaceObject.prototype.oneStep = function () {
  */
 SpaceObject.prototype.actOn = function (another, distance) {};
 
-
 SpaceObject.prototype.toString = function() {
   return " " + this.constructor.name;
+};
+
+
+SpaceObject.prototype.clone = function() {
+  var retval = new this.constructor();
+  for (var prop in this) {
+    var value = this[prop];
+    if (typeof value === "function") {
+      continue;
+    }
+    if (value instanceof Vector) {
+      retval[prop] = value.clone();
+      continue;
+    }
+    if (typeof value === "object") {
+      continue;
+    }
+    retval[prop] = value;
+  }
+  return retval;
+};
+
+SpaceObject.createFromPOJO = function (pojo) {
+  var ConstructorFn = window[pojo.type];
+  if (!ConstructorFn) {
+    console.error("Unable to create type: " + pojo.type);
+    return new SpaceObject();
+  }
+  var retval = new ConstructorFn();
+  Object.assign(retval, pojo);
+  retval.pos = new Vector(retval.pos.x, retval.pos.y);
+  retval.v = new Vector(retval.v.x, retval.v.y);
+  return retval;
 };
