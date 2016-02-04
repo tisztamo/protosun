@@ -12,9 +12,7 @@ SelectorController.prototype = Object.create(Controller.prototype);
 SelectorController.prototype.constructor = SelectorController;
 
 SelectorController.prototype.upHandler = function (event) {
-  if (event.target.tagName !== "CANVAS") {
-    return;
-  }
+  if (!this.editor.isPointerEventOnScene()) return;
   var spaceObject = this.editor.renderer.clickedObject(event.clientX, event.clientY);
   if (spaceObject) {
     this.editor.selectSpaceObject(spaceObject);

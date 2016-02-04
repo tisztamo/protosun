@@ -10,7 +10,7 @@ function Editor(containingViewOrElement) {
   this.isPlaying = false;
   this.savedState = null;
   this.edit();
-  
+
   this.initControls();
 }
 
@@ -31,20 +31,30 @@ Editor.prototype.initSimulation = function () {
   this.scene = new EditorScene(this);
   this.simulation.setUpModel();
   this.renderer.start();
-  setTimeout(this.render.bind(this), 500); //TODO debug why this delay is needed
+  this.imageLoadEventListener = this.render.bind(this);
+  CanvasView.addEventListener("load", this.imageLoadEventListener);
+  this.render();
 };
 
 Editor.prototype.freeSimulation = function () {
-  this.simulation = null;
+  if (this.simulation) {
+    this.simulation.stop();
+    this.simulation = null;
+  }
   if (this.renderer) {
     this.renderer.stop();
     this.renderer = null;
   }
   this.scene = null;
+  CanvasView.removeEventListener("load", this.imageLoadEventListener);
+  this.imageLoadEventListener = null;
 };
 
 Editor.prototype.freePlaySimulation = function () {
-  this.playSimulation = null;
+  if (this.playSimulation) {
+    this.playSimulation.stop();
+    this.playSimulation = null;
+  }
   if (this.playRenderer) {
     this.playRenderer.stop();
     this.playRenderer = null;
@@ -72,6 +82,7 @@ Editor.prototype.play = function () {
   this.view.rootElement.classList.add("playing");
 
   this.savedState = this.simulation.getState();
+  console.log(JSON.stringify(this.savedState));
   this.freeSimulation();
 
   this.playSimulation = new Simulation(60);
@@ -82,14 +93,18 @@ Editor.prototype.play = function () {
   this.playRenderer.start();
 };
 
-Editor.prototype.edit = function() {
+Editor.prototype.edit = function () {
   this.isPlaying = false;
   this.freePlaySimulation();
   this.initSimulation();
   this.view.rootElement.classList.remove("playing");
 };
 
-Editor.prototype.restart = function() {
+Editor.prototype.restart = function () {
   this.isPlaying = false;
   this.initSimulation();
+};
+
+Editor.prototype.isPointerEventOnScene = function () {
+  return this.renderer && event.target === this.renderer.canvas;
 };

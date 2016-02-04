@@ -40,5 +40,8 @@ Forecaster.prototype.createForecast = function () {
     });
   }
 
+  this.simulation.stop();
+  this.simulation = null;
+  
   return forecast;
 };

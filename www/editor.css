@@ -7,20 +7,22 @@
   -webkit-transform: translateZ(0);
 }
 
+.editor .popup {
+  background-color: rgba(255, 255, 0, 0.8);  
+}
+
 .toolbar {
   position: absolute;
   top: 5px;
   left: 5px;
   z-index: 9000;
-  background-color: rgba(200, 200, 200, 0.5);
 }
 
 .propertyeditor {
   position: absolute;
-  top: 120px;
+  top: 130px;
   left: 5px;
   z-index: 9000;
-  background-color: rgba(200, 200, 200, 0.5);
 }
 
 .selector {
@@ -28,7 +30,6 @@
   top: 310px;
   left: 5px;
   z-index: 9000;
-  background-color: rgba(200, 200, 200, 0.5);
 }
 
 .playing .toolbar, .playing .propertyeditor, .playing .selector {
@@ -41,9 +42,16 @@
   top: 5px;
   left: 5px;
   z-index: 9000;
-  background-color: rgba(200, 200, 200, 0.5);
 }
 
 .editor.playing .playcontrols {
   display: block;
+}
+
+input[type="number"] {
+  max-width: 55px;
+}
+
+label {
+    float:right;
 }

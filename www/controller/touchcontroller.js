@@ -21,7 +21,7 @@ function TouchController(spaceShip, camera, touchControlView) {
       touchstart: spaceShip.launchMissile.bind(spaceShip)
     },
     outlinecontrol: {
-      touchstart: camera.switchOutlined.bind(camera)
+      touchstart: (camera.switchOutlined ? camera.switchOutlined.bind(camera): function() {})
     }
   };
   Controller.call(this, spaceShip, touchControlView);

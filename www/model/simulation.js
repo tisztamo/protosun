@@ -18,6 +18,12 @@ Simulation.prototype.constructor = Simulation;
 Simulation.prototype.start = function () {
   this.setUpModel();
   GameEngine.prototype.start.call(this);
+  this.emit("start");
+};
+
+Simulation.prototype.stop = function () {
+  GameEngine.prototype.stop.call(this);
+  this.emit("stop");
 };
 
 /**
@@ -121,4 +127,3 @@ Simulation.prototype.setState = function (state) {
   });
   return state;
 };
-

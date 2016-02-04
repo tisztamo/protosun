@@ -22,6 +22,13 @@ function SimulationObserver(simulation) {
       observer.collision();
     };
 
+    var simulationStopped = function simulationStopped(event) {
+      if (observer.simulationStopped) {
+        observer.simulationStopped();        
+      }
+      observer.unbindFromSimulation();
+    };
+
     if (observer.spaceObjectAdded) {
       simulation.addEventListener("spaceobjectadded", spaceObjectAdded);
     }
@@ -35,11 +42,14 @@ function SimulationObserver(simulation) {
       simulation.addEventListener("collision", collision);
     }
 
+    simulation.addEventListener("stop", simulationStopped);
+
     observer.unbindFromSimulation = function () {
       observer.simulation.removeEventListener("spaceobjectadded", spaceObjectAdded);
       observer.simulation.removeEventListener("spaceobjectremoved", spaceObjectRemoved);
       observer.simulation.removeEventListener("onesteptaken", oneStepTaken);
       observer.simulation.removeEventListener("collision", collision);
+      observer.simulation.removeEventListener("stop", simulationStopped);
     };
   }
 }

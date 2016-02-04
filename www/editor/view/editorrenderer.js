@@ -16,6 +16,13 @@ EditorRenderer.prototype.redraw = function () {
   this.renderForecast();
 };
 
+EditorRenderer.prototype.stop = function () {
+  CanvasRenderer.prototype.stop.call(this);
+  this.forecaster = null;
+};
+
+CanvasView.loadImage("selected");
+
 EditorRenderer.prototype.updateView = function (view) {
   CanvasRenderer.prototype.updateView.call(this, view);
   try {

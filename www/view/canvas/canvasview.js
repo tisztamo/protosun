@@ -12,6 +12,8 @@ CanvasView.modelName = "spaceobject";
 CanvasView.images = {};
 CanvasRenderer.registerViewClass(CanvasView);
 
+CustomEventTarget.call(CanvasView); // Emits "static" events from the class
+
 CanvasView.prototype.drawImage = function (descriptor) {
   var offsetX = descriptor.offsetX || 0;
   var offsetY = descriptor.offsetY || 0;
@@ -47,7 +49,18 @@ CanvasView.loadImage = function (imageName) {
   if (CanvasView.images[imageName]) {
     return CanvasView.images[imageName];
   }
+  CanvasView.emit("loadstart", imageName);
+  
   var image = new Image();
+  
+  image.addEventListener("load", function() {
+    CanvasView.emit("load", imageName);
+  });
+  image.addEventListener("error", function() {
+    console.error("Unable to load image: " + imageName);
+    CanvasView.emit("error", imageName);
+  });
+
   image.src = "img/" + imageName + ".png";
   image.width = 60;
   image.height = 60;

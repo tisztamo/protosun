@@ -14,8 +14,12 @@ PlayScene.prototype.setUpModel = function () {
   var ship = this.simulation.spaceObjects.find(function (spaceObject) {
     return spaceObject instanceof SpaceShip;
   });
-  var camera = new SimpleCamera(this.simulation, this.renderer.viewPort, ship);
+  var camera = new OutlineCamera(new SimpleCamera(this.simulation, this.renderer.viewPort, ship), -1500, -1500, 3000, 3000);
   this.renderer.setCamera(camera);
 
   new KeyboardController(ship, camera);
+  var touchController = TouchController.createControllerFor(ship, camera);
+  if (touchController) {
+    this.renderer.viewElement.appendChild(touchController.view.rootElement);
+  }
 };

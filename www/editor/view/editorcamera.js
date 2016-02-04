@@ -5,11 +5,19 @@ function EditorCamera(editor, simulation, viewPort) {
   this.editor = editor;
   this.center = Vector.zero.clone();
   this.zoom = 1;
-  this.editor.view.rootElement.addEventListener("wheel", this.wheelHandler.bind(this));
-  this.editor.view.rootElement.addEventListener("pointermove", this.moveHandler.bind(this));
-  this.editor.view.rootElement.addEventListener("pointerdown", this.downHandler.bind(this));
-  this.editor.view.rootElement.addEventListener("pointerup", this.upHandler.bind(this));
-  this.editor.view.rootElement.addEventListener("pointercancel", this.upHandler.bind(this));
+  SimulationObserver.call(this, simulation);
+  
+  this.rootElement = this.editor.view.rootElement;
+  this.installedWheelHandler = this.wheelHandler.bind(this);
+  this.installedMoveHandler = this.moveHandler.bind(this);
+  this.installedDownHandler = this.downHandler.bind(this);
+  this.installedUpHandler = this.upHandler.bind(this);
+
+  this.rootElement.addEventListener("wheel", this.installedWheelHandler);
+  this.rootElement.addEventListener("pointermove", this.installedMoveHandler);
+  this.rootElement.addEventListener("pointerdown", this.installedDownHandler);
+  this.rootElement.addEventListener("pointerup", this.installedUpHandler);
+  this.rootElement.addEventListener("pointercancel", this.installedUpHandler);
   this.lastDragX = null;
 }
 
@@ -35,9 +43,7 @@ EditorCamera.prototype.wheelHandler = function (event) {
 };
 
 EditorCamera.prototype.downHandler = function (event) {
-  if (event.target.tagName !== "CANVAS") {
-    return;
-  }
+  if (!this.editor.isPointerEventOnScene()) return;
   this.lastDragX = event.clientX;
   this.lastDragY = event.clientY;
 };
@@ -54,4 +60,12 @@ EditorCamera.prototype.moveHandler = function (event) {
   this.lastDragX = event.clientX;
   this.lastDragY = event.clientY;
   this.editor.render();
+};
+
+EditorCamera.prototype.simulationStopped = function () {
+  this.rootElement.removeEventListener("wheel", this.installedWheelHandler);
+  this.rootElement.removeEventListener("pointermove", this.installedMoveHandler);
+  this.rootElement.removeEventListener("pointerdown", this.installedDownHandler);
+  this.rootElement.removeEventListener("pointerup", this.installedUpHandler);
+  this.rootElement.removeEventListener("pointercancel", this.installedUpHandler);
 };
