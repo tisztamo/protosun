@@ -5,16 +5,23 @@ function SelectorController(editor, containingViewOrElement) {
   this.model = {};
   this.view = new View(this.model, "selector", containingViewOrElement);
   Controller.call(this, this.model, this.view);
-  editor.view.rootElement.addEventListener("click", this.upHandler.bind(this));
+  editor.view.rootElement.addEventListener("pointerup", this.upHandler.bind(this));
+  editor.view.rootElement.addEventListener("pointerdown", this.downHandler.bind(this));
 }
 
 SelectorController.prototype = Object.create(Controller.prototype);
 SelectorController.prototype.constructor = SelectorController;
 
+SelectorController.prototype.downHandler = function (event) {
+  this.downX = event.clientX;
+  this.downY = event.clientY;
+};
+
 SelectorController.prototype.upHandler = function (event) {
-  if (!this.editor.isPointerEventOnScene()) return;
+  if (!this.editor.isPointerEventOnScene(event) ||
+     this.downX !== event.clientX ||
+     this.downY !== event.clientY) return;
   var spaceObject = this.editor.renderer.clickedObject(event.clientX, event.clientY);
-  if (spaceObject) {
-    this.editor.selectSpaceObject(spaceObject);
-  }
+  spaceObject = spaceObject || {};
+  this.editor.selectSpaceObject(spaceObject);
 };

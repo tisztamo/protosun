@@ -28,7 +28,7 @@ SpaceDebrisScene.prototype.setUpModel = function () {
   
   this.objective = new ProtectObjective(simulation, [ship]);
 
-  var camera = new OutlineCamera(new SimpleCamera(this.simulation, this.renderer.viewPort, ship));
+  var camera = new OutlineCamera(new SimpleCamera(this.simulation, this.renderer.viewPort, ship), -800, -800, 2200, 2200);
   this.renderer.setCamera(camera);
 
   new KeyboardController(ship, camera);

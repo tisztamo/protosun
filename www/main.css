@@ -100,7 +100,6 @@ body {
   right: 2px;
   width: 140px;
   overflow: hidden;
-  pointer-events: none;
 }
 
 .debug > label {

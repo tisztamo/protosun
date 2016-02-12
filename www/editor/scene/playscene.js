@@ -1,8 +1,8 @@
 "use strict";
 
-function PlayScene(editor) {
-  Scene.call(this, editor.playSimulation, editor.playRenderer);
-  this.editor = editor;
+function PlayScene(simulation, renderer, sceneDescriptor) {
+  Scene.call(this, simulation, renderer);
+  this.descriptor = sceneDescriptor;
 }
 
 PlayScene.prototype = Object.create(Scene.prototype);
@@ -10,7 +10,7 @@ PlayScene.prototype.constructor = PlayScene;
 Scene.registerScene(PlayScene);
 
 PlayScene.prototype.setUpModel = function () {
-  this.simulation.setState(this.editor.savedState);
+  this.simulation.setState(this.descriptor);
   var ship = this.simulation.spaceObjects.find(function (spaceObject) {
     return spaceObject instanceof SpaceShip;
   });

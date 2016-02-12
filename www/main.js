@@ -46,6 +46,7 @@ loader.loadScript("compressed.js", main, function () {
   "view/outlinecamera.js",
   "view/simulationobserver.js",
   "view/view.js",
+  "view/listview.js",
   "view/renderer.js",
   "view/canvas/canvasrenderer.js",
   "view/canvas/canvasview.js",

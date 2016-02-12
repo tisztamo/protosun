@@ -18,12 +18,19 @@ function PropertyEditorView(model, containingElement) {
         }
         return {
           value: this.model[prop1]
-        };        
+        };
       };
     }
   };
 
   this.projection = {
+    root: function () {
+      return {
+        style: {
+          visibility: (this.model && this.model instanceof SpaceObject) ? "visible" : "hidden"
+        }
+      };
+    },
     type: function (newType) {
       if (newType) {
         this.emit("typechange", newType);

@@ -30,6 +30,6 @@ Toolbar.prototype = Object.create(Controller.prototype);
 Toolbar.prototype.constructor = Toolbar;
 
 Toolbar.prototype.createObject = function () {
-  var spaceObject = new Star(new Vector(100, 100), Vector.zero.clone());
+  var spaceObject = new Planet(new Vector(100, 100), Vector.zero.clone());
   this.editor.addSpaceObject(spaceObject);
 };

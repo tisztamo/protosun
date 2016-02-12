@@ -19,6 +19,7 @@ function View(model, templateId, containingViewOrElement, projection) {
 
   this.viewElements = this.loadElementsToObject("[data-field]", "data-field");
   this.setModel(model);
+  this.loadLists();
 }
 
 View.prototype.idPrefix = "view_";
@@ -36,6 +37,15 @@ View.prototype.createRootElement = function (model, templateId) {
   rootElement.id = id;
   rootElement.classList.remove("template");
   return rootElement;
+};
+
+View.prototype.loadLists = function () {
+  var listElements = this.loadElementsToObject("[data-list]", "data-list");
+  this.lists = {};
+  for (var listModelName in listElements) {
+    this.lists[listModelName] = new ListView(this.model[listModelName],
+      listElements[listModelName], this.projection[listModelName]);
+  }
 };
 
 View.prototype.loadElementsToObject = function (selector, namingAttribute) {
@@ -66,12 +76,19 @@ View.prototype.calculateFieldValue = function (fieldName) {
 };
 
 View.prototype.updateField = function (fieldName) {
+  function deepCopyFieldValues(targetObject, fieldValue) {
+    for (var attributeName in fieldValue) {
+      if (typeof targetObject[attributeName] === "object") {
+        deepCopyFieldValues(targetObject[attributeName], fieldValue[attributeName]);
+      } else {
+        targetObject[attributeName] = fieldValue[attributeName];
+      }
+    }
+  }
   var viewElement = this.viewElements[fieldName];
   var fieldValue = this.calculateFieldValue(fieldName);
   if (typeof fieldValue === "object") {
-    for (var attributeName in fieldValue) {
-      viewElement[attributeName] = fieldValue[attributeName];
-    }
+    deepCopyFieldValues(viewElement, fieldValue);
   } else {
     viewElement.textContent = fieldValue;
   }
@@ -86,4 +103,8 @@ View.prototype.updateAll = function () {
 View.prototype.setModel = function (model) {
   this.model = model;
   this.updateAll();
+};
+
+View.prototype.show = function (visible) {
+  this.rootElement.style.visibility = visible === false ? "hidden" : "visible";
 };

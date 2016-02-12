@@ -3,9 +3,14 @@
 function PropertyEditor(editor, containingViewOrElement) {
   this.editor = editor;
   this.editor.addEventListener("selected", this.selectHandler.bind(this));
-  this.spaceObject = {};
+  this.loadSpaceObject({});
   this.view = new PropertyEditorView(this.spaceObject, containingViewOrElement);
   this.view.addEventListener("typechange", this.typeChangeHandler.bind(this));
+  this.eventMapping = {
+    delete: {
+      click: this.deleteSpaceObject.bind(this)
+    }
+  };
   Controller.call(this, this.model, this.view);
 }
 
@@ -17,9 +22,11 @@ PropertyEditor.prototype.selectHandler = function (event) {
   this.loadSpaceObject(spaceObject);
 };
 
-PropertyEditor.prototype.loadSpaceObject = function(spaceObject) {
+PropertyEditor.prototype.loadSpaceObject = function (spaceObject) {
   this.spaceObject = spaceObject;
-  this.view.setModel(this.spaceObject);
+  if (this.view) {
+    this.view.setModel(this.spaceObject);
+  }
 };
 
 PropertyEditor.prototype.changeHandler = function (event) {
@@ -37,11 +44,11 @@ PropertyEditor.prototype.typeChangeHandler = function (event) {
   var simulation = old.simulation;
   var newSpaceObject = new NewType();
   this.copySpaceObject(old, newSpaceObject);
-  
+
   simulation.removeSpaceObject(old);
   simulation.addSpaceObject(newSpaceObject);
   simulation.purgeSpaceObjects();
-  
+
   this.editor.selectSpaceObject(newSpaceObject);
 };
 
@@ -49,9 +56,13 @@ PropertyEditor.prototype.copySpaceObject = function (source, target) {
   var copiedPropertyNames = ["pos", "v"];
   for (var prop in source) {
     if (copiedPropertyNames.indexOf(prop) !== -1) {
-      target[prop] = source[prop];      
+      target[prop] = source[prop];
     }
   }
 };
 
-
+PropertyEditor.prototype.deleteSpaceObject = function () {
+  this.editor.simulation.removeSpaceObject(this.spaceObject);
+  this.editor.simulation.purgeSpaceObjects();
+  this.editor.selectSpaceObject(this.editor.simulation.spaceObjects[0]);
+};

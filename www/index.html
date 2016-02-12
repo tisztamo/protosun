@@ -37,17 +37,28 @@
       <li data-scene="SpaceDebrisScene">Space Debris</li>
       <li data-scene="PuzzleScene">Gravity Puzzle</li>
     </ul>
+    <hr/>
+    <ul data-list="editedScenes" data-template="editedsceneentry" data-control="loadEditedScene">
+    </ul>
   </div>
+  <li class="template editedsceneentry" id="editedsceneentry">
+    <span data-field="name"></span>
+  </li>
   <div class="template main" id="main"></div>
   <div class="template editor" id="editor">
   </div>
+  <div id="editorarea" class="template gamearea editorarea">
+    <canvas touch-action="none"></canvas>
+  </div>
   <div class="template toolbar popup" id="toolbar">
     <ul>
-      <li data-control="createobject">New Object</li>
-      <li data-control="play">Play</li>
+      <li class="button" data-control="createobject">New Object</li>
+      <li class="button" data-control="play">Play</li>
       <li>
-        <label>Prediction length</label>
-        <div><input type="range" min="0" max="7200" data-field="forecastSteps" /></div>
+        <label>Prediction</label>
+        <div>
+          <input type="range" min="0" max="7200" data-field="forecastSteps" />
+        </div>
       </li>
     </ul>
   </div>
@@ -57,7 +68,8 @@
       <li data-control="restart">Restart</li>
     </ul>
   </div>
-  <div class="template propertyeditor popup" id="propertyeditor">
+  <span class="template" id="propertyeditor">
+  <div class="propertyeditor popup" data-field="root">
     <ul>
       <li>
         <label>Type
@@ -68,12 +80,14 @@
             <option value="Moon">Moon</option>
             <option value="Asteroid">Asteroid</option>
             <option value="SpaceDebris">Space Debris</option>
+            <option value="Earth">Earth (big)</option>
+            <option value="FixedStar">Fixed Star</option>
           </select>
         </label>
       </li>
       <li>
         <label>X
-          <input type="number" step="0.1" data-field="x"/>
+          <input type="number" step="0.1" data-field="x" />
         </label>
       </li>
       <li>
@@ -101,13 +115,13 @@
           <input type="checkbox" data-field="indestructible" />
         </label>
       </li>
+      <li>
+        <label class="button" data-control="delete">Delete</label>
+      </li>
     </ul>
   </div>
-  <div class="template selector popup" id="selector">
-    Objects
-    <ul>
-      <li></li>
-    </ul>
+  </span>
+  <div class="template selector" id="selector">
   </div>
   <script src="util/loader.js"></script>
   <script src="main.js"></script>

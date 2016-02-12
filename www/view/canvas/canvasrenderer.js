@@ -1,7 +1,7 @@
 "use strict";
 
-function CanvasRenderer(simulation, containingViewOrElement) {
-  this.area = new View({}, "area", containingViewOrElement);
+function CanvasRenderer(simulation, containingViewOrElement, templateName) {
+  this.area = new View({}, templateName || "area", containingViewOrElement);
   Renderer.call(this, simulation, this.area.rootElement);
   this.views = [];
   this.backgroundSpeedRatio = 2;
@@ -86,8 +86,7 @@ CanvasRenderer.prototype.updateView = function (view) {
 
 CanvasRenderer.prototype.updateBackground = function () {
   if (!this.backgroundImage) {
-    this.backgroundImage = new Image();
-    this.backgroundImage.src = "img/background.jpg";
+    this.backgroundImage = CanvasView.loadImage("background");
   }
 
   function nonPositiveRemainder(value, width) {

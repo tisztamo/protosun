@@ -11,16 +11,19 @@ Scene.registerScene(EditorScene);
 
 EditorScene.prototype.setUpModel = function () {
   var simulation = this.simulation;
-  var ship;
   if (this.editor.savedState) {
     simulation.setState(this.editor.savedState);
-    ship = this.simulation.spaceObjects.find(function (spaceObject) {
-      return spaceObject instanceof SpaceShip;
-    });
     this.editor.savedState = null;
-  } else {
-    ship = new SpaceShip(simulation, new Vector(0, 0), new Vector(0, 0), 0.1, 0);
-    simulation.addSpaceObject(ship);
+  } else if (localStorage.editedlevel && localStorage.editedlevel !== "") {
+    try {
+      simulation.setState(JSON.parse(localStorage.editedlevel));
+    } catch (e) {
+      console.error("Cannot restore from state: " + localStorage.editedlevel);
+      localStorage.editedLevel = "";
+    }
+  }
+  if (!simulation.spaceObjects.length) {
+    simulation.addSpaceObject(new SpaceShip(simulation, new Vector(0, 0), new Vector(0, 0), 0.1, 0));
   }
 
   var camera = new EditorCamera(this.editor, this.simulation, this.renderer.viewPort);

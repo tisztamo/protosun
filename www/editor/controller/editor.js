@@ -9,6 +9,7 @@ function Editor(containingViewOrElement) {
 
   this.isPlaying = false;
   this.savedState = null;
+  this.initSimulation();
   this.edit();
 
   this.initControls();
@@ -83,11 +84,11 @@ Editor.prototype.play = function () {
 
   this.savedState = this.simulation.getState();
   console.log(JSON.stringify(this.savedState));
-  this.freeSimulation();
+  localStorage.editedlevel = JSON.stringify(this.savedState);
 
   this.playSimulation = new Simulation(60);
   this.playRenderer = new CanvasRenderer(this.playSimulation, this.view.rootElement);
-  this.playScene = new PlayScene(this);
+  this.playScene = new PlayScene(this.playSimulation, this.playRenderer, this.savedState);
 
   this.playSimulation.start();
   this.playRenderer.start();
@@ -96,8 +97,8 @@ Editor.prototype.play = function () {
 Editor.prototype.edit = function () {
   this.isPlaying = false;
   this.freePlaySimulation();
-  this.initSimulation();
   this.view.rootElement.classList.remove("playing");
+  this.render();
 };
 
 Editor.prototype.restart = function () {
@@ -105,6 +106,6 @@ Editor.prototype.restart = function () {
   this.initSimulation();
 };
 
-Editor.prototype.isPointerEventOnScene = function () {
+Editor.prototype.isPointerEventOnScene = function (event) {
   return this.renderer && event.target === this.renderer.canvas;
 };

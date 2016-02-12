@@ -32,7 +32,7 @@
   z-index: 9000;
 }
 
-.playing .toolbar, .playing .propertyeditor, .playing .selector {
+.playing .toolbar, .playing .propertyeditor, .playing .selector, .playing .editorarea {
   display: none;
 }
 
@@ -54,4 +54,12 @@ input[type="number"] {
 
 label {
     float:right;
+}
+
+.button {
+  margin: 3px;
+  padding: 3px;
+  background-color: rgba(150, 150, 150, 0.3);
+  border: 2px outset;
+  border-radius: 5px;
 }

@@ -32,6 +32,21 @@ MainController.prototype.selectScene = function (sceneNameOrEvent) {
   this.bindToObjective(this.scene.objective);
 };
 
+
+MainController.prototype.selectEditedScene = function (sceneDescriptor) {
+  this.hideSceneSelector();
+  this.removeSimulation();
+
+  this.simulation = new Simulation(60);
+  this.renderer = new CanvasRenderer(this.simulation, document.body);
+  this.scene = new PlayScene(this.simulation, this.renderer, sceneDescriptor);
+  this.debugView = new DebugView(this.simulation, this.renderer, this.view);
+
+  this.simulation.start();
+  this.renderer.start();
+  this.bindToObjective(this.scene.objective);
+};
+
 MainController.prototype.bindToObjective = function (objective) {
   if (!objective) {
     return;
@@ -90,6 +105,7 @@ MainController.prototype.showSceneSelector = function () {
   if (!this.sceneSelector) {
     this.sceneSelector = new SceneSelector(this.view);
     this.sceneSelector.addEventListener("sceneselected", this.selectScene.bind(this));
+    this.sceneSelector.addEventListener("editedsceneselected", this.selectEditedScene.bind(this));
   } else {
     this.view.rootElement.appendChild(this.sceneSelector.view.rootElement);
   }

@@ -14,7 +14,7 @@ DragController.prototype = Object.create(Controller.prototype);
 DragController.prototype.constructor = DragController;
 
 DragController.prototype.downHandler = function (event) {
-  if (!this.editor.isPointerEventOnScene()) return;
+  if (!this.editor.isPointerEventOnScene(event)) return;
   var spaceObject = this.editor.renderer.clickedObject(event.clientX, event.clientY);
   if (spaceObject && spaceObject === this.editor.selectedObject) {
     event.stopPropagation();
