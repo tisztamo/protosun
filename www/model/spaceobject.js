@@ -116,7 +116,7 @@ SpaceObject.createFromPOJO = function (pojo) {
     return new SpaceObject();
   }
   var retval = new ConstructorFn();
-  Object.assign(retval, pojo);
+  LangUtils.deepMerge(retval, pojo);
   retval.pos = new Vector(retval.pos.x, retval.pos.y);
   retval.v = new Vector(retval.v.x, retval.v.y);
   return retval;

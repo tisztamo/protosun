@@ -33,9 +33,18 @@ MainController.prototype.selectScene = function (sceneNameOrEvent) {
 };
 
 
-MainController.prototype.selectEditedScene = function (sceneDescriptor) {
+MainController.prototype.selectEditedScene = function (sceneDescriptorOrEvent) {
   this.hideSceneSelector();
   this.removeSimulation();
+
+  var sceneDescriptor = sceneDescriptorOrEvent;
+  if (typeof sceneDescriptor === "object") {
+    sceneDescriptor = sceneDescriptor.detail;
+  }
+
+  if (typeof sceneDescriptor === "string") {
+    sceneDescriptor = JSON.parse(sceneDescriptor);
+  }
 
   this.simulation = new Simulation(60);
   this.renderer = new CanvasRenderer(this.simulation, document.body);

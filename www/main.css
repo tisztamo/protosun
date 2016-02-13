@@ -33,21 +33,23 @@ body {
   -webkit-transform: translateZ(0);
 }
 
-#copyrightnotice {
+.copyrightnotice {
   position: fixed;
+  z-index: 12000;
   bottom: 0;
   right: 0;
 }
 
-#copyrightnotice a {
+.copyrightnotice a {
   color: dimgray;
 }
 
-#controlhint {
+.controlhint {
   color: dimgray;
   position: fixed;
   bottom: 18px;
   right: 0;
+  z-index: 12000;
 }
 
 .touchcontrol {

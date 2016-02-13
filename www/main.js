@@ -11,6 +11,7 @@ loader.loadScript("compressed.js", main, function () {
 
   console.info("compressed.js not found, loading scripts in debug mode.");
   loader.loadScripts(["util/polyfills.js",
+  "util/langutils.js",
   "util/browserfeatures.js",
   "util/keyboard.js",
   "util/customeventtarget.js",
@@ -69,7 +70,7 @@ loader.loadScript("compressed.js", main, function () {
   "controller/maincontroller.js",
   "editor/controller/dragcontroller.js",
   "editor/controller/editor.js",
-  "editor/controller/playcontrols.js",                      
+  "editor/controller/playcontrols.js",
   "editor/controller/propertyeditor.js",
   "editor/controller/selectorcontroller.js",
   "editor/controller/toolbar.js",

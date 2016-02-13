@@ -31,6 +31,7 @@ SceneSelector.prototype.loadScene = function (event) {
 };
 
 SceneSelector.prototype.loadEditedScene = function (event) {
-  var descriptor = event.target.model.dataset.sceneDescriptor;
+  var model = this.view.getModelForElement(event.target);
+  var descriptor = model.sceneDescriptor;
   this.emit("editedsceneselected", descriptor);
 };

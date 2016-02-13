@@ -33,8 +33,9 @@ View.prototype.createRootElement = function (model, templateId) {
     return null;
   }
   var rootElement = template.cloneNode(true);
-  var id = model && model.id ? model.id : "autogen" + Math.round(Math.random() * 100000);
+  var id = model && model.id ? model.id : "auto" + Math.round(Math.random() * 100000);
   rootElement.id = id;
+  rootElement.view_model = model;//TODO ES6: move to a Map-based implementation
   rootElement.classList.remove("template");
   return rootElement;
 };
@@ -76,16 +77,6 @@ View.prototype.calculateFieldValue = function (fieldName) {
 };
 
 View.prototype.updateField = function (fieldName) {
-  function deepCopyFieldValues(targetObject, fieldValue) {
-    for (var attributeName in fieldValue) {
-      if (typeof targetObject[attributeName] === "object") {
-        deepCopyFieldValues(targetObject[attributeName], fieldValue[attributeName]);
-      } else {
-        targetObject[attributeName] = fieldValue[attributeName];
-      }
-    }
-  }
-
   function setCSSClasses(targetObject, classes) {
     for (var c in classes) {
       if (classes[c]) {
@@ -104,7 +95,7 @@ View.prototype.updateField = function (fieldName) {
   }
   
   if (typeof fieldValue === "object") {
-    deepCopyFieldValues(viewElement, fieldValue);
+    LangUtils.deepMerge(viewElement, fieldValue);
   } else {
     viewElement.textContent = fieldValue;
   }
@@ -119,6 +110,15 @@ View.prototype.updateAll = function () {
 View.prototype.setModel = function (model) {
   this.model = model;
   this.updateAll();
+};
+
+View.prototype.getModelForElement = function (element) {
+  while (element) {
+    if (element.view_model) {
+      return element.view_model;
+    }
+    element = element.parentNode;
+  }
 };
 
 View.prototype.show = function (visible) {
