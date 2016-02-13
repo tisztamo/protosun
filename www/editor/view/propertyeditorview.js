@@ -26,8 +26,8 @@ function PropertyEditorView(model, containingElement) {
   this.projection = {
     root: function () {
       return {
-        style: {
-          visibility: (this.model && this.model instanceof SpaceObject) ? "visible" : "hidden"
+        class: {
+          visible: this.model && this.model instanceof SpaceObject
         }
       };
     },

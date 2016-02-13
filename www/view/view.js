@@ -85,8 +85,24 @@ View.prototype.updateField = function (fieldName) {
       }
     }
   }
+
+  function setCSSClasses(targetObject, classes) {
+    for (var c in classes) {
+      if (classes[c]) {
+        targetObject.classList.add(c);
+      } else {
+        targetObject.classList.remove(c);
+      }
+    }
+  }
   var viewElement = this.viewElements[fieldName];
   var fieldValue = this.calculateFieldValue(fieldName);
+  
+  if (fieldValue.class) {
+    setCSSClasses(viewElement, fieldValue.class);
+    fieldValue.class = null;
+  }
+  
   if (typeof fieldValue === "object") {
     deepCopyFieldValues(viewElement, fieldValue);
   } else {

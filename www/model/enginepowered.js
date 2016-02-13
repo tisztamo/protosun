@@ -14,7 +14,7 @@ function EnginePowered(enginePower, fuel, engineRunning) {
     fuel: fuel || Infinity,
     engineRunning: engineRunning || false
   };
-  enginePower = enginePower || 0.001;
+  enginePower = enginePower || 0.0015;
   var props = this.enginePowered;
 
   var superOneStep = this.oneStep;

@@ -83,15 +83,15 @@ loader.loadScript("compressed.js", main, function () {
 
 /*jshint -W098 */
 function main() {
-  //var mainController = new MainController(document.body);
-  var editor = new Editor(document.body);
+  var mainController = new MainController(document.body);
+  //var editor = new Editor(document.body);
 }
 
 document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
   var sound = new Sound();
-  sound.playMusic("sound/Leisure-B_-_17_-_Man_On_The_Moon.mp3");
+  sound.playMusic("sound/operentzia-sarkcsillag.mp3");
   //Leisure-B_-_17_-_Man_On_The_Moon.mp3
   //Andy_G_Cohen_-_11_-_Space_Outro.mp3
   //Tortue_Super_Sonic_-_05_-_Neogrotesque.mp3

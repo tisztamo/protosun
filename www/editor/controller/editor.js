@@ -76,6 +76,7 @@ Editor.prototype.addSpaceObject = function (spaceObject) {
 
 Editor.prototype.render = function () {
   this.renderer.redrawNeeded = true;
+  this.emit("render");
 };
 
 Editor.prototype.play = function () {
@@ -99,11 +100,6 @@ Editor.prototype.edit = function () {
   this.freePlaySimulation();
   this.view.rootElement.classList.remove("playing");
   this.render();
-};
-
-Editor.prototype.restart = function () {
-  this.isPlaying = false;
-  this.initSimulation();
 };
 
 Editor.prototype.isPointerEventOnScene = function (event) {

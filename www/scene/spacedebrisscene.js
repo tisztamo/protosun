@@ -11,7 +11,7 @@ Scene.registerScene(SpaceDebrisScene);
 SpaceDebrisScene.prototype.setUpModel = function () {
   var simulation = this.simulation;
   var scene = this;
-  var ship = new SpaceShip(simulation, new Vector(400, -550), new Vector(2.3, 0), 0.1, 0);
+  var ship = new SpaceShip(simulation, new Vector(400, -550), new Vector(2.3, 0), 0.1, 0, 0.0012);
   var earth = new Earth(new Vector(400, 350), new Vector(0, 0), 105, 755);
   earth.maxDistance = 4000;
 

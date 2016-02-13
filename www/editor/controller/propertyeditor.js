@@ -2,10 +2,13 @@
 
 function PropertyEditor(editor, containingViewOrElement) {
   this.editor = editor;
-  this.editor.addEventListener("selected", this.selectHandler.bind(this));
   this.loadSpaceObject({});
   this.view = new PropertyEditorView(this.spaceObject, containingViewOrElement);
   this.view.addEventListener("typechange", this.typeChangeHandler.bind(this));
+
+  this.editor.addEventListener("selected", this.selectHandler.bind(this));
+  this.editor.addEventListener("render", this.view.updateAll.bind(this.view));
+  
   this.eventMapping = {
     delete: {
       click: this.deleteSpaceObject.bind(this)

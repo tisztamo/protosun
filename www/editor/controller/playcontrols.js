@@ -7,9 +7,6 @@ function PlayControls(editor, containingViewOrElement) {
   this.eventMapping = {
     edit: {
       click: this.editor.edit.bind(this.editor)
-    },
-    restart: {
-      click: this.editor.restart.bind(this.editor.restart)
     }
   };
   Controller.call(this, this.model, this.view);

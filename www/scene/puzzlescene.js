@@ -11,7 +11,7 @@ Scene.registerScene(PuzzleScene);
 
 PuzzleScene.prototype.setUpModel = function () {
   var simulation = this.simulation;
-  var ship = new SpaceShip(simulation, new Vector(500, 350), new Vector(3, 0), 0.1, 0, 0.0015);
+  var ship = new SpaceShip(simulation, new Vector(500, 350), new Vector(3, 0), 0.1, 0);
   var planet = new Planet(new Vector(400, 350), new Vector(-0.3, 0.3), 15);
   var moon = new Moon(new Vector(400, 650), new Vector(-1.3, 0.3), 1);
   var star = new FixedStar(new Vector(1400, 1050), new Vector(0, 0), 10);
