@@ -2,9 +2,7 @@
 
 function MainController(containingElement) {
   this.model = {};
-  this.view = new View(this.model, "main", containingElement);
-
-  Controller.call(this, this.model, this.view);
+  Controller.call(this, this.model, containingElement);
 
   this.selectScene("SpaceDebrisScene");
   this.showSceneSelector();
@@ -12,6 +10,8 @@ function MainController(containingElement) {
 
 MainController.prototype = Object.create(Controller.prototype);
 MainController.prototype.constructor = MainController;
+
+Controller.registerClass(MainController, "Main");
 
 MainController.prototype.selectScene = function (sceneNameOrEvent) {
   this.hideSceneSelector();
@@ -33,14 +33,12 @@ MainController.prototype.selectScene = function (sceneNameOrEvent) {
 };
 
 
-MainController.prototype.selectEditedScene = function (sceneDescriptorOrEvent) {
+MainController.prototype.editedSceneSelectedHandler = function (event) {
   this.hideSceneSelector();
   this.removeSimulation();
 
-  var sceneDescriptor = sceneDescriptorOrEvent;
-  if (typeof sceneDescriptor === "object") {
-    sceneDescriptor = sceneDescriptor.detail;
-  }
+  var index = event.detail;
+  var sceneDescriptor = LocalScenes.get(index);
 
   if (typeof sceneDescriptor === "string") {
     sceneDescriptor = JSON.parse(sceneDescriptor);
@@ -114,7 +112,7 @@ MainController.prototype.showSceneSelector = function () {
   if (!this.sceneSelector) {
     this.sceneSelector = new SceneSelector(this.view);
     this.sceneSelector.addEventListener("sceneselected", this.selectScene.bind(this));
-    this.sceneSelector.addEventListener("editedsceneselected", this.selectEditedScene.bind(this));
+    this.sceneSelector.addEventListener("editedsceneselected", this.editedSceneSelectedHandler.bind(this));
   } else {
     this.view.rootElement.appendChild(this.sceneSelector.view.rootElement);
   }

@@ -14,7 +14,7 @@
 </head>
 
 <body>
-  <div id="area" class="template gamearea">
+  <div id="Area" class="template gamearea">
     <canvas touch-action="none"></canvas>
   </div>
   <div class="copyrightnotice"><a href="https://www.flickr.com/photos/24662369@N07/15884229752/">NASA imagery</a>, <a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a> <a href="index.html">RESTART GAME</a>
@@ -27,30 +27,31 @@
     <div class="firecontrol" data-control="firecontrol">Fire</div>
     <div class="outlinecontrol" data-control="outlinecontrol">Outline</div>
   </div>
-  <div class="template debug popup" id="debug">
+  <div class="template debug popup" id="Debug">
     <label>Timer lag:</label><span data-field="timerLag"></span>
     <br>
   </div>
-  <div class="template sceneselector popup" id="sceneselector">
+  <div class="template sceneselector popup" id="SceneSelector">
     <h1>Select Level</h1>
-    <ul data-control="loadscene">
+    <ul data-control="loadScene">
       <li data-scene="SpaceDebrisScene">Space Debris</li>
       <li data-scene="PuzzleScene">Gravity Puzzle</li>
     </ul>
     <hr/>
-    <ul data-list="editedScenes" data-template="editedsceneentry" data-control="loadEditedScene">
+    <ul data-list="editedScenes" data-template="EditedSceneEntry" data-control="loadEditedScene">
     </ul>
   </div>
-  <li class="template editedsceneentry" id="editedsceneentry">
+  <li class="template editedsceneentry" id="EditedSceneEntry">
     <span data-field="name"></span>
+    <a class="editlink" data-control="edit"> - Edit</a>
   </li>
-  <div class="template main" id="main"></div>
-  <div class="template editor" id="editor">
+  <div class="template main" id="Main"></div>
+  <div class="template editor" id="Editor">
   </div>
-  <div id="editorarea" class="template gamearea editorarea">
+  <div id="EditorArea" class="template gamearea editorarea">
     <canvas touch-action="none"></canvas>
   </div>
-  <div class="template toolbar popup" id="toolbar">
+  <div class="template toolbar popup" id="Toolbar">
     <ul>
       <li class="button" data-control="play">Play</li>
       <li class="button" data-control="createobject">New Object</li>
@@ -62,12 +63,12 @@
       </li>
     </ul>
   </div>
-  <div class="template playcontrols popup" id="playcontrols">
+  <div class="template playcontrols popup" id="PlayControls">
     <ul>
       <li class="button" data-control="edit">Edit</li>
     </ul>
   </div>
-  <span class="template" id="propertyeditor">
+  <span class="template" id="PropertyEditor">
   <div class="propertyeditor popup" data-field="root">
     <ul>
       <li>
@@ -120,7 +121,7 @@
     </ul>
   </div>
   </span>
-  <div class="template selector" id="selector">
+  <div class="template selector" id="Selector">
   </div>
   <script src="util/loader.js"></script>
   <script src="main.js"></script>

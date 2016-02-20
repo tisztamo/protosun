@@ -34,6 +34,7 @@
              "LangUtils",
              "ListView",
              "Loader",
+             "LocalScenes",
              "Objective",
              "OutlineCamera",
              "Planet",

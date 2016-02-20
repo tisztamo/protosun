@@ -1,10 +1,10 @@
 "use strict";
 
-function Editor(containingViewOrElement) {
+function Editor(containingViewOrElement, localLevelIndex) {
+  this.localLevelIndex = localLevelIndex;
   this.model = {};
-  this.view = new View(this.model, "editor", containingViewOrElement);
 
-  Controller.call(this, this.model, this.view);
+  Controller.call(this, this.model, containingViewOrElement);
   CustomEventTarget.call(this);
 
   this.isPlaying = false;
@@ -17,6 +17,8 @@ function Editor(containingViewOrElement) {
 
 Editor.prototype = Object.create(Controller.prototype);
 Editor.prototype.constructor = Editor;
+
+Controller.registerClass(Editor);
 
 Editor.prototype.initControls = function () {
   this.toolbar = new Toolbar(this, this.view);
@@ -84,8 +86,7 @@ Editor.prototype.play = function () {
   this.view.rootElement.classList.add("playing");
 
   this.savedState = this.simulation.getState();
-  console.log(JSON.stringify(this.savedState));
-  localStorage.editedlevel = JSON.stringify(this.savedState);
+  this.save();
 
   this.playSimulation = new Simulation(60);
   this.playRenderer = new CanvasRenderer(this.playSimulation, this.view.rootElement);
@@ -104,4 +105,13 @@ Editor.prototype.edit = function () {
 
 Editor.prototype.isPointerEventOnScene = function (event) {
   return this.renderer && event.target === this.renderer.canvas;
+};
+
+Editor.prototype.save = function () {
+  var state = JSON.stringify(this.savedState);
+  if (typeof this.localLevelIndex === "undefined") {
+    this.localLevelIndex = LocalScenes.add(state);
+  } else {
+    LocalScenes.set(this.localLevelIndex, state);
+  }
 };

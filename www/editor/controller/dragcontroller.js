@@ -3,7 +3,7 @@
 function DragController(editor) {
   this.editor = editor;
   this.model = {};
-  Controller.call(this, this.model, null);
+  Controller.call(this, this.model);
   editor.view.rootElement.addEventListener("pointerdown", this.downHandler.bind(this), true);
   editor.view.rootElement.addEventListener("pointermove", this.moveHandler.bind(this), true);
   editor.view.rootElement.addEventListener("pointerup", this.upHandler.bind(this), true);
@@ -12,6 +12,8 @@ function DragController(editor) {
 
 DragController.prototype = Object.create(Controller.prototype);
 DragController.prototype.constructor = DragController;
+
+Controller.registerClass(DragController, null);
 
 DragController.prototype.downHandler = function (event) {
   if (!this.editor.isPointerEventOnScene(event)) return;

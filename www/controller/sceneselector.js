@@ -2,16 +2,16 @@
 
 function SceneSelector(containingViewOrElement) {
   this.model = {
-    editedScenes: [{
-      name: "Scene1",
-      sceneDescriptor: localStorage.editedlevel
-    }, {
-      name: "Scene2"
-    }]
+    editedScenes: LocalScenes.getList().map(function (descriptor, index) {
+      return {
+        name: "Edited Level " + (index + 1),
+        localLevelIndex: index
+      };
+    })
   };
-  this.view = new View(this.model, "sceneselector", containingViewOrElement);
+  this.view = new View(this.model, this.templateId, containingViewOrElement);
   this.eventMapping = {
-    loadscene: {
+    loadScene: {
       click: this.loadScene.bind(this)
     },
     loadEditedScene: {
@@ -25,6 +25,8 @@ function SceneSelector(containingViewOrElement) {
 SceneSelector.prototype = Object.create(Controller.prototype);
 SceneSelector.prototype.constructor = SceneSelector;
 
+Controller.registerClass(SceneSelector);
+
 SceneSelector.prototype.loadScene = function (event) {
   var sceneName = event.target.dataset.scene;
   this.emit("sceneselected", sceneName);
@@ -32,6 +34,5 @@ SceneSelector.prototype.loadScene = function (event) {
 
 SceneSelector.prototype.loadEditedScene = function (event) {
   var model = this.view.getModelForElement(event.target);
-  var descriptor = model.sceneDescriptor;
-  this.emit("editedsceneselected", descriptor);
+  this.emit("editedsceneselected", model.localLevelIndex);
 };

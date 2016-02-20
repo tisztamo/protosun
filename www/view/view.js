@@ -1,6 +1,9 @@
 "use strict";
 
 function View(model, templateId, containingViewOrElement, projection) {
+  if (!templateId) {
+    return;
+  }
   if (typeof projection === "object") {
     this.projection = projection;
   }
@@ -35,7 +38,7 @@ View.prototype.createRootElement = function (model, templateId) {
   var rootElement = template.cloneNode(true);
   var id = model && model.id ? model.id : "auto" + Math.round(Math.random() * 100000);
   rootElement.id = id;
-  rootElement.view_model = model;//TODO ES6: move to a Map-based implementation
+  rootElement.view_model = model; //TODO ES6: move to a Map-based implementation
   rootElement.classList.remove("template");
   return rootElement;
 };
@@ -88,12 +91,12 @@ View.prototype.updateField = function (fieldName) {
   }
   var viewElement = this.viewElements[fieldName];
   var fieldValue = this.calculateFieldValue(fieldName);
-  
+
   if (fieldValue.class) {
     setCSSClasses(viewElement, fieldValue.class);
     fieldValue.class = null;
   }
-  
+
   if (typeof fieldValue === "object") {
     LangUtils.deepMerge(viewElement, fieldValue);
   } else {

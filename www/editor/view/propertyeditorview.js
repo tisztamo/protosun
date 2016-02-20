@@ -54,7 +54,7 @@ function PropertyEditorView(model, containingElement) {
       };
     }
   };
-  View.call(this, model, "propertyeditor", containingElement);
+  View.call(this, model, "PropertyEditor", containingElement);
   CustomEventTarget.call(this);
 }
 

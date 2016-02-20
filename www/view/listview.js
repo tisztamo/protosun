@@ -12,7 +12,7 @@ ListView.prototype.createSubViews = function() {
   this.subViews = [];
   var listView = this;
   this.model.forEach(function (item) {
-    listView.subViews.push(new View(item, listView.templateId, listView.rootElement, listView.projection));
+    listView.subViews.push(Controller.createForTemplate(listView.templateId, item, listView.rootElement, listView.projection));
   });
 };
 

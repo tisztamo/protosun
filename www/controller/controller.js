@@ -1,14 +1,41 @@
 "use strict";
 
-function Controller(model, view) {
+/**
+ * Call from subclasses! Initializes the controller and optionally a view for it (if the view property is not already defined in the object under creation)
+ */
+function Controller(model, /* optional*/ containingViewOrElement, /* optional*/ projection) {
   this.model = model;
-  this.view = view;
+  if (!this.view) {
+    this.view = new View(this.model, this.templateId, containingViewOrElement, projection);
+  }
   this.controlElements = this.view && this.view.loadElementsToObject("[data-control]", "data-control");
   this.setupDataBinding();
   this.bindEvents();
 }
 
 Controller.prototype.eventMapping = {};
+
+Controller.controllerClasses = {};
+
+Controller.registerClass = function registerClass(controllerClass, templateId) {
+  if (typeof templateId === "undefined") {
+    templateId = controllerClass.name;
+  }
+  controllerClass.prototype.templateId = templateId;
+  Controller.controllerClasses[templateId] = controllerClass;
+};
+
+Controller.createForTemplate = function (templateId, model, containingViewOrElement) {
+  var ControllerClass = Controller.controllerClasses[templateId];
+  if (typeof ControllerClass !== "function") {
+    var retval = new Controller();
+    retval.view = null;
+    retval.templateId = templateId;
+    Controller.call(retval, model, containingViewOrElement);
+    return retval;
+  }
+  return new ControllerClass(model, containingViewOrElement);
+};
 
 /** @private */
 Controller.prototype.bindEvents = function () {
@@ -45,7 +72,7 @@ Controller.prototype.setupDataBinding = function () {
   }
 };
 
-Controller.prototype.clearDataBinding = function() {
+Controller.prototype.clearDataBinding = function () {
   if (this.installedChangeHandler) {
     this.view.rootElement.removeEventListener("change", this.installedChangeHandler);
     this.installedChangeHandler = null;

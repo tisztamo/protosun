@@ -10,7 +10,7 @@ function DebugView(simulation, renderer, containingElement) {
       };
     }
   };
-  View.call(this, simulation, "debug", containingElement);
+  View.call(this, simulation, "Debug", containingElement);
   SimulationObserver.call(this, simulation);
 }
 

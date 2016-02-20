@@ -1,7 +1,7 @@
 "use strict";
 
 function EditorRenderer(editor, containingViewOrElement) {
-  CanvasRenderer.call(this, editor.simulation, containingViewOrElement, "editorarea");
+  CanvasRenderer.call(this, editor.simulation, containingViewOrElement, "EditorArea");
   this.editor = editor;
 
   this.forecastSteps = 1200;

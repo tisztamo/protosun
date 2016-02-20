@@ -18,6 +18,7 @@ body {
   -moz-user-select: none;
   -ms-user-select: none;
   font-family: radiospace;
+  overflow: hidden;
 }
 
 .template {
@@ -134,11 +135,15 @@ body {
 .sceneselector ul {
   font-size: 25px;
   font-family: space_age;
-  transform: scale3d(1, 1.5, 1);
+  /*transform: scale3d(1, 1.5, 1);*/
 }
 
 .sceneselector h1 {
   text-align: center;
+}
+
+.editedsceneentry .editlink {
+  float: right;
 }
 
 ul {

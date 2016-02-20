@@ -14,7 +14,6 @@ function Toolbar(editor, containingViewOrElement) {
       };
     }
   };
-  this.view = new View(this.model, "toolbar", containingViewOrElement, projection);
   this.eventMapping = {
     createobject: {
       click: this.createObject.bind(this)
@@ -23,11 +22,13 @@ function Toolbar(editor, containingViewOrElement) {
       click: this.editor.play.bind(this.editor)
     }
   };
-  Controller.call(this, this.model, this.view);
+  Controller.call(this, this.model, containingViewOrElement, projection);
 }
 
 Toolbar.prototype = Object.create(Controller.prototype);
 Toolbar.prototype.constructor = Toolbar;
+
+Controller.registerClass(Toolbar);
 
 Toolbar.prototype.createObject = function () {
   var spaceObject = new Planet(new Vector(100, 100), Vector.zero.clone());

@@ -1,7 +1,7 @@
 "use strict";
 
 function CanvasRenderer(simulation, containingViewOrElement, templateName) {
-  this.area = new View({}, templateName || "area", containingViewOrElement);
+  this.area = new View({}, templateName || "Area", containingViewOrElement);
   Renderer.call(this, simulation, this.area.rootElement);
   this.views = [];
   this.backgroundSpeedRatio = 2;

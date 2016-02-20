@@ -11,15 +11,15 @@ Scene.registerScene(EditorScene);
 
 EditorScene.prototype.setUpModel = function () {
   var simulation = this.simulation;
+  var sceneDescriptor = LocalScenes.get(this.editor.localLevelIndex);
   if (this.editor.savedState) {
     simulation.setState(this.editor.savedState);
     this.editor.savedState = null;
-  } else if (localStorage.editedlevel && localStorage.editedlevel !== "") {
+  } else if (sceneDescriptor && sceneDescriptor !== "") {
     try {
-      simulation.setState(JSON.parse(localStorage.editedlevel));
+      simulation.setState(JSON.parse(sceneDescriptor));
     } catch (e) {
-      console.error("Cannot restore from state: " + localStorage.editedlevel);
-      localStorage.editedLevel = "";
+      console.error("Cannot restore from state: " + sceneDescriptor);
     }
   }
   if (!simulation.spaceObjects.length) {
