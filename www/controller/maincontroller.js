@@ -32,26 +32,31 @@ MainController.prototype.selectScene = function (sceneNameOrEvent) {
   this.bindToObjective(this.scene.objective);
 };
 
-
 MainController.prototype.editedSceneSelectedHandler = function (event) {
-  this.hideSceneSelector();
-  this.removeSimulation();
+  var sceneDescriptor;
+  try {
+    this.hideSceneSelector();
+    this.removeSimulation();
 
-  var index = event.detail;
-  var sceneDescriptor = LocalScenes.get(index);
+    var index = event.detail;
+    sceneDescriptor = LocalScenes.get(index);
 
-  if (typeof sceneDescriptor === "string") {
-    sceneDescriptor = JSON.parse(sceneDescriptor);
+    if (typeof sceneDescriptor === "string") {
+      sceneDescriptor = JSON.parse(sceneDescriptor);
+    }
+
+    this.simulation = new Simulation(60);
+    this.renderer = new CanvasRenderer(this.simulation, document.body);
+    this.scene = new PlayScene(this.simulation, this.renderer, sceneDescriptor);
+    this.debugView = new DebugView(this.simulation, this.renderer, this.view);
+
+    this.simulation.start();
+    this.renderer.start();
+    //this.bindToObjective(this.scene.objective);
+  } catch (e) {
+    console.error("Unable to start scene " + sceneDescriptor);
+    this.showSceneSelector();
   }
-
-  this.simulation = new Simulation(60);
-  this.renderer = new CanvasRenderer(this.simulation, document.body);
-  this.scene = new PlayScene(this.simulation, this.renderer, sceneDescriptor);
-  this.debugView = new DebugView(this.simulation, this.renderer, this.view);
-
-  this.simulation.start();
-  this.renderer.start();
-  this.bindToObjective(this.scene.objective);
 };
 
 MainController.prototype.bindToObjective = function (objective) {

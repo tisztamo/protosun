@@ -7,11 +7,11 @@ window.LocalScenes = (function () {
   var idFor = function (idx) {
     return "savedscene_" + idx;
   };
-  
+
   var storedItem = function (idx) {
     return localStorage[idFor(idx)];
   };
-  
+
   var initListFromLocalStorage = function () {
     scenes = [];
     var idx = 0;
@@ -21,6 +21,11 @@ window.LocalScenes = (function () {
       idx += 1;
       item = storedItem(idx);
     }
+
+    while (idx < 6) {
+      scenes.push("");
+      idx += 1;
+    }
   };
 
   localScenes.getList = function () {
@@ -28,7 +33,11 @@ window.LocalScenes = (function () {
   };
 
   localScenes.get = function (index) {
-    return scenes[index];
+    var retval = scenes[index];
+    if (!retval) {
+      retval = JSON.stringify(Simulation.defaultState);
+    }
+    return retval;
   };
 
   localScenes.set = function (index, sceneDescriptor) {

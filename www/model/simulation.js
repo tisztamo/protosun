@@ -1,4 +1,3 @@
-/*jshint -W098 */
 "use strict";
 
 /**
@@ -15,13 +14,13 @@ function Simulation(fps) {
 Simulation.prototype = Object.create(GameEngine.prototype);
 Simulation.prototype.constructor = Simulation;
 
-Simulation.prototype.start = function () {
+Simulation.prototype.start = function() {
   this.setUpModel();
   GameEngine.prototype.start.call(this);
   this.emit("start");
 };
 
-Simulation.prototype.stop = function () {
+Simulation.prototype.stop = function() {
   GameEngine.prototype.stop.call(this);
   this.emit("stop");
 };
@@ -30,14 +29,14 @@ Simulation.prototype.stop = function () {
  * Sets up the model.
  * @abstract
  */
-Simulation.prototype.setUpModel = function () {
+Simulation.prototype.setUpModel = function() {
   console.log("Default setUpModel, you have to override it!");
 };
 
 /**
  * Adds a SpaceObject to the simulation.
  */
-Simulation.prototype.addSpaceObject = function (spaceObject) {
+Simulation.prototype.addSpaceObject = function(spaceObject) {
   this.spaceObjects.push(spaceObject);
   spaceObject.simulation = this;
   this.emit("spaceobjectadded", {
@@ -48,14 +47,14 @@ Simulation.prototype.addSpaceObject = function (spaceObject) {
 /**
  * Marks the {@link SpaceObject} for removal. It will be removed at the end of the current step.
  */
-Simulation.prototype.removeSpaceObject = function (spaceObject) {
+Simulation.prototype.removeSpaceObject = function(spaceObject) {
   this.objectsToRemove.push(spaceObject);
 };
 
 /**
  * @private
  */
-Simulation.prototype.purgeSpaceObjects = function () {
+Simulation.prototype.purgeSpaceObjects = function() {
   var removeIdx = this.objectsToRemove.length - 1;
   while (removeIdx >= 0) {
     var objectToRemove = this.objectsToRemove[removeIdx];
@@ -75,7 +74,7 @@ Simulation.prototype.purgeSpaceObjects = function () {
   this.objectsToRemove = [];
 };
 
-Simulation.prototype.oneStep = function () {
+Simulation.prototype.oneStep = function() {
   var length = this.spaceObjects.length;
   var spaceObjects = this.spaceObjects;
   var outerIdx = 0;
@@ -104,11 +103,11 @@ Simulation.prototype.oneStep = function () {
   GameEngine.prototype.oneStep.call(this);
 };
 
-Simulation.prototype.getState = function () {
+Simulation.prototype.getState = function() {
   var state = {};
   state.spaceObjects = [];
   state.stepsTaken = this.stepsTaken;
-  this.spaceObjects.forEach(function (spaceObject) {
+  this.spaceObjects.forEach(function(spaceObject) {
     var so = spaceObject.clone();
     so.type = so.constructor.name;
     delete so.simulation;
@@ -119,11 +118,40 @@ Simulation.prototype.getState = function () {
   return state;
 };
 
-Simulation.prototype.setState = function (state) {
+Simulation.prototype.setState = function(state) {
   var simulation = this;
-  this.stepsTaken = state.stepsTaken;
-  state.spaceObjects.forEach(function (spaceObject) {
-    simulation.addSpaceObject(SpaceObject.createFromPOJO(spaceObject));
-  });
+  this.stepsTaken = state.stepsTaken || 0;
+  if (state.spaceObjects) {
+    state.spaceObjects.forEach(function(spaceObject) {
+      simulation.addSpaceObject(SpaceObject.createFromPOJO(spaceObject));
+    });
+  }
   return state;
+};
+
+Simulation.defaultState = {
+  "spaceObjects": [{
+    "pos": {
+      "x": 0,
+      "y": 0
+    },
+    "v": {
+      "x": 0,
+      "y": 0
+    },
+    "mass": 0.1,
+    "reciprocalMass": 10,
+    "heading": 0,
+    "angularSpeed": 0,
+    "radius": 20,
+    "id": "SO14",
+    "enginePowered": {
+      "fuel": null,
+      "engineRunning": false
+    },
+    "permeable": false,
+    "isIndestructible": false,
+    "type": "SpaceShip"
+  }],
+  "stepsTaken": 0
 };
