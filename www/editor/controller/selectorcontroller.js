@@ -20,7 +20,6 @@ SelectorController.prototype.downHandler = function (event) {
 SelectorController.prototype.upHandler = function (event) {
   if (!this.editor.isPointerEventOnScene(event) ||
      this.down.distanceFrom(new Vector(event.clientX, event.clientY)) > 5) return;
-  var spaceObject = this.editor.renderer.clickedObject(event.clientX, event.clientY);
-  spaceObject = spaceObject || {};
+  var spaceObject = this.editor.renderer.clickedObject(event.clientX, event.clientY) || {};
   this.editor.selectSpaceObject(spaceObject);
 };

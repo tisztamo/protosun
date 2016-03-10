@@ -60,3 +60,11 @@ function PropertyEditorView(model, containingElement) {
 
 PropertyEditorView.prototype = Object.create(View.prototype);
 PropertyEditorView.prototype.constructor = PropertyEditorView;
+
+PropertyEditorView.prototype.updateAll = function () {
+  if (this.model && this.model instanceof SpaceObject) {
+    View.prototype.updateAll.call(this);
+  } else {
+    View.prototype.updateField.call(this, "root");
+  }
+};
