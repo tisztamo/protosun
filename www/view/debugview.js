@@ -2,12 +2,17 @@
 
 function DebugView(simulation, renderer, containingElement) {
   this.projection = {
-    timerLag: function() {
+    timerLag: function () {
       var val = Math.round(simulation.avgStepsPerCB * 100) / 100;
       return {
         textContent: val,
         className: val < 1.1 ? "normal" : "warning"
       };
+    },
+    fuel: function () {
+      return simulation.spaceObjects.find(function (spaceObject) {
+        return spaceObject instanceof SpaceShip;
+      }).enginePowered.fuel;
     }
   };
   View.call(this, simulation, "Debug", containingElement);

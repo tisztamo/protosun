@@ -25,6 +25,7 @@
              "EnginePoweredCanvasView",
              "FixedStar",
              "Forecaster",
+             "FuelPack",
              "GameEngine",
              "KeyboardController",
              "MainController",
