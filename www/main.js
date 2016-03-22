@@ -39,6 +39,7 @@ loader.loadScript("compressed.js", main, function () {
   "scene/scene.js",
   "scene/objective.js",
   "scene/protectobjective.js",
+  "scene/gravityassistscene.js",
   "scene/puzzlescene.js",
   "scene/spacedebrisscene.js",
   "scene/localscenes.js",

@@ -36,6 +36,7 @@
     <ul data-control="loadScene">
       <li data-scene="SpaceDebrisScene">Space Debris</li>
       <li data-scene="PuzzleScene">Gravity Puzzle</li>
+      <li data-scene="GravityAssistScene">Gravity Assist</li>
     </ul>
     <hr/>
     <ul data-list="editedScenes" data-template="EditedSceneEntry" data-control="loadEditedScene">
@@ -108,6 +109,11 @@
       <li>
         <label>Mass
           <input type="number" step="0.1" data-field="mass" />
+        </label>
+      </li>
+      <li>
+        <label>Radius
+          <input type="number" step="1" data-field="radius" />
         </label>
       </li>
       <li>

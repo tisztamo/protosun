@@ -50,13 +50,13 @@ CanvasView.loadImage = function (imageName) {
     return CanvasView.images[imageName];
   }
   CanvasView.emit("loadstart", imageName);
-  
+
   var image = new Image();
-  
-  image.addEventListener("load", function() {
+
+  image.addEventListener("load", function () {
     CanvasView.emit("load", imageName);
   });
-  image.addEventListener("error", function() {
+  image.addEventListener("error", function () {
     console.error("Unable to load image: " + imageName);
     CanvasView.emit("error", imageName);
   });
@@ -66,4 +66,17 @@ CanvasView.loadImage = function (imageName) {
   image.height = 60;
   CanvasView.images[imageName] = image;
   return image;
+};
+
+CanvasView.sphere = function (imageName, model, optRadiusFactor) {
+  optRadiusFactor = optRadiusFactor || 2;
+  return {
+    image: CanvasView.loadImage(imageName),
+    get width() {
+      return model.radius * 2;
+    },
+    get height() {
+      return model.radius * 2;
+    }
+  };
 };

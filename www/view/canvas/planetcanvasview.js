@@ -1,11 +1,7 @@
 "use strict";
 
 function PlanetCanvasView(model, viewPort) {
-  CanvasView.call(this, model, viewPort, [{
-    image: CanvasView.loadImage("planet"),
-    width: model.radius * 2,
-    height: model.radius * 2
-  }]);
+  CanvasView.call(this, model, viewPort, [CanvasView.sphere("planet", model)]);
 }
 
 PlanetCanvasView.prototype = Object.create(CanvasView.prototype);

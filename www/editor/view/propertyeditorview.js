@@ -45,6 +45,7 @@ function PropertyEditorView(model, containingElement) {
     vx: numberGetSet("v", "x"),
     vy: numberGetSet("v", "y"),
     mass: numberGetSet("mass"),
+    radius: numberGetSet("radius"),
     indestructible: function (value) {
       if (typeof value !== "undefined") {
         this.model.isIndestructible = value;

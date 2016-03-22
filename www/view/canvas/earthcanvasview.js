@@ -1,11 +1,7 @@
 "use strict";
 
 function EarthCanvasView(model, viewPort) {
-  CanvasView.call(this, model, viewPort, [{
-    image: CanvasView.loadImage("earth"),
-    width: model.radius * 2,
-    height: model.radius * 2
-  }]);
+  CanvasView.call(this, model, viewPort, [CanvasView.sphere("earth", model)]);
 }
 
 EarthCanvasView.prototype = Object.create(CanvasView.prototype);

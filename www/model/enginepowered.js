@@ -12,15 +12,16 @@
 function EnginePowered(enginePower, fuel, engineRunning) {
   this.enginePowered = {
     fuel: fuel || Infinity,
-    engineRunning: engineRunning || false
+    engineRunning: engineRunning || false,
+    enginePower: enginePower || 0.0015
   };
-  enginePower = enginePower || 0.0015;
+  
   var props = this.enginePowered;
 
   var superOneStep = this.oneStep;
   this.oneStep = function () {
     if (props.engineRunning) {
-      this.stepForce.add(Vector.createFromPolar(this.heading, enginePower));
+      this.stepForce.add(Vector.createFromPolar(this.heading, props.enginePower));
       if (--props.fuel <= 0) {
         props.engineRunning = false;
       }
