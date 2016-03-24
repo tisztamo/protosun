@@ -41,14 +41,18 @@ ViewPort.prototype.setViewSize = function (viewWidth, viewHeight) {
  * Sets the projected area of the model space.
  * @param x
  * @param y
- * @param width
- * @param height
+ * @param wishedWidth
+ * @param wishedHeight
  */
-ViewPort.prototype.setModelViewPort = function (x, y, width, height) {
+ViewPort.prototype.setModelViewPort = function (x, y, wishedWidth, wishedHeight) {
+  var width = wishedWidth;
+  var height = wishedHeight;
   if (height * this.modelAspectRatio > width) {
     width = Math.round(height * this.modelAspectRatio);
+    x -= (width - wishedHeight) / 2;
   } else {
     height = Math.round(width / this.modelAspectRatio);
+    y -= (height - wishedHeight) / 2;
   }
   this.modelViewPort = {
     x: x,
