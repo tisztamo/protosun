@@ -103,7 +103,7 @@ GravityAssistScene.prototype.setUpModel = function () {
   });
 
   this.objective = new ProtectObjective(simulation, objectToProtect, 1900);
-  var camera = new OutlineCamera(new SimpleCamera(this.simulation, this.renderer.viewPort, ship), -1000, -3000, 2000, 2800);
+  var camera = new OutlineCamera(new SimpleCamera(this.simulation, this.renderer.viewPort, ship), -1000, -1500, 2000, 2800);
   this.renderer.setCamera(camera);
 
   new KeyboardController(ship, camera);

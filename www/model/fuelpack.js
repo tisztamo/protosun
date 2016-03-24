@@ -3,7 +3,7 @@
 function FuelPack(pos, v, storedFuel) {
   SpaceObject.call(this, pos, v, 0.001);
   this.radius = 10;
-  this.storedFuel = storedFuel || 600;
+  this.storedFuel = storedFuel || 2000;
 }
 
 FuelPack.prototype = Object.create(SpaceObject.prototype);

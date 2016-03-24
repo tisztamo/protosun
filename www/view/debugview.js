@@ -10,9 +10,7 @@ function DebugView(simulation, renderer, containingElement) {
       };
     },
     fuel: function () {
-      return simulation.spaceObjects.find(function (spaceObject) {
-        return spaceObject instanceof SpaceShip;
-      }).enginePowered.fuel;
+      return simulation.spaceObjects[0].enginePowered.fuel;
     }
   };
   View.call(this, simulation, "Debug", containingElement);
