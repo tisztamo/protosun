@@ -49,7 +49,7 @@ ViewPort.prototype.setModelViewPort = function (x, y, wishedWidth, wishedHeight)
   var height = wishedHeight;
   if (height * this.modelAspectRatio > width) {
     width = Math.round(height * this.modelAspectRatio);
-    x -= (width - wishedHeight) / 2;
+    x -= (width - wishedWidth) / 2;
   } else {
     height = Math.round(width / this.modelAspectRatio);
     y -= (height - wishedHeight) / 2;
@@ -59,7 +59,7 @@ ViewPort.prototype.setModelViewPort = function (x, y, wishedWidth, wishedHeight)
     y: y,
     width: width,
     height: height,
-    center: new Vector(x + width / 2, y + width / 2)
+    center: new Vector(x + width / 2, y + height / 2)
   };
   this.zoom = this.baseWidth / width;
   this.viewScale = this.zoom * this.viewToBaseRatio;
