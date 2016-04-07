@@ -6,6 +6,7 @@ function Missile(pos, v, heading, lifeSteps, fuel) {
   this.radius = 10;
   this.lifeSteps = lifeSteps || 480;
   this.detonated = false;
+  this.permeable = true;// The missile detonates from a distance, no collision check needed.
 }
 
 Missile.prototype = Object.create(SpaceObject.prototype);
