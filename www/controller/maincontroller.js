@@ -48,11 +48,9 @@ MainController.prototype.editedSceneSelectedHandler = function (event) {
     this.simulation = new Simulation(60);
     this.renderer = new CanvasRenderer(this.simulation, document.body);
     this.scene = new PlayScene(this.simulation, this.renderer, sceneDescriptor);
-    this.debugView = new DebugView(this.simulation, this.renderer, this.view);
 
     this.simulation.start();
     this.renderer.start();
-    //this.bindToObjective(this.scene.objective);
   } catch (e) {
     console.error("Unable to start scene " + sceneDescriptor);
     this.showSceneSelector();
