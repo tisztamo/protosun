@@ -74,7 +74,6 @@ View.prototype.calculateFieldValue = function (fieldName) {
     }
     return fieldProjector;
   } catch (ex) {
-    console.warn("Unable to calculate value for field " + fieldName, ex);
     return "N/A";
   }
 };
