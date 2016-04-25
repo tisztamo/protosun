@@ -6,7 +6,7 @@ function OutlineCamera(originalCamera, x, y, width, height) {
   this.isOutLined = false;
   this.x = x || 0;
   this.width = width || 2048;
-  this.y = x || 0;
+  this.y = y || 0;
   this.height = height || 1536;
   this.animationLength = 500;
 }

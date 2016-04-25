@@ -1,10 +1,8 @@
 "use strict";
 
-function MainController() {
+function MainController(containingElement) {
   this.model = {};
-  this.view = new View(this.model, "main");
-
-  Controller.call(this, this.model, this.view);
+  Controller.call(this, this.model, containingElement);
 
   this.selectScene("SpaceDebrisScene");
   this.showSceneSelector();
@@ -12,6 +10,8 @@ function MainController() {
 
 MainController.prototype = Object.create(Controller.prototype);
 MainController.prototype.constructor = MainController;
+
+Controller.registerClass(MainController, "Main");
 
 MainController.prototype.selectScene = function (sceneNameOrEvent) {
   this.hideSceneSelector();
@@ -23,15 +23,38 @@ MainController.prototype.selectScene = function (sceneNameOrEvent) {
   }
 
   this.simulation = new Simulation(60);
-  var area = document.getElementById('area');
-  this.renderer = new CanvasRenderer(this.simulation, area);
+  this.renderer = new CanvasRenderer(this.simulation, document.body);
   this.scene = Scene.createScene(sceneName, this.simulation, this.renderer);
-  this.debugView = new DebugView(this.simulation, this.renderer);
-  document.body.appendChild(this.debugView.rootElement);
+  this.debugView = new DebugView(this.simulation, this.renderer, this.view);
 
   this.simulation.start();
   this.renderer.start();
   this.bindToObjective(this.scene.objective);
+};
+
+MainController.prototype.editedSceneSelectedHandler = function (event) {
+  var sceneDescriptor;
+  try {
+    this.hideSceneSelector();
+    this.removeSimulation();
+
+    var index = event.detail;
+    sceneDescriptor = LocalScenes.get(index);
+
+    if (typeof sceneDescriptor === "string") {
+      sceneDescriptor = JSON.parse(sceneDescriptor);
+    }
+
+    this.simulation = new Simulation(60);
+    this.renderer = new CanvasRenderer(this.simulation, document.body);
+    this.scene = new PlayScene(this.simulation, this.renderer, sceneDescriptor);
+
+    this.simulation.start();
+    this.renderer.start();
+  } catch (e) {
+    console.error("Unable to start scene " + sceneDescriptor);
+    this.showSceneSelector();
+  }
 };
 
 MainController.prototype.bindToObjective = function (objective) {
@@ -82,7 +105,7 @@ MainController.prototype.removeSimulation = function () {
   this.renderer = null;
 
   if (this.debugView) {
-    document.body.removeChild(this.debugView.rootElement);
+    this.debugView.rootElement.parentNode.removeChild(this.debugView.rootElement);
     this.debugView = null;
   }
   this.scene = null;
@@ -90,10 +113,12 @@ MainController.prototype.removeSimulation = function () {
 
 MainController.prototype.showSceneSelector = function () {
   if (!this.sceneSelector) {
-    this.sceneSelector = new SceneSelector();
+    this.sceneSelector = new SceneSelector(this.view);
     this.sceneSelector.addEventListener("sceneselected", this.selectScene.bind(this));
+    this.sceneSelector.addEventListener("editedsceneselected", this.editedSceneSelectedHandler.bind(this));
+  } else {
+    this.view.rootElement.appendChild(this.sceneSelector.view.rootElement);
   }
-  this.view.rootElement.appendChild(this.sceneSelector.view.rootElement);
 };
 
 MainController.prototype.hideSceneSelector = function () {

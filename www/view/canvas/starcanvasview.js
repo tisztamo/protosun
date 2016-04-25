@@ -1,11 +1,7 @@
 "use strict";
 
 function StarCanvasView(model, viewPort) {
-  CanvasView.call(this, model, viewPort, [{
-    image: CanvasView.loadImage("star"),
-    width: model.radius * 2.2,
-    height: model.radius * 2.2
-  }]);
+  CanvasView.call(this, model, viewPort, [CanvasView.sphere("star", model, 2.2)]);
 }
 
 StarCanvasView.prototype = Object.create(CanvasView.prototype);

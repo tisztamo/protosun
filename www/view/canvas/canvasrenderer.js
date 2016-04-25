@@ -1,16 +1,14 @@
 "use strict";
 
-function CanvasRenderer(simulation, area) {
-  Renderer.call(this, simulation, area);
+function CanvasRenderer(simulation, containingViewOrElement, templateName) {
+  this.area = new View({}, templateName || "Area", containingViewOrElement);
+  Renderer.call(this, simulation, this.area.rootElement);
   this.views = [];
   this.backgroundSpeedRatio = 2;
   this.defaultBgSize = 1024;
   this.displayedViewCount = 0;
-  this.canvas = document.createElement("canvas");
-  this.area = area;
-  this.area.appendChild(this.canvas);
-  this.canvas.width = area.width || 1000;
-  this.canvas.height = area.height || 800;
+  this.canvas = this.area.rootElement.querySelector("canvas");
+  this.area.rootElement.appendChild(this.canvas);
   this.ctx = this.canvas.getContext('2d');
 }
 
@@ -19,7 +17,7 @@ CanvasRenderer.prototype.constructor = CanvasRenderer;
 CanvasRenderer.viewClasses = [];
 
 CanvasRenderer.prototype.stop = function () {
-  this.area.removeChild(this.canvas);
+  this.area.rootElement.parentNode.removeChild(this.area.rootElement);
   Renderer.prototype.stop.call(this);
 };
 
@@ -88,8 +86,7 @@ CanvasRenderer.prototype.updateView = function (view) {
 
 CanvasRenderer.prototype.updateBackground = function () {
   if (!this.backgroundImage) {
-    this.backgroundImage = new Image();
-    this.backgroundImage.src = "img/background.jpg";
+    this.backgroundImage = CanvasView.loadImage("background");
   }
 
   function nonPositiveRemainder(value, width) {

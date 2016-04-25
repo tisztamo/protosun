@@ -18,6 +18,7 @@ body {
   -moz-user-select: none;
   -ms-user-select: none;
   font-family: radiospace;
+  overflow: hidden;
 }
 
 .template {
@@ -29,87 +30,27 @@ body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-/* background-image: url(img/background.jpg);*/
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
 }
 
-.spaceobject {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  -webkit-transform: translate(-50%, -50%);
-}
-
-.flame {
-  opacity: 1;
-  position: absolute;
-  width: 0;
-  left: 0;
-  margin-left: 0;
-  top: 1px;
-  transition-property: width, margin-left, opacity;
-  transition-duration: 0.2s;
-}
-
-.flame img {
-  width: 100%;
-  margin-left: -100%;
-  margin-right: 100%;
-}
-
-.spaceship .flame {
-  top: -7px;
-}
-
-.spaceship.enginerunning .flame {
-  width: 100px;
-  opacity: 0.5;
-}
-
-.missile.enginerunning .flame {
-  width: 50px;
-  opacity: 0.5;
-}
-
-.spaceship {
-  z-index: 1000;
-}
-
-.detonation {
-  z-index: 20000;
-  opacity: 1;
-  width: 0;
-  height: 0;
-}
-
-.detonation img {
-  width: 100%;
-  height: 100%;
-}
-
-.detonated.detonation {
-  opacity: 0;
-  width: 600px;
-  height: 600px;
-  transition: all 1.5s;
-  -webkit-transition: all 1.5s;
-}
-
-#copyrightnotice {
+.copyrightnotice {
   position: fixed;
+  z-index: 12000;
   bottom: 0;
   right: 0;
 }
 
-#copyrightnotice a {
+.copyrightnotice a {
   color: dimgray;
 }
 
-#controlhint {
+.controlhint {
   color: dimgray;
   position: fixed;
   bottom: 18px;
   right: 0;
+  z-index: 12000;
 }
 
 .touchcontrol {
@@ -160,10 +101,8 @@ body {
   position: absolute;
   top: 2px;
   right: 2px;
-  width: 140px;
+  width: 150px;
   overflow: hidden;
-  color: white;
-  pointer-events: none;
 }
 
 .debug > label {
@@ -177,24 +116,42 @@ body {
   color: red;
 }
 
+.popup {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  text-shadow: 1px 1px rgba(255, 255, 255, 0.6);
+  z-index: 10000;
+  padding: 6px;
+}
+
 .sceneselector {
   position: fixed;
   top: 20%;
   bottom: 20%;
   left: 20%;
   right: 20%;
-  background-color: rgba(255, 255, 255, 0.5); 
-  border-radius: 10px;
-  text-shadow: 1px 1px rgba(255, 255, 255, 0.6);
 }
 
 .sceneselector ul {
-  list-style-type: none;
   font-size: 25px;
   font-family: space_age;
-  transform: scale3d(1, 1.5, 1);
+  /*transform: scale3d(1, 1.5, 1);*/
 }
 
 .sceneselector h1 {
   text-align: center;
+}
+
+.editedsceneentry .editlink {
+  float: right;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+hr {
+  margin: 20px;
 }

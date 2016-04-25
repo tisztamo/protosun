@@ -21,10 +21,11 @@ function TouchController(spaceShip, camera, touchControlView) {
       touchstart: spaceShip.launchMissile.bind(spaceShip)
     },
     outlinecontrol: {
-      touchstart: camera.switchOutlined.bind(camera)
+      touchstart: (camera.switchOutlined ? camera.switchOutlined.bind(camera): function() {})
     }
   };
-  Controller.call(this, spaceShip, touchControlView);
+  this.view = touchControlView;
+  Controller.call(this, spaceShip);
 }
 
 TouchController.prototype = Object.create(Controller.prototype);
@@ -32,7 +33,7 @@ TouchController.prototype.constructor = TouchController;
 
 /**
  * @static
- * Creates a touch screen controller (TouchControlView and TouchController) for the given spaceship. If the browser does not support touching, 
+ * Creates a touch screen controller (TouchControlView and TouchController) for the given spaceship. If the browser does not support touching,
  then returns null
  */
 TouchController.createControllerFor = function (spaceShip, simulation) {

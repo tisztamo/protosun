@@ -8,8 +8,8 @@
  * @class
  */
 function ViewPort() {
-    this.setBaseSize(1024, 768);
-    this.setModelViewPort(0, 0, 1024, 768);
+  this.setBaseSize(1024, 768);
+  this.setModelViewPort(0, 0, 1024, 768);
 }
 
 /**
@@ -41,21 +41,25 @@ ViewPort.prototype.setViewSize = function (viewWidth, viewHeight) {
  * Sets the projected area of the model space.
  * @param x
  * @param y
- * @param width
- * @param height
+ * @param wishedWidth
+ * @param wishedHeight
  */
-ViewPort.prototype.setModelViewPort = function (x, y, width, height) {
+ViewPort.prototype.setModelViewPort = function (x, y, wishedWidth, wishedHeight) {
+  var width = wishedWidth;
+  var height = wishedHeight;
   if (height * this.modelAspectRatio > width) {
     width = Math.round(height * this.modelAspectRatio);
+    x -= (width - wishedWidth) / 2;
   } else {
     height = Math.round(width / this.modelAspectRatio);
+    y -= (height - wishedHeight) / 2;
   }
   this.modelViewPort = {
     x: x,
     y: y,
     width: width,
     height: height,
-    center: new Vector(x + width / 2, y + width / 2)
+    center: new Vector(x + width / 2, y + height / 2)
   };
   this.zoom = this.baseWidth / width;
   this.viewScale = this.zoom * this.viewToBaseRatio;
@@ -77,19 +81,23 @@ ViewPort.prototype.setModelViewPortWithCenterZoom = function (center, zoom) {
 };
 
 /**
-* Projects a Vector from the model space to the view space.
-* @param {Vector} pos The vector to project
-*/
+ * Projects a Vector from the model space to the view space.
+ * @param {Vector} pos The vector to project
+ */
 ViewPort.prototype.projectToView = function (pos) {
   return new Vector((pos.x - this.modelViewPort.x) * this.viewScale + this.horizontalViewShift, (pos.y - this.modelViewPort.y) * this.viewScale);
 };
 
+ViewPort.prototype.projectToModel = function (pos) {
+  return new Vector((pos.x - this.horizontalViewShift) / this.viewScale + this.modelViewPort.x, pos.y / this.viewScale + this.modelViewPort.y);
+};
+
 /**
-* Checks if the given Vector is in the view.
-* @return the projected (view) vector if it is in the view, false otherwise.
-* @param {Vector} modelPos The vector to project
-* @param {number} radius 
-*/
+ * Checks if the given Vector is in the view.
+ * @return the projected (view) vector if it is in the view, false otherwise.
+ * @param {Vector} modelPos The vector to project
+ * @param {number} radius 
+ */
 ViewPort.prototype.isInView = function (modelPos, radius) {
   var viewPos = this.projectToView(modelPos);
   radius = radius || 0;

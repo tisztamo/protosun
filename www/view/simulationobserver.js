@@ -15,8 +15,19 @@ function SimulationObserver(simulation) {
     };
 
     var oneStepTaken = function oneStepTaken(event) {
-        observer.oneStepTaken();
-      };
+      observer.oneStepTaken();
+    };
+
+    var collision = function collision(event) {
+      observer.collision();
+    };
+
+    var simulationStopped = function simulationStopped(event) {
+      if (observer.simulationStopped) {
+        observer.simulationStopped();        
+      }
+      observer.unbindFromSimulation();
+    };
 
     if (observer.spaceObjectAdded) {
       simulation.addEventListener("spaceobjectadded", spaceObjectAdded);
@@ -27,11 +38,18 @@ function SimulationObserver(simulation) {
     if (observer.oneStepTaken) {
       simulation.addEventListener("onesteptaken", oneStepTaken);
     }
+    if (observer.collision) {
+      simulation.addEventListener("collision", collision);
+    }
+
+    simulation.addEventListener("stop", simulationStopped);
 
     observer.unbindFromSimulation = function () {
       observer.simulation.removeEventListener("spaceobjectadded", spaceObjectAdded);
       observer.simulation.removeEventListener("spaceobjectremoved", spaceObjectRemoved);
       observer.simulation.removeEventListener("onesteptaken", oneStepTaken);
+      observer.simulation.removeEventListener("collision", collision);
+      observer.simulation.removeEventListener("stop", simulationStopped);
     };
   }
 }

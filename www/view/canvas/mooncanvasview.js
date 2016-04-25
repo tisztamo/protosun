@@ -1,11 +1,7 @@
 "use strict";
 
 function MoonCanvasView(model, viewPort) {
-  CanvasView.call(this, model, viewPort, [{
-    image: CanvasView.loadImage("moon"),
-    width: model.radius * 2,
-    height: model.radius * 2
-  }]);
+  CanvasView.call(this, model, viewPort, [CanvasView.sphere("moon", model)]);
 }
 
 MoonCanvasView.prototype = Object.create(CanvasView.prototype);

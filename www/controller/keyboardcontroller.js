@@ -3,8 +3,11 @@
 function KeyboardController(spaceShip, camera) {
   this.spaceShip = spaceShip;
   this.camera = camera;
-  document.addEventListener("keydown", this.keydownHandler.bind(this));
-  document.addEventListener("keyup", this.keyupHandler.bind(this));
+  this.installedKeydownHandler = this.keydownHandler.bind(this);
+  this.installedKeyupHandler = this.keyupHandler.bind(this);
+  document.addEventListener("keydown", this.installedKeydownHandler);
+  document.addEventListener("keyup", this.installedKeyupHandler);
+  spaceShip.simulation.addEventListener("stop", this.releaseResources.bind(this));
 }
 
 /** @private */
@@ -40,4 +43,9 @@ KeyboardController.prototype.keyupHandler = function (keyEvent) {
     this.spaceShip.stopEngine();
     break;
   }
+};
+
+KeyboardController.prototype.releaseResources = function () {
+  document.removeEventListener("keydown", this.installedKeydownHandler);
+  document.removeEventListener("keyup", this.installedKeyupHandler);  
 };

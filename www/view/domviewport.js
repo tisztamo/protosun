@@ -30,6 +30,6 @@ DOMViewPort.prototype.notifyViewSizeChange = function () {
 /**
 * Removes the resize event listener attached to window.
 */
-DOMViewPort.prototype.shutdown = function () {
-  window.removeEventListener(this.resizeListener);
+DOMViewPort.prototype.freeResources = function () {
+  window.removeEventListener("resize", this.resizeListener);
 };

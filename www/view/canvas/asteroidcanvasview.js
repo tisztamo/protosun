@@ -1,11 +1,7 @@
 "use strict";
 
 function AteroidCanvasView(model, viewPort) {
-  CanvasView.call(this, model, viewPort, [{
-    image: CanvasView.loadImage("asteroid"),
-    width: model.radius * 2,
-    height: model.radius * 2
-  }]);
+  CanvasView.call(this, model, viewPort, [CanvasView.sphere("earth", model)]);
 }
 
 AteroidCanvasView.prototype = Object.create(CanvasView.prototype);

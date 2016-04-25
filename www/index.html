@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <title>Solar System Simulation</title>
   <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="editor.css">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
@@ -13,45 +14,12 @@
 </head>
 
 <body>
-  <div id="area" class="gamearea"></div>
-  <div id="copyrightnotice"><a href="https://www.flickr.com/photos/24662369@N07/15884229752/">NASA imagery</a>, <a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a> <a href="index.html">RESTART GAME</a>
+  <div id="Area" class="template gamearea">
+    <canvas touch-action="none"></canvas>
   </div>
-  <div id="controlhint">Use arrow keys and space!</div>
-  <div class="template spaceobject star" id="star">
-    <img class="physicalview" src="img/star.png" width="60" height="60">
+  <div class="copyrightnotice"><a href="https://www.flickr.com/photos/24662369@N07/15884229752/">NASA imagery</a>, <a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a> <a href="index.html">RESTART GAME</a>
   </div>
-  <div class="template spaceobject planet" id="planet">
-    <img class="physicalview" src="img/planet.png" width="50" height="50">
-  </div>
-  <div class="template spaceobject earth" id="earth">
-    <img class="physicalview" src="img/earth.png" width="1500" height="1500">
-  </div>
-  <div class="template spaceobject moon" id="moon">
-    <img class="physicalview" src="img/moon.png" width="25" height="25">
-  </div>
-  <div class="template spaceobject spaceship" id="spaceship">
-    <div class="physicalview">
-      <img src="img/spaceship.png" width="50" height="20">
-      <div class="flame">
-        <img src="img/flame.png" height="10">
-        <img src="img/flame.png" height="10">
-      </div>
-    </div>
-  </div>
-  <div class="template spaceobject missile" id="missile">
-    <div class="physicalview">
-      <img src="img/missile.png" height="16" width="25">
-      <div class="flame">
-        <img src="img/flame.png" height="11">
-      </div>
-    </div>
-  </div>
-  <div class="template spaceobject detonation" id="detonation">
-    <img class="physicalview" src="img/detonation.png">
-  </div>
-  <div class="template spaceobject spacedebris" id="spacedebris">
-    <img class="physicalview" src="img/spacedebris.png" width="40" height="26">
-  </div>
+  <div class="controlhint">Use arrow keys and space!</div>
   <div class="template touchcontrol" id="touchcontrol">
     <div class="leftcontrol" data-control="leftcontrol">Left</div>
     <div class="rightcontrol" data-control="rightcontrol">Right</div>
@@ -59,18 +27,109 @@
     <div class="firecontrol" data-control="firecontrol">Fire</div>
     <div class="outlinecontrol" data-control="outlinecontrol">Outline</div>
   </div>
-  <div class="template debug" id="debug">
-    <label>Timer lag:</label><span data-view="timerLag"></span>
+  <div class="template debug popup" id="Debug">
+    <label>Timer lag:</label><span data-field="timerLag"></span>
     <br>
+    <label>Fuel:</label><span data-field="fuel"></span>
   </div>
-  <div class="template sceneselector" id="sceneselector">
+  <div class="template sceneselector popup" id="SceneSelector">
     <h1>Select Level</h1>
-    <ul data-control="loadscene">
+    <ul data-control="loadScene">
       <li data-scene="SpaceDebrisScene">Space Debris</li>
       <li data-scene="PuzzleScene">Gravity Puzzle</li>
+      <li data-scene="GravityAssistScene">Gravity Assist</li>
+    </ul>
+    <hr/>
+    <ul data-list="editedScenes" data-template="EditedSceneEntry" data-control="loadEditedScene">
     </ul>
   </div>
-  <div class="template main" id="main"></div>
+  <li class="template editedsceneentry" id="EditedSceneEntry">
+    <span data-field="name"></span>
+    <a class="editlink" data-control="edit"> - Edit</a>
+  </li>
+  <div class="template main" id="Main"></div>
+  <div class="template editor" id="Editor">
+  </div>
+  <div id="EditorArea" class="template gamearea editorarea">
+    <canvas touch-action="none"></canvas>
+  </div>
+  <div class="template toolbar popup" id="Toolbar">
+    <ul>
+      <li class="button" data-control="play">Play</li>
+      <li class="button" data-control="createobject">New Object</li>
+      <li>
+        <label>Prediction</label>
+        <div>
+          <input type="range" min="0" max="7200" data-field="forecastSteps" />
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="template playcontrols popup" id="PlayControls">
+    <ul>
+      <li class="button" data-control="edit">Edit</li>
+    </ul>
+  </div>
+  <span class="template" id="PropertyEditor">
+  <div class="propertyeditor popup" data-field="root">
+    <ul>
+      <li>
+        <label>Type
+          <select data-field="type">
+            <option value="SpaceShip">Space Ship</option>
+            <option value="Star">Star</option>
+            <option value="Planet">Planet</option>
+            <option value="Moon">Moon</option>
+            <option value="Asteroid">Asteroid</option>
+            <option value="SpaceDebris">Space Debris</option>
+            <option value="Earth">Earth (big)</option>
+            <option value="FixedStar">Fixed Star</option>
+          </select>
+        </label>
+      </li>
+      <li>
+        <label>X
+          <input type="number" step="0.1" data-field="x" />
+        </label>
+      </li>
+      <li>
+        <label>Y
+          <input type="number" step="0.1" data-field="y" />
+        </label>
+      </li>
+      <li>
+        <label>VX
+          <input type="number" step="0.001" data-field="vx" />
+        </label>
+      </li>
+      <li>
+        <label>VY
+          <input type="number" step="0.001" data-field="vy" />
+        </label>
+      </li>
+      <li>
+        <label>Mass
+          <input type="number" step="0.1" data-field="mass" />
+        </label>
+      </li>
+      <li>
+        <label>Radius
+          <input type="number" step="1" data-field="radius" />
+        </label>
+      </li>
+      <li>
+        <label>Indestructible
+          <input type="checkbox" data-field="indestructible" />
+        </label>
+      </li>
+      <li>
+        <label class="button" data-control="delete">Delete</label>
+      </li>
+    </ul>
+  </div>
+  </span>
+  <div class="template selector" id="Selector">
+  </div>
   <script src="util/loader.js"></script>
   <script src="main.js"></script>
   <script src="cordova.js"></script>
