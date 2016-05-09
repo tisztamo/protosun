@@ -70,11 +70,14 @@ MainController.prototype.bindToObjective = function (objective) {
 
   this.failhandler = (function failhandler(event) {
     var reason;
+    var mainController = this;
     try {
       reason = event.detail.lostObject.constructor.name;
     } catch (e) {}
-    alert("fail: " + reason);
-    this.showSceneSelector();
+    setTimeout(function() {
+      alert("fail: " + reason);
+      mainController.showSceneSelector();
+    }, 1000);
   }).bind(this);
 
   objective.addEventListener("win", this.winHandler);

@@ -16,3 +16,7 @@ Detonation.prototype.oneStep = function () {
     this.simulation.removeSpaceObject(this);
   }
 };
+
+Detonation.createFromSpaceObject = function (spaceObject) {
+  return new Detonation(spaceObject.pos.clone(), Vector.zero.clone());
+};
