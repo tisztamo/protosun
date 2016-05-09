@@ -93,16 +93,12 @@ GravityAssistScene.prototype.setUpModel = function () {
   simulation.setState(GravityAssistScene.descriptor);
   var ship = simulation.spaceObjects[0];
 
-  var objectToProtect = simulation.spaceObjects.map(function (spaceObject) {
-    spaceObject.actOn = function (another, distance) {
-      if (distance < another.radius + spaceObject.radius - 8 && !another.permeable) {
-        simulation.removeSpaceObject(spaceObject);
-      }
-    };
-    return spaceObject;
+  var objectsToProtect = simulation.spaceObjects.map(function (s) {
+    return s;
   });
+  this.addProtectedObjects(objectsToProtect);
 
-  this.objective = new ProtectObjective(simulation, objectToProtect, 1900);
+  this.objective = new ProtectObjective(simulation, objectsToProtect, 1900);
   var camera = new OutlineCamera(new SimpleCamera(this.simulation, this.renderer.viewPort, ship), -1000, -1500, 2000, 2800);
   this.renderer.setCamera(camera);
 

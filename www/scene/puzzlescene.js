@@ -26,16 +26,10 @@ PuzzleScene.prototype.setUpModel = function () {
   asteroids.forEach(simulation.addSpaceObject.bind(simulation));
   simulation.addSpaceObject(star);
 
-  var objectToProtect = [ship, planet, moon, star];
-  objectToProtect.forEach(function (spaceObject) {
-    spaceObject.actOn = function (another, distance) {
-      if (distance < another.radius + spaceObject.radius - 8 && !another.permeable) {
-        simulation.removeSpaceObject(spaceObject);
-      }
-    };
-  });
+  var objectsToProtect = [ship, planet, moon, star];
+  this.addProtectedObjects(objectsToProtect);
 
-  this.objective = new ProtectObjective(simulation, objectToProtect, 1800);
+  this.objective = new ProtectObjective(simulation, objectsToProtect, 1800);
   var camera = new OutlineCamera(new SimpleCamera(this.simulation, this.renderer.viewPort, ship), 0, 0, 3000, 1800);
   this.renderer.setCamera(camera);
 

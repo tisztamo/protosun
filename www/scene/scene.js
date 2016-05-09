@@ -20,6 +20,16 @@ function Scene(simulation, renderer) {
  */
 Scene.prototype.setUpModel = function () {};
 
+Scene.prototype.addProtectedObjects = function (objectsToProtect) {
+  objectsToProtect.forEach(function (spaceObject) {
+    spaceObject.actOn = function (another, distance) {
+      if (distance < another.radius + spaceObject.radius - 8 && !another.permeable) {
+        this.simulation.removeSpaceObject(spaceObject);
+        this.simulation.addSpaceObject(Detonation.createFromSpaceObject(spaceObject))
+      }
+    };
+  });
+};
 
 Scene.scenes = {};
 
@@ -28,5 +38,5 @@ Scene.registerScene = function (sceneClass) {
 };
 
 Scene.createScene = function (sceneName, simulation, renderer) {
-  return new (Scene.scenes[sceneName])(simulation, renderer);
+  return new(Scene.scenes[sceneName])(simulation, renderer);
 };

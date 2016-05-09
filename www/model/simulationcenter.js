@@ -16,7 +16,8 @@ function SimulationCenter(maxDistance) {
 
   var superActOn = this.actOn || function () {};
   this.actOn = function (another, distance) {
-    if (distance > this.maxDistance) {
+    if (distance > this.maxDistance && !another.permeable) {
+      this.simulation.addSpaceObject(Detonation.createFromSpaceObject(another));
       this.simulation.removeSpaceObject(another);
     }
     superActOn.call(this, another, distance);
