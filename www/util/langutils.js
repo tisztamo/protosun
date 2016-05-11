@@ -11,7 +11,7 @@ LangUtils.deepMerge = function deepMerge(destination, source) {
       if (typeof source[property] === "object" &&
         destination[property]) {
         deepMerge(destination[property], source[property]);
-      } else {
+      } else if (typeof destination[property] !== "function") {
         destination[property] = source[property];
       }
     }
