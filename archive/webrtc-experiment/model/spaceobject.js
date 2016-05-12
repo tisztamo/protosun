@@ -88,23 +88,9 @@ SpaceObject.prototype.toString = function () {
   return " " + this.constructor.name;
 };
 
-
 SpaceObject.prototype.clone = function () {
   var retval = new this.constructor();
-  for (var prop in this) {
-    var value = this[prop];
-    if (typeof value === "function") {
-      continue;
-    }
-    if (value instanceof Vector) {
-      retval[prop] = value.clone();
-      continue;
-    }
-    if (typeof value === "object") {
-      continue;
-    }
-    retval[prop] = value;
-  }
+  LangUtils.deepMerge(retval, this);
   return retval;
 };
 
