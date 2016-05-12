@@ -22,7 +22,7 @@ MainController.prototype.selectScene = function (sceneNameOrEvent) {
     sceneName = sceneNameOrEvent.detail;
   }
 
-  this.simulation = new Simulation(30);
+  this.simulation = new Simulation(60);
   this.renderer = new CanvasRenderer(this.simulation, document.body);
   this.scene = Scene.createScene(sceneName, this.simulation, this.renderer);
   this.debugView = new DebugView(this.simulation, this.renderer, this.view);

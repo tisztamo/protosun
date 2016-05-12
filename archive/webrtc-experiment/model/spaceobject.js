@@ -9,8 +9,8 @@
  * @class
  */
 function SpaceObject(pos, v, mass, heading, angularSpeed) {
-  this.pos = pos;
-  this.v = v;
+  this.pos = pos || new Vector(0, 0);
+  this.v = v || new Vector(0, 0);
   this.mass = mass || 1;
   this.heading = heading || 0;
   this.angularSpeed = angularSpeed || 0;
@@ -111,8 +111,6 @@ SpaceObject.createFromPOJO = function (pojo) {
   }
   var retval = new ConstructorFn();
   LangUtils.deepMerge(retval, pojo);
-  retval.pos = new Vector(retval.pos.x, retval.pos.y);
-  retval.v = new Vector(retval.v.x, retval.v.y);
   return retval;
 };
 

@@ -1,8 +1,10 @@
 "use strict";
 
-function SimulationDistributor(simulation, connection) {
+function SimulationDistributor(simulation, connection, fps) {
   this.simulation = simulation;
   this.connection = connection;
+  this.fps = fps || 30;
+  this.lastSendTS = 0;
   this.externalObjects = {};
   this.ownedObjects = {};
   this.connect();
@@ -33,6 +35,10 @@ SimulationDistributor.prototype.messageReceived = function(event) {
 };
 
 SimulationDistributor.prototype.oneStepTaken = function () {
+  if (Date.now() - this.lastSendTS < 1000 / this.fps) {
+    return;
+  }
+  this.lastSendTS = Date.now();
   var state = this.simulation.getState();
   var distributor = this;
   this.connection.send(JSON.stringify({
